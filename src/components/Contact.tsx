@@ -1,26 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: ''
   });
+  const [status, setStatus] = useState({
+    submitting: false,
+    submitted: false,
+    error: false
+  });
+
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setStatus({ submitting: true, submitted: false, error: false });
+
+    try {
+      // Send message to your email
+      await emailjs.sendForm(
+        'service_oy9d5yk',
+        'template_ceubdgu',
+        formRef.current!,
+        'B2tSaHdAan64WRTIK'
+      );
+
+      // Send auto-reply to the user
+      await emailjs.send(
+        'service_oy9d5yk',
+        'template_j8j643n',
+        {
+          name: formData.name,
+          subject: formData.subject,
+          from_name: 'Muhammad Maaz Uddin'
+        },
+        'B2tSaHdAan64WRTIK'
+      );
+
+      setStatus({ submitting: false, submitted: true, error: false });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setStatus({ submitting: false, submitted: false, error: true });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -101,9 +134,9 @@ const Contact = () => {
             {/* Contact Details */}
             <div className="space-y-6">
               {[
-                { icon: Mail, label: 'Email', value: 'john@example.com', href: 'mailto:john@example.com', color: 'bg-[#f1faee] dark:bg-[#1d3557]/30 text-[#457b9d] dark:text-[#a8dadc]' },
-                { icon: Phone, label: 'Phone', value: '+1 (234) 567-8900', href: 'tel:+1234567890', color: 'bg-[#f1faee] dark:bg-[#1d3557]/30 text-[#457b9d] dark:text-[#a8dadc]' },
-                { icon: MapPin, label: 'Location', value: 'San Francisco, CA', href: '#', color: 'bg-[#f1faee] dark:bg-[#1d3557]/30 text-[#457b9d] dark:text-[#a8dadc]' },
+                { icon: Mail, label: 'Email', value: 'maazawan100@gmail.com', href: 'mailto:maazawan100@gmail.com', color: 'bg-[#f1faee] dark:bg-[#1d3557]/30 text-[#457b9d] dark:text-[#a8dadc]' },
+                { icon: Phone, label: 'Phone', value: '+92 315 4426400', href: 'tel:+923154426400', color: 'bg-[#f1faee] dark:bg-[#1d3557]/30 text-[#457b9d] dark:text-[#a8dadc]' },
+                { icon: MapPin, label: 'Location', value: 'Islamabad, Pakistan', href: '#', color: 'bg-[#f1faee] dark:bg-[#1d3557]/30 text-[#457b9d] dark:text-[#a8dadc]' },
               ].map((contact, index) => (
                 <motion.div
                   key={index}
@@ -145,9 +178,9 @@ const Contact = () => {
               <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Follow Me</h4>
               <div className="flex space-x-4">
                 {[
-                  { icon: Github, href: "https://github.com", color: "hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600" },
-                  { icon: Linkedin, href: "https://linkedin.com", color: "hover:text-blue-600 hover:border-blue-300" },
-                  { icon: Twitter, href: "https://twitter.com", color: "hover:text-sky-600 hover:border-sky-300" }
+                  { icon: Github, href: "https://github.com/MuhammadMaaz7", color: "hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600" },
+                  { icon: Linkedin, href: "https://www.linkedin.com/in/muhammad-maaz-uddin-512b4b26b/", color: "hover:text-blue-600 hover:border-blue-300" },
+                  { icon: Twitter, href: "https://twitter.com/maazawan2004", color: "hover:text-sky-600 hover:border-sky-300" }
                 ].map((social, index) => (
                   <motion.a
                     key={index}
@@ -188,7 +221,7 @@ const Contact = () => {
           >
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Send a Message</h3>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <motion.div
                   whileFocus={{ scale: 1.02 }}
@@ -267,17 +300,38 @@ const Contact = () => {
                 />
               </motion.div>
 
+              {status.submitted && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg"
+                >
+                  Thank you for your message! I'll get back to you soon.
+                </motion.div>
+              )}
+
+              {status.error && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg"
+                >
+                  Oops! Something went wrong. Please try again later.
+                </motion.div>
+              )}
+
               <motion.button
                 type="submit"
-                className="w-full bg-gradient-to-r from-[#1d3557] via-[#457b9d] to-[#a8dadc] text-white py-4 px-6 rounded-lg font-semibold hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center space-x-2"
+                disabled={status.submitting}
+                className={`w-full bg-gradient-to-r from-[#1d3557] via-[#457b9d] to-[#a8dadc] text-white py-4 px-6 rounded-lg font-semibold hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center space-x-2 ${status.submitting ? 'opacity-50 cursor-not-allowed' : ''}`}
                 whileHover={{ 
-                  scale: 1.02,
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+                  scale: status.submitting ? 1 : 1.02,
+                  boxShadow: status.submitting ? 'none' : "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
                 }}
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: status.submitting ? 1 : 0.98 }}
               >
                 <Send size={20} />
-                <span>Send Message</span>
+                <span>{status.submitting ? 'Sending...' : 'Send Message'}</span>
               </motion.button>
             </form>
           </motion.div>
@@ -289,7 +343,7 @@ const Contact = () => {
           variants={itemVariants}
         >
           <p className="text-gray-600 dark:text-gray-400">
-            © 2024 John Developer. Built with React, TypeScript, Tailwind CSS, and Three.js.
+            © 2024 Muhammad Maaz. Built with React, TypeScript, and Tailwind CSS.
           </p>
         </motion.div>
       </motion.div>
