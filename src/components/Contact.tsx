@@ -37,14 +37,17 @@ const Contact = () => {
       );
 
       // Send auto-reply to the user
+      const templateParams = {
+        email: formData.email,
+        name: formData.name,
+        subject: formData.subject,
+        from_name: 'Muhammad Maaz Uddin'
+      };
+
       await emailjs.send(
         'service_oy9d5yk',
         'template_j8j643n',
-        {
-          name: formData.name,
-          subject: formData.subject,
-          from_name: 'Muhammad Maaz Uddin'
-        },
+        templateParams,
         'B2tSaHdAan64WRTIK'
       );
 
@@ -343,7 +346,7 @@ const Contact = () => {
           variants={itemVariants}
         >
           <p className="text-gray-600 dark:text-gray-400">
-            © 2024 Muhammad Maaz. Built with React, TypeScript, and Tailwind CSS.
+            © 2025 Muhammad Maaz. Built with React, TypeScript, and Tailwind CSS.
           </p>
         </motion.div>
       </motion.div>
