@@ -13,47 +13,7 @@ const Projects = () => {
 
   const projects = [
     {
-      id: 1,
-      title: 'E-Commerce Platform',
-      description: 'Full-stack e-commerce solution with advanced features',
-      longDescription: 'A comprehensive e-commerce platform built with React, Node.js, and MongoDB. Features include user authentication, shopping cart, payment integration with Stripe, admin dashboard, inventory management, and real-time notifications.',
-      image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=800',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Stripe API', 'JWT'],
-      category: 'Full Stack',
-      liveUrl: 'https://example.com',
-      githubUrl: 'https://github.com/example',
-      features: [
-        'User authentication and authorization',
-        'Shopping cart and wishlist functionality',
-        'Secure payment processing',
-        'Admin dashboard for inventory management',
-        'Real-time order tracking',
-        'Responsive design for all devices'
-      ],
-      gradient: 'from-blue-500 to-purple-600'
-    },
-    {
-      id: 2,
-      title: 'Social Media Dashboard',
-      description: 'Analytics dashboard for social media management',
-      longDescription: 'A comprehensive social media analytics dashboard that aggregates data from multiple platforms. Built with React and D3.js for data visualization, featuring real-time updates and customizable reports.',
-      image: 'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800',
-      technologies: ['React', 'D3.js', 'Python', 'Flask', 'PostgreSQL', 'Redis'],
-      category: 'Data Visualization',
-      liveUrl: 'https://example.com',
-      githubUrl: 'https://github.com/example',
-      features: [
-        'Multi-platform data aggregation',
-        'Interactive data visualizations',
-        'Real-time analytics updates',
-        'Custom report generation',
-        'User engagement metrics',
-        'Export functionality for reports'
-      ],
-      gradient: 'from-green-500 to-teal-600'
-    },
-    {
-      "id": 3,
+      "id": 1,
       "title": "Task Management App",
       "description": "Full-stack collaborative task management platform",
       "longDescription": "A modern, feature-rich task management application built with React and Node.js. Features drag-and-drop task reordering, real-time collaboration with user permissions, email notifications, CSV/PDF export capabilities, and comprehensive task organization tools. Includes user authentication, task sharing with view/edit permissions, activity tracking, and automated email reminders for due dates.",
@@ -77,65 +37,45 @@ const Projects = () => {
       "gradient": "from-blue-500 to-purple-600"
     },
     {
-      id: 4,
+      id: 2,
       title: 'Weather Dashboard',
-      description: 'Web-based weather dashboard with real-time and location-based forecasts',
-      longDescription: 'A responsive weather dashboard that displays current weather data, 5-day forecasts, and UV index information using the OpenWeatherMap API. It automatically detects your current location to provide instant weather updates, while also allowing users to search for weather in other cities.',
+      description: 'Web-based weather dashboard with location-based forecasts and chatbot support',
+      longDescription: 'A responsive weather dashboard that displays real-time weather information and 5-day forecasts using the OpenWeatherMap API. It uses geolocation to automatically detect the user’s current city and provides weather data accordingly. A built-in chatbot allows users to ask weather-related questions about their current location.',
       image: 'https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=800',
-      technologies: ['HTML', 'CSS', 'JavaScript', 'OpenWeatherMap API', 'Geolocation API'],
+      technologies: ['HTML', 'CSS', 'JavaScript', 'OpenWeatherMap API', 'Geolocation API', 'Chatbot'],
       category: 'Web',
       liveUrl: 'https://muhammadmaaz7.github.io/Weather-Dashboard/index.html',
-      githubUrl: 'https://github.com/MuhammadMaaz7/Weather-Dashboard.git',
+      githubUrl: 'https://github.com/muhammadmaaz7/Weather-Dashboard',
       features: [
-        'Auto-detect user location using Geolocation API',
-        'City-based weather search functionality',
-        'Real-time weather data with temperature, humidity, and wind speed',
-        '5-day weather forecast display',
-        'UV index with color-coded risk indicators',
-        'Search history for previously searched cities',
-        'Responsive design for desktop and mobile'
+        'Auto-detects user’s location using Geolocation API',
+        'Displays real-time weather data (temperature, humidity, wind)',
+        '5-day weather forecast',
+        'Interactive chatbot that answers weather questions for the current city',
+        'Clean, responsive, and user-friendly UI'
       ],
       gradient: 'from-blue-400 to-indigo-600'
-    },
+    },    
     {
-      id: 5,
-      title: 'Blog Platform',
-      description: 'Modern blogging platform with CMS features',
-      longDescription: 'A full-featured blogging platform with content management system capabilities. Includes rich text editor, SEO optimization, comment system, and social media integration.',
-      image: 'https://images.pexels.com/photos/261662/pexels-photo-261662.jpeg?auto=compress&cs=tinysrgb&w=800',
-      technologies: ['Next.js', 'Sanity CMS', 'Tailwind CSS', 'Vercel'],
-      category: 'CMS',
-      liveUrl: 'https://example.com',
-      githubUrl: 'https://github.com/example',
+      id: 3,
+      title: 'GoLocal Guide',
+      description: 'A full-featured local tourism platform with booking, planning, and real-time support',
+      longDescription: 'GoLocal Guide is a comprehensive local tourism management system built to help tourists discover and book local services like hotels, restaurants, and tour guides across various cities in Pakistan. As part of a team project, I was responsible for the complete development of the Tourist Panel — both frontend and backend — including core booking features, personalized dashboards, and itinerary planning. I also created the landing page and designed the login/signup user flows. The platform includes 4 major user panels: Admin, Tourist, Guide, and Business, each with its own set of features and dashboards.',
+      image: 'https://images.pexels.com/photos/290120/pexels-photo-290120.jpeg?auto=compress&cs=tinysrgb&w=800',
+      technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'JWT Auth', 'Tailwind CSS', 'REST API', 'Vercel'],
+      category: 'Web',
+      liveUrl: 'https://golocal-guide.vercel.app/',
+      githubUrl: 'https://github.com/MuhammadMaaz7/golocal-guide',
       features: [
-        'Rich text editor with markdown support',
-        'SEO optimization features',
-        'Comment system with moderation',
-        'Social media integration',
-        'Tag and category management',
-        'Analytics and performance tracking'
+        'Multi-role access: Tourist, Guide, Admin, Business',
+        'Tourist Panel: Search destinations, book hotels/restaurants/guides',
+        'Location-based discovery and AI-powered recommendations',
+        'Secure login and JWT-based authentication system',
+        'Interactive booking with real-time availability',
+        'Responsive landing page and personalized dashboards',
+        'Payment system integration for online bookings',
+        'Review and rating system for destinations and services'
       ],
-      gradient: 'from-indigo-500 to-blue-600'
-    },
-    {
-      id: 6,
-      title: 'Crypto Portfolio Tracker',
-      description: 'Real-time cryptocurrency portfolio management',
-      longDescription: 'A comprehensive cryptocurrency portfolio tracker with real-time price updates, portfolio analytics, and market insights. Features advanced charting and price alert functionality.',
-      image: 'https://images.pexels.com/photos/844124/pexels-photo-844124.jpeg?auto=compress&cs=tinysrgb&w=800',
-      technologies: ['Vue.js', 'Chart.js', 'CoinGecko API', 'Firebase'],
-      category: 'Finance',
-      liveUrl: 'https://example.com',
-      githubUrl: 'https://github.com/example',
-      features: [
-        'Real-time price tracking',
-        'Portfolio performance analytics',
-        'Advanced charting capabilities',
-        'Price alerts and notifications',
-        'Market news integration',
-        'Multiple exchange support'
-      ],
-      gradient: 'from-yellow-500 to-orange-600'
+      gradient: 'from-green-500 to-emerald-700'
     }
   ];
 
