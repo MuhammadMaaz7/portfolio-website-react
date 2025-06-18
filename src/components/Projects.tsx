@@ -53,44 +53,49 @@ const Projects = () => {
       gradient: 'from-green-500 to-teal-600'
     },
     {
-      id: 3,
-      title: 'Task Management App',
-      description: 'Collaborative project management tool',
-      longDescription: 'A modern task management application inspired by Trello and Asana. Features drag-and-drop functionality, real-time collaboration, file attachments, and team management capabilities.',
-      image: 'https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800',
-      technologies: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Socket.io'],
-      category: 'Productivity',
-      liveUrl: 'https://example.com',
-      githubUrl: 'https://github.com/example',
-      features: [
-        'Drag-and-drop task management',
-        'Real-time collaboration',
-        'File attachment support',
-        'Team and project organization',
-        'Due date and priority management',
-        'Activity tracking and notifications'
+      "id": 3,
+      "title": "Task Management App",
+      "description": "Full-stack collaborative task management platform",
+      "longDescription": "A modern, feature-rich task management application built with React and Node.js. Features drag-and-drop task reordering, real-time collaboration with user permissions, email notifications, CSV/PDF export capabilities, and comprehensive task organization tools. Includes user authentication, task sharing with view/edit permissions, activity tracking, and automated email reminders for due dates.",
+      "image": "https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "technologies": ["React", "TypeScript", "Node.js", "Express.js", "MongoDB", "Tailwind CSS", "Vite", "Docker"],
+      "category": "Productivity",
+      "liveUrl": "https://task-management-application-client-one.vercel.app/",
+      "githubUrl": "https://github.com/MuhammadMaaz7/task-management-application",
+      "features": [
+        "Drag-and-drop task reordering with @dnd-kit",
+        "User authentication and authorization",
+        "Task sharing with view/edit permissions",
+        "Real-time task collaboration",
+        "Priority levels and due date management",
+        "Email notifications for due dates and overdue tasks",
+        "CSV and PDF export functionality",
+        "Task activity tracking and comments",
+        "Responsive design with Tailwind CSS",
+        "Docker containerization and CI/CD pipeline"
       ],
-      gradient: 'from-purple-500 to-pink-600'
+      "gradient": "from-blue-500 to-purple-600"
     },
     {
       id: 4,
-      title: 'Weather Forecast App',
-      description: 'Beautiful weather app with location-based forecasts',
-      longDescription: 'A sleek weather application that provides detailed forecasts based on user location. Features include hourly and weekly forecasts, weather maps, and severe weather alerts.',
+      title: 'Weather Dashboard',
+      description: 'Web-based weather dashboard with real-time and location-based forecasts',
+      longDescription: 'A responsive weather dashboard that displays current weather data, 5-day forecasts, and UV index information using the OpenWeatherMap API. It automatically detects your current location to provide instant weather updates, while also allowing users to search for weather in other cities.',
       image: 'https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=800',
-      technologies: ['React Native', 'TypeScript', 'Weather API', 'Maps API'],
-      category: 'Mobile',
-      liveUrl: 'https://example.com',
-      githubUrl: 'https://github.com/example',
+      technologies: ['HTML', 'CSS', 'JavaScript', 'OpenWeatherMap API', 'Geolocation API'],
+      category: 'Web',
+      liveUrl: 'https://muhammadmaaz7.github.io/Weather-Dashboard/index.html',
+      githubUrl: 'https://github.com/MuhammadMaaz7/Weather-Dashboard.git',
       features: [
-        'Location-based weather data',
-        'Hourly and 7-day forecasts',
-        'Interactive weather maps',
-        'Severe weather alerts',
-        'Beautiful animations and transitions',
-        'Offline data caching'
+        'Auto-detect user location using Geolocation API',
+        'City-based weather search functionality',
+        'Real-time weather data with temperature, humidity, and wind speed',
+        '5-day weather forecast display',
+        'UV index with color-coded risk indicators',
+        'Search history for previously searched cities',
+        'Responsive design for desktop and mobile'
       ],
-      gradient: 'from-orange-500 to-red-600'
+      gradient: 'from-blue-400 to-indigo-600'
     },
     {
       id: 5,
