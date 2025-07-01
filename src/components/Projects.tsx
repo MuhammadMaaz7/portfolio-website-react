@@ -79,7 +79,7 @@ const Projects = () => {
     }
   ];
 
-  const categories = ['All', 'Full Stack', 'Data Visualization', 'Productivity', 'Mobile', 'CMS', 'Finance'];
+  const categories = ['All', 'Full Stack', 'Productivity'];
 
   const filteredProjects = activeCategory === 'All' 
     ? projects 
