@@ -76,7 +76,29 @@ const Projects = () => {
         'Review and rating system for destinations and services'
       ],
       gradient: 'from-green-500 to-emerald-700'
-    }
+    },
+    {
+      id: 4,
+      title: 'Word Ladder Adventure',
+      description: 'An interactive word puzzle game with AI-powered pathfinding and difficulty levels',
+      longDescription: 'Word Ladder Adventure is a game where players transform a start word into a target word by changing one letter at a time, with each step being a valid English word. I built both the frontend and backend of the application using React and FastAPI. The backend features three different search algorithms (UCS, A*, GBFS) and dynamically generates puzzles based on difficulty. The game also provides hints and keeps track of session scores using in-memory logic. The frontend is deployed on Vercel, and the backend is hosted via Railway.',
+      image: 'https://images.pexels.com/photos/261909/pexels-photo-261909.jpeg?auto=compress&cs=tinysrgb&w=800', // you can replace this with your own screenshot
+      technologies: ['React.js', 'FastAPI', 'Python', 'Uvicorn', 'Railway', 'Vercel', 'CORS', 'UUID', 'Tailwind CSS'],
+      category: 'Web',
+      liveUrl: 'https://word-ladder-adventure-frontend.vercel.app/',
+      githubUrl: 'https://github.com/MuhammadMaaz7/word-ladder-adventure',
+      features: [
+        'Three difficulty levels: Beginner, Intermediate, Advanced',
+        'AI algorithms: Uniform Cost Search, A*, Greedy Best-First Search',
+        'Backend with FastAPI deployed on Railway',
+        'Frontend with React.js deployed on Vercel',
+        'Session-based gameplay with UUID tracking',
+        'Hint system powered by AI pathfinding',
+        'CORS configuration for cross-origin support',
+        'Mobile-responsive UI with interactive game flow'
+      ],
+      gradient: 'from-purple-500 to-indigo-700'
+    }    
   ];
 
   const categories = ['All', 'Full Stack', 'Productivity'];
