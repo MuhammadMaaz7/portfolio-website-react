@@ -156,7 +156,7 @@ const Hero = () => {
                 ease: "linear"
               }}
             >
-              Muhammd Maaz
+              Muhammad Maaz
             </motion.span>
           </motion.h1>
 

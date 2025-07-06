@@ -1,28 +1,53 @@
-import React, { useState } from 'react';
-import { ExternalLink, Github, Eye, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import React, { useState, useEffect } from "react";
+import { ExternalLink, Github, Eye, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState("All");
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    // Cleanup function to restore scroll when component unmounts
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedProject]);
+
   const projects = [
     {
-      "id": 1,
-      "title": "Task Management App",
-      "description": "Full-stack collaborative task management platform",
-      "longDescription": "A modern, feature-rich task management application built with React and Node.js. Features drag-and-drop task reordering, real-time collaboration with user permissions, email notifications, CSV/PDF export capabilities, and comprehensive task organization tools. Includes user authentication, task sharing with view/edit permissions, activity tracking, and automated email reminders for due dates.",
-      "image": "https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "technologies": ["React", "TypeScript", "Node.js", "Express.js", "MongoDB", "Tailwind CSS", "Vite", "Docker"],
-      "category": "Productivity",
-      "liveUrl": "https://task-management-application-client-one.vercel.app/",
-      "githubUrl": "https://github.com/MuhammadMaaz7/task-management-application",
-      "features": [
+      id: 1,
+      title: "Task Management App",
+      description: "Full-stack collaborative task management platform",
+      longDescription:
+        "A modern, feature-rich task management application built with React and Node.js. Features drag-and-drop task reordering, real-time collaboration with user permissions, email notifications, CSV/PDF export capabilities, and comprehensive task organization tools. Includes user authentication, task sharing with view/edit permissions, activity tracking, and automated email reminders for due dates.",
+      image:
+        "https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800",
+      technologies: [
+        "React",
+        "TypeScript",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Tailwind CSS",
+        "Vite",
+        "Docker",
+      ],
+      category: "Productivity",
+      liveUrl: "https://task-management-application-client-one.vercel.app/",
+      githubUrl: "https://github.com/MuhammadMaaz7/task-management-application",
+      features: [
         "Drag-and-drop task reordering with @dnd-kit",
         "User authentication and authorization",
         "Task sharing with view/edit permissions",
@@ -32,80 +57,118 @@ const Projects = () => {
         "CSV and PDF export functionality",
         "Task activity tracking and comments",
         "Responsive design with Tailwind CSS",
-        "Docker containerization and CI/CD pipeline"
+        "Docker containerization and CI/CD pipeline",
       ],
-      "gradient": "from-blue-500 to-purple-600"
+      gradient: "from-blue-500 to-purple-600",
     },
     {
       id: 2,
-      title: 'Weather Dashboard',
-      description: 'Web-based weather dashboard with location-based forecasts and chatbot support',
-      longDescription: 'A responsive weather dashboard that displays real-time weather information and 5-day forecasts using the OpenWeatherMap API. It uses geolocation to automatically detect the user’s current city and provides weather data accordingly. A built-in chatbot allows users to ask weather-related questions about their current location.',
-      image: 'https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=800',
-      technologies: ['HTML', 'CSS', 'JavaScript', 'OpenWeather API', 'Geolocation API', 'Chatbot'],
-      category: 'Web',
-      liveUrl: 'https://muhammadmaaz7.github.io/Weather-Dashboard/index.html',
-      githubUrl: 'https://github.com/muhammadmaaz7/Weather-Dashboard',
-      features: [
-        'Auto-detects user’s location using Geolocation API',
-        'Displays real-time weather data (temperature, humidity, wind)',
-        '5-day weather forecast',
-        'Interactive chatbot that answers weather questions for the current city',
-        'Clean, responsive, and user-friendly UI'
+      title: "Weather Dashboard",
+      description:
+        "Web-based weather dashboard with location-based forecasts and chatbot support",
+      longDescription:
+        "A responsive weather dashboard that displays real-time weather information and 5-day forecasts using the OpenWeatherMap API. It uses geolocation to automatically detect the user’s current city and provides weather data accordingly. A built-in chatbot allows users to ask weather-related questions about their current location.",
+      image:
+        "https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=800",
+      technologies: [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "OpenWeather API",
+        "Geolocation API",
+        "Chatbot",
       ],
-      gradient: 'from-blue-400 to-indigo-600'
-    },    
+      category: "Web",
+      liveUrl: "https://muhammadmaaz7.github.io/Weather-Dashboard/index.html",
+      githubUrl: "https://github.com/muhammadmaaz7/Weather-Dashboard",
+      features: [
+        "Auto-detects user’s location using Geolocation API",
+        "Displays real-time weather data (temperature, humidity, wind)",
+        "5-day weather forecast",
+        "Interactive chatbot that answers weather questions for the current city",
+        "Clean, responsive, and user-friendly UI",
+      ],
+      gradient: "from-blue-400 to-indigo-600",
+    },
     {
       id: 3,
-      title: 'GoLocal Guide',
-      description: 'A full-featured local tourism platform with booking, planning, and real-time support',
-      longDescription: 'GoLocal Guide is a comprehensive local tourism management system built to help tourists discover and book local services like hotels, restaurants, and tour guides across various cities in Pakistan. As part of a team project, I was responsible for the complete development of the Tourist Panel — both frontend and backend — including core booking features, personalized dashboards, and itinerary planning. I also created the landing page and designed the login/signup user flows. The platform includes 4 major user panels: Admin, Tourist, Guide, and Business, each with its own set of features and dashboards.',
-      image: 'https://images.pexels.com/photos/290120/pexels-photo-290120.jpeg?auto=compress&cs=tinysrgb&w=800',
-      technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'JWT Auth', 'Firebase', 'OpenWeather API', 'Tailwind CSS', 'REST API', 'Vercel'],
-      category: 'Web',
-      liveUrl: 'https://golocal-guide.vercel.app/',
-      githubUrl: 'https://github.com/MuhammadMaaz7/golocal-guide',
-      features: [
-        'Multi-role access: Tourist, Guide, Admin, Business',
-        'Tourist Panel: Search destinations, book hotels/restaurants/guides',
-        'Location-based discovery and AI-powered recommendations',
-        'Secure login and JWT-based authentication system',
-        'Interactive booking with real-time availability',
-        'Responsive landing page and personalized dashboards',
-        'Payment system integration for online bookings',
-        'Review and rating system for destinations and services'
+      title: "GoLocal Guide",
+      description:
+        "A full-featured local tourism platform with booking, planning, and real-time support",
+      longDescription:
+        "GoLocal Guide is a comprehensive local tourism management system built to help tourists discover and book local services like hotels, restaurants, and tour guides across various cities in Pakistan. As part of a team project, I was responsible for the complete development of the Tourist Panel — both frontend and backend — including core booking features, personalized dashboards, and itinerary planning. I also created the landing page and designed the login/signup user flows. The platform includes 4 major user panels: Admin, Tourist, Guide, and Business, each with its own set of features and dashboards.",
+      image:
+        "https://images.pexels.com/photos/290120/pexels-photo-290120.jpeg?auto=compress&cs=tinysrgb&w=800",
+      technologies: [
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "JWT Auth",
+        "Firebase",
+        "OpenWeather API",
+        "Tailwind CSS",
+        "REST API",
+        "Vercel",
       ],
-      gradient: 'from-green-500 to-emerald-700'
+      category: "Web",
+      liveUrl: "https://golocal-guide.vercel.app/",
+      githubUrl: "https://github.com/MuhammadMaaz7/golocal-guide",
+      features: [
+        "Multi-role access: Tourist, Guide, Admin, Business",
+        "Tourist Panel: Search destinations, book hotels/restaurants/guides",
+        "Location-based discovery and AI-powered recommendations",
+        "Secure login and JWT-based authentication system",
+        "Interactive booking with real-time availability",
+        "Responsive landing page and personalized dashboards",
+        "Payment system integration for online bookings",
+        "Review and rating system for destinations and services",
+      ],
+      gradient: "from-green-500 to-emerald-700",
     },
     {
       id: 4,
-      title: 'Word Ladder Adventure',
-      description: 'An interactive word puzzle game with AI-powered pathfinding and difficulty levels',
-      longDescription: 'Word Ladder Adventure is a game where players transform a start word into a target word by changing one letter at a time, with each step being a valid English word. I built both the frontend and backend of the application using React and FastAPI. The backend features three different search algorithms (UCS, A*, GBFS) and dynamically generates puzzles based on difficulty. The game also provides hints and keeps track of session scores using in-memory logic. The frontend is deployed on Vercel, and the backend is hosted via Railway.',
-      image: 'https://images.pexels.com/photos/261909/pexels-photo-261909.jpeg?auto=compress&cs=tinysrgb&w=800', // you can replace this with your own screenshot
-      technologies: ['React.js', 'FastAPI', 'Python', 'Uvicorn', 'Railway', 'Vercel', 'CORS', 'UUID', 'Tailwind CSS'],
-      category: 'Web',
-      liveUrl: 'https://word-ladder-adventure-frontend.vercel.app/',
-      githubUrl: 'https://github.com/MuhammadMaaz7/word-ladder-adventure',
-      features: [
-        'Three difficulty levels: Beginner, Intermediate, Advanced',
-        'AI algorithms: Uniform Cost Search, A*, Greedy Best-First Search',
-        'Backend with FastAPI deployed on Railway',
-        'Frontend with React.js deployed on Vercel',
-        'Session-based gameplay with UUID tracking',
-        'Hint system powered by AI pathfinding',
-        'CORS configuration for cross-origin support',
-        'Mobile-responsive UI with interactive game flow'
+      title: "Word Ladder Adventure",
+      description:
+        "An interactive word puzzle game with AI-powered pathfinding and difficulty levels",
+      longDescription:
+        "Word Ladder Adventure is a game where players transform a start word into a target word by changing one letter at a time, with each step being a valid English word. I built both the frontend and backend of the application using React and FastAPI. The backend features three different search algorithms (UCS, A*, GBFS) and dynamically generates puzzles based on difficulty. The game also provides hints and keeps track of session scores using in-memory logic. The frontend is deployed on Vercel, and the backend is hosted via Railway.",
+      image:
+        "https://images.pexels.com/photos/261909/pexels-photo-261909.jpeg?auto=compress&cs=tinysrgb&w=800", // you can replace this with your own screenshot
+      technologies: [
+        "React.js",
+        "FastAPI",
+        "Python",
+        "Uvicorn",
+        "Railway",
+        "Vercel",
+        "CORS",
+        "UUID",
+        "Tailwind CSS",
       ],
-      gradient: 'from-purple-500 to-indigo-700'
-    }    
+      category: "Web",
+      liveUrl: "https://word-ladder-adventure-frontend.vercel.app/",
+      githubUrl: "https://github.com/MuhammadMaaz7/word-ladder-adventure",
+      features: [
+        "Three difficulty levels: Beginner, Intermediate, Advanced",
+        "AI algorithms: Uniform Cost Search, A*, Greedy Best-First Search",
+        "Backend with FastAPI deployed on Railway",
+        "Frontend with React.js deployed on Vercel",
+        "Session-based gameplay with UUID tracking",
+        "Hint system powered by AI pathfinding",
+        "CORS configuration for cross-origin support",
+        "Mobile-responsive UI with interactive game flow",
+      ],
+      gradient: "from-purple-500 to-indigo-700",
+    },
   ];
 
-  const categories = ['All', 'Full Stack', 'Productivity'];
+  const categories = ["All", "Full Stack", "Productivity"];
 
-  const filteredProjects = activeCategory === 'All' 
-    ? projects 
-    : projects.filter(project => project.category === activeCategory);
+  const filteredProjects =
+    activeCategory === "All"
+      ? projects
+      : projects.filter((project) => project.category === activeCategory);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -113,9 +176,9 @@ const Projects = () => {
       opacity: 1,
       transition: {
         delayChildren: 0.3,
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
@@ -125,24 +188,27 @@ const Projects = () => {
       opacity: 1,
       transition: {
         duration: 0.8,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   return (
-    <section id="projects" className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
+    <section
+      id="projects"
+      className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden"
+    >
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-5 dark:opacity-10">
         <motion.div
           className="absolute inset-0 bg-gradient-to-r from-[#1d3557] via-[#457b9d] to-[#a8dadc]"
           animate={{
-            backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
+            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
           }}
           transition={{
             duration: 15,
             repeat: Infinity,
-            ease: "linear"
+            ease: "linear",
           }}
         />
       </div>
@@ -156,13 +222,16 @@ const Projects = () => {
       >
         <motion.div className="text-center mb-16" variants={itemVariants}>
           <h2 className="text-5xl md:text-6xl font-bold text-[#1d3557] dark:text-[#a8dadc] mb-6">
-            Featured <span className="bg-gradient-to-r from-[#1d3557] via-[#457b9d] to-[#a8dadc] bg-clip-text text-transparent">Projects</span>
+            Featured{" "}
+            <span className="bg-gradient-to-r from-[#1d3557] via-[#457b9d] to-[#a8dadc] bg-clip-text text-transparent">
+              Projects
+            </span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            A showcase of my recent work, demonstrating expertise across various technologies and industries.
+            A showcase of my recent work, demonstrating expertise across various
+            technologies and industries.
           </p>
         </motion.div>
-
         {/* Category Filter */}
         <motion.div
           className="flex flex-wrap justify-center gap-3 mb-12"
@@ -174,8 +243,8 @@ const Projects = () => {
               onClick={() => setActiveCategory(category)}
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                 activeCategory === category
-                  ? 'bg-gradient-to-r from-[#1d3557] via-[#457b9d] to-[#a8dadc] text-white shadow-lg'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-[#f1faee] dark:hover:bg-[#1d3557] hover:text-[#1d3557] dark:hover:text-[#a8dadc]'
+                  ? "bg-gradient-to-r from-[#1d3557] via-[#457b9d] to-[#a8dadc] text-white shadow-lg"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-[#f1faee] dark:hover:bg-[#1d3557] hover:text-[#1d3557] dark:hover:text-[#a8dadc]"
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -184,10 +253,9 @@ const Projects = () => {
             </motion.button>
           ))}
         </motion.div>
-
         {/* Projects Grid */}
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" // Added responsive gap and sm:grid-cols-2
           layout
         >
           <AnimatePresence>
@@ -200,9 +268,9 @@ const Projects = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                whileHover={{ 
+                whileHover={{
                   y: -10,
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
                 }}
               >
                 <div className="relative overflow-hidden">
@@ -214,7 +282,7 @@ const Projects = () => {
                     transition={{ duration: 0.3 }}
                   />
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end"
+                    className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-end" // Changed opacity classes
                     initial={{ opacity: 0 }}
                     whileHover={{ opacity: 1 }}
                   >
@@ -253,16 +321,21 @@ const Projects = () => {
                     </div>
                   </motion.div>
                   <div className="absolute top-4 right-4">
-                    <span className={`px-3 py-1 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white text-xs rounded-full font-medium`}>
+                    <span
+                      className={`px-3 py-1 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white text-xs rounded-full font-medium`}
+                    >
                       {project.category}
                     </span>
                   </div>
                 </div>
-                
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{project.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">{project.description}</p>
-                  
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                    {project.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                    {project.description}
+                  </p>
+
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.slice(0, 3).map((tech, index) => (
                       <motion.span
@@ -284,19 +357,18 @@ const Projects = () => {
             ))}
           </AnimatePresence>
         </motion.div>
-
         {/* Project Modal */}
         <AnimatePresence>
           {selectedProject && (
             <motion.div
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 pt-20" // Added pt-20 for top padding
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedProject(null)}
             >
               <motion.div
-                className="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+                className="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[80vh] md:max-h-[90vh] overflow-y-auto" // Adjusted max-height
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
@@ -317,21 +389,31 @@ const Projects = () => {
                     <X size={20} />
                   </motion.button>
                 </div>
-                
-                <div className="p-8">
-                  <div className="flex justify-between items-start mb-6">
+                this
+                <div className="p-6 md:p-8">
+                  {" "}
+                  {/* Added responsive padding */}
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4">
+                    {" "}
+                    {/* Changed to flex-col on mobile */}
                     <div>
-                      <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{selectedProject.title}</h3>
-                      <span className={`px-3 py-1 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white rounded-full text-sm font-medium`}>
+                      <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                        {selectedProject.title}
+                      </h3>
+                      <span
+                        className={`px-3 py-1 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white rounded-full text-sm font-medium`}
+                      >
                         {selectedProject.category}
                       </span>
                     </div>
-                    <div className="flex space-x-3">
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      {" "}
+                      {/* Changed to flex-col on mobile */}
                       <motion.a
                         href={selectedProject.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white rounded-lg hover:shadow-lg transition-all duration-300"
+                        className="flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white rounded-lg hover:shadow-lg transition-all duration-300"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -342,7 +424,7 @@ const Projects = () => {
                         href={selectedProject.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center space-x-2 px-4 py-2 bg-gray-900 dark:bg-gray-700 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-300"
+                        className="flex items-center justify-center space-x-2 px-4 py-2 bg-gray-900 dark:bg-gray-700 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-300"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -351,45 +433,59 @@ const Projects = () => {
                       </motion.a>
                     </div>
                   </div>
-                  
-                  <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-lg">
+                  <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-base md:text-lg">
+                    {" "}
+                    {/* Added responsive text size */}
                     {selectedProject.longDescription}
                   </p>
-                  
-                  <div className="grid md:grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {" "}
+                    {/* Changed to single column on mobile */}
                     <div>
-                      <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Key Features</h4>
+                      <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                        Key Features
+                      </h4>
                       <ul className="space-y-2">
-                        {selectedProject.features.map((feature: string, index: number) => (
-                          <motion.li
-                            key={index}
-                            className="flex items-start space-x-2"
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3, delay: index * 0.1 }}
-                          >
-                            <div className="w-1.5 h-1.5 bg-gradient-to-r from-[#1d3557] to-[#457b9d] rounded-full mt-2 flex-shrink-0"></div>
-                            <span className="text-gray-600 dark:text-gray-300">{feature}</span>
-                          </motion.li>
-                        ))}
+                        {selectedProject.features.map(
+                          (feature: string, index: number) => (
+                            <motion.li
+                              key={index}
+                              className="flex items-start space-x-2"
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.3, delay: index * 0.1 }}
+                            >
+                              <div className="w-1.5 h-1.5 bg-gradient-to-r from-[#1d3557] to-[#457b9d] rounded-full mt-2 flex-shrink-0"></div>
+                              <span className="text-gray-600 dark:text-gray-300">
+                                {feature}
+                              </span>
+                            </motion.li>
+                          )
+                        )}
                       </ul>
                     </div>
-                    
                     <div>
-                      <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Technologies Used</h4>
+                      <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                        Technologies Used
+                      </h4>
                       <div className="flex flex-wrap gap-2">
-                        {selectedProject.technologies.map((tech: string, index: number) => (
-                          <motion.span
-                            key={index}
-                            className="px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium"
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.3, delay: index * 0.05 }}
-                            whileHover={{ scale: 1.05 }}
-                          >
-                            {tech}
-                          </motion.span>
-                        ))}
+                        {selectedProject.technologies.map(
+                          (tech: string, index: number) => (
+                            <motion.span
+                              key={index}
+                              className="px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium"
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{
+                                duration: 0.3,
+                                delay: index * 0.05,
+                              }}
+                              whileHover={{ scale: 1.05 }}
+                            >
+                              {tech}
+                            </motion.span>
+                          )
+                        )}
                       </div>
                     </div>
                   </div>
