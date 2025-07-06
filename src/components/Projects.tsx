@@ -67,7 +67,7 @@ const Projects = () => {
       description:
         "Web-based weather dashboard with location-based forecasts and chatbot support",
       longDescription:
-        "A responsive weather dashboard that displays real-time weather information and 5-day forecasts using the OpenWeatherMap API. It uses geolocation to automatically detect the user’s current city and provides weather data accordingly. A built-in chatbot allows users to ask weather-related questions about their current location.",
+        "A responsive weather dashboard that displays real-time weather information and 5-day forecasts using the OpenWeatherMap API. It uses geolocation to automatically detect the user's current city and provides weather data accordingly. A built-in chatbot allows users to ask weather-related questions about their current location.",
       image:
         "https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=800",
       technologies: [
@@ -82,7 +82,7 @@ const Projects = () => {
       liveUrl: "https://muhammadmaaz7.github.io/Weather-Dashboard/index.html",
       githubUrl: "https://github.com/muhammadmaaz7/Weather-Dashboard",
       features: [
-        "Auto-detects user’s location using Geolocation API",
+        "Auto-detects user's location using Geolocation API",
         "Displays real-time weather data (temperature, humidity, wind)",
         "5-day weather forecast",
         "Interactive chatbot that answers weather questions for the current city",
@@ -134,7 +134,7 @@ const Projects = () => {
       longDescription:
         "Word Ladder Adventure is a game where players transform a start word into a target word by changing one letter at a time, with each step being a valid English word. I built both the frontend and backend of the application using React and FastAPI. The backend features three different search algorithms (UCS, A*, GBFS) and dynamically generates puzzles based on difficulty. The game also provides hints and keeps track of session scores using in-memory logic. The frontend is deployed on Vercel, and the backend is hosted via Railway.",
       image:
-        "https://images.pexels.com/photos/261909/pexels-photo-261909.jpeg?auto=compress&cs=tinysrgb&w=800", // you can replace this with your own screenshot
+        "https://images.pexels.com/photos/261909/pexels-photo-261909.jpeg?auto=compress&cs=tinysrgb&w=800",
       technologies: [
         "React.js",
         "FastAPI",
@@ -255,15 +255,14 @@ const Projects = () => {
         </motion.div>
         {/* Projects Grid */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" // Added responsive gap and sm:grid-cols-2
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
           layout
         >
           <AnimatePresence>
             {filteredProjects.map((project) => (
-              // Update the project card container to:
               <motion.div
                 key={project.id}
-                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-xl transition-all duration-300 group pb-4 md:pb-0" // Added pb-4 for mobile spacing
+                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group"
                 variants={itemVariants}
                 layout
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -283,6 +282,13 @@ const Projects = () => {
                     transition={{ duration: 0.3 }}
                   />
 
+                  {/* Category Badge */}
+                  <div className="absolute top-4 right-4">
+                    <span className="px-3 py-1 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white text-xs rounded-full font-medium">
+                      {project.category}
+                    </span>
+                  </div>
+
                   {/* Mobile-only button (visible on screens < md) */}
                   <div className="md:hidden absolute bottom-4 left-4 right-4">
                     <motion.button
@@ -296,56 +302,47 @@ const Projects = () => {
                     </motion.button>
                   </div>
 
-                  {/* Desktop hover overlay (hidden on mobile) */}
+                  {/* Desktop hover overlay (hidden on mobile) - positioned at bottom */}
                   <motion.div
-                    className="hidden md:block absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end"
+                    className="hidden md:flex absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4"
                     initial={{ opacity: 0 }}
                     whileHover={{ opacity: 1 }}
                   >
-                    <div className="p-4 w-full">
-                      <div className="flex space-x-2">
-                        <motion.button
-                          onClick={() => setSelectedProject(project)}
-                          className="flex-1 bg-white/90 text-gray-900 px-3 py-2 rounded-lg text-sm font-medium hover:bg-white transition-colors duration-200 flex items-center justify-center space-x-1"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Eye size={16} />
-                          <span>View Details</span>
-                        </motion.button>
-                        <motion.a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 bg-white/90 text-gray-900 rounded-lg hover:bg-white transition-colors duration-200"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <ExternalLink size={16} />
-                        </motion.a>
-                        <motion.a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 bg-white/90 text-gray-900 rounded-lg hover:bg-white transition-colors duration-200"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <Github size={16} />
-                        </motion.a>
-                      </div>
+                    <div className="flex space-x-2 w-full mt-8">
+                      <motion.button
+                        onClick={() => setSelectedProject(project)}
+                        className="flex-1 bg-white/90 text-gray-900 px-3 py-2 rounded-lg text-sm font-medium hover:bg-white transition-colors duration-200 flex items-center justify-center space-x-1"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Eye size={16} />
+                        <span>View Details</span>
+                      </motion.button>
+                      <motion.a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 bg-white/90 text-gray-900 rounded-lg hover:bg-white transition-colors duration-200"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <ExternalLink size={16} />
+                      </motion.a>
+                      <motion.a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 bg-white/90 text-gray-900 rounded-lg hover:bg-white transition-colors duration-200"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Github size={16} />
+                      </motion.a>
                     </div>
                   </motion.div>
-
-                  <div className="absolute top-4 right-4">
-                    <span
-                      className={`px-3 py-1 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white text-xs rounded-full font-medium`}
-                    >
-                      {project.category}
-                    </span>
-                  </div>
                 </div>
-                <div className="p-6">
+
+                <div className="p-6 flex-1">
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                     {project.title}
                   </h3>
@@ -378,14 +375,14 @@ const Projects = () => {
         <AnimatePresence>
           {selectedProject && (
             <motion.div
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 pt-20" // Added pt-20 for top padding
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 pt-20"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedProject(null)}
             >
               <motion.div
-                className="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[80vh] md:max-h-[90vh] overflow-y-auto" // Adjusted max-height
+                className="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[80vh] md:max-h-[90vh] overflow-y-auto"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
@@ -407,24 +404,16 @@ const Projects = () => {
                   </motion.button>
                 </div>
                 <div className="p-6 md:p-8">
-                  {" "}
-                  {/* Added responsive padding */}
                   <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4">
-                    {" "}
-                    {/* Changed to flex-col on mobile */}
                     <div>
                       <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
                         {selectedProject.title}
                       </h3>
-                      <span
-                        className={`px-3 py-1 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white rounded-full text-sm font-medium`}
-                      >
+                      <span className="px-3 py-1 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white rounded-full text-sm font-medium">
                         {selectedProject.category}
                       </span>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-3">
-                      {" "}
-                      {/* Changed to flex-col on mobile */}
                       <motion.a
                         href={selectedProject.liveUrl}
                         target="_blank"
@@ -450,13 +439,9 @@ const Projects = () => {
                     </div>
                   </div>
                   <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-base md:text-lg">
-                    {" "}
-                    {/* Added responsive text size */}
                     {selectedProject.longDescription}
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {" "}
-                    {/* Changed to single column on mobile */}
                     <div>
                       <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                         Key Features
