@@ -260,9 +260,10 @@ const Projects = () => {
         >
           <AnimatePresence>
             {filteredProjects.map((project) => (
+              // Update the project card container to:
               <motion.div
                 key={project.id}
-                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-xl transition-all duration-300 group"
+                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-xl transition-all duration-300 group pb-4 md:pb-0" // Added pb-4 for mobile spacing
                 variants={itemVariants}
                 layout
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -281,8 +282,23 @@ const Projects = () => {
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.3 }}
                   />
+
+                  {/* Mobile-only button (visible on screens < md) */}
+                  <div className="md:hidden absolute bottom-4 left-4 right-4">
+                    <motion.button
+                      onClick={() => setSelectedProject(project)}
+                      className="w-full bg-white/90 text-gray-900 px-4 py-2 rounded-lg text-sm font-medium hover:bg-white transition-colors duration-200 flex items-center justify-center space-x-2"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <Eye size={16} />
+                      <span>View Details</span>
+                    </motion.button>
+                  </div>
+
+                  {/* Desktop hover overlay (hidden on mobile) */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-end" // Changed opacity classes
+                    className="hidden md:block absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end"
                     initial={{ opacity: 0 }}
                     whileHover={{ opacity: 1 }}
                   >
@@ -320,6 +336,7 @@ const Projects = () => {
                       </div>
                     </div>
                   </motion.div>
+
                   <div className="absolute top-4 right-4">
                     <span
                       className={`px-3 py-1 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white text-xs rounded-full font-medium`}
@@ -389,7 +406,6 @@ const Projects = () => {
                     <X size={20} />
                   </motion.button>
                 </div>
-                this
                 <div className="p-6 md:p-8">
                   {" "}
                   {/* Added responsive padding */}
