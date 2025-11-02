@@ -2,12 +2,10 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
-import { useTheme } from '../contexts/ThemeContext';
 
 const ParticleField: React.FC = () => {
   const ref = useRef<THREE.Points>(null);
-  const { theme } = useTheme();
-  
+
   const particlesPosition = useMemo(() => {
     const positions = new Float32Array(2000 * 3);
     for (let i = 0; i < 2000; i++) {
@@ -29,7 +27,7 @@ const ParticleField: React.FC = () => {
     <Points ref={ref} positions={particlesPosition} stride={3} frustumCulled={false}>
       <PointMaterial
         transparent
-        color={theme === 'dark' ? '#a8dadc' : '#457b9d'}
+        color="#06b6d4"
         size={0.02}
         sizeAttenuation={true}
         depthWrite={false}
@@ -40,7 +38,6 @@ const ParticleField: React.FC = () => {
 
 const FloatingGeometry: React.FC<{ position: [number, number, number] }> = ({ position }) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const { theme } = useTheme();
 
   useFrame((state) => {
     if (meshRef.current) {
@@ -54,7 +51,7 @@ const FloatingGeometry: React.FC<{ position: [number, number, number] }> = ({ po
     <mesh ref={meshRef} position={position}>
       <icosahedronGeometry args={[0.3, 1]} />
       <meshStandardMaterial
-        color={theme === 'dark' ? '#457b9d' : '#1d3557'}
+        color="#3b82f6"
         transparent
         opacity={0.6}
         wireframe
@@ -64,16 +61,14 @@ const FloatingGeometry: React.FC<{ position: [number, number, number] }> = ({ po
 };
 
 const ThreeBackground: React.FC = () => {
-  const { theme } = useTheme();
-
   return (
     <div className="absolute inset-0 -z-10">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 75 }}
         style={{ background: 'transparent' }}
       >
-        <ambientLight intensity={theme === 'dark' ? 0.3 : 0.5} />
-        <pointLight position={[10, 10, 10]} intensity={theme === 'dark' ? 0.8 : 1} />
+        <ambientLight intensity={0.3} />
+        <pointLight position={[10, 10, 10]} intensity={0.8} />
         <ParticleField />
         <FloatingGeometry position={[-2, 1, -2]} />
         <FloatingGeometry position={[2, -1, -1]} />

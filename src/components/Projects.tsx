@@ -59,7 +59,7 @@ const Projects = () => {
         "Responsive design with Tailwind CSS",
         "Docker containerization and CI/CD pipeline",
       ],
-      gradient: "from-blue-500 to-purple-600",
+      gradient: "from-blue-500 to-cyan-600",
     },
     {
       id: 2,
@@ -159,7 +159,7 @@ const Projects = () => {
         "CORS configuration for cross-origin support",
         "Mobile-responsive UI with interactive game flow",
       ],
-      gradient: "from-purple-500 to-indigo-700",
+      gradient: "from-cyan-500 to-teal-600",
     },
     {
       id: 5,
@@ -194,7 +194,7 @@ const Projects = () => {
         "Adam optimizer with gradient clipping",
         "Batch processing with efficient 64×64 image handling",
       ],
-      gradient: "from-pink-500 to-rose-600",
+      gradient: "from-teal-500 to-emerald-600",
     },
   ];
 
@@ -231,21 +231,50 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden"
+      className="py-32 bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden"
     >
-      {/* Animated Background */}
-      <div className="absolute inset-0 opacity-5 dark:opacity-10">
+      {/* Modern 3D Background */}
+      <div className="absolute inset-0">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-[#1d3557] via-[#457b9d] to-[#a8dadc]"
+          className="absolute inset-0 opacity-20"
           animate={{
-            backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+            background: [
+              "radial-gradient(circle at 30% 40%, #3b82f6 0%, transparent 50%), radial-gradient(circle at 70% 60%, #06b6d4 0%, transparent 50%)",
+              "radial-gradient(circle at 70% 40%, #3b82f6 0%, transparent 50%), radial-gradient(circle at 30% 60%, #06b6d4 0%, transparent 50%)",
+              "radial-gradient(circle at 30% 40%, #3b82f6 0%, transparent 50%), radial-gradient(circle at 70% 60%, #06b6d4 0%, transparent 50%)"
+            ]
           }}
           transition={{
-            duration: 15,
+            duration: 10,
             repeat: Infinity,
-            ease: "linear",
+            ease: "linear"
           }}
         />
+        
+        {/* 3D Geometric Shapes */}
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-4 h-4 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -40, 0],
+              x: [0, Math.random() * 30 - 15, 0],
+              scale: [1, 1.5, 1],
+              rotate: [0, 180, 360],
+              opacity: [0.2, 0.6, 0.2]
+            }}
+            transition={{
+              duration: 4 + Math.random() * 3,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
       </div>
 
       <motion.div
@@ -255,33 +284,49 @@ const Projects = () => {
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
       >
-        <motion.div className="text-center mb-16" variants={itemVariants}>
-          <h2 className="text-5xl md:text-6xl font-bold text-[#1d3557] dark:text-[#a8dadc] mb-6">
-            Featured{" "}
-            <span className="bg-gradient-to-r from-[#1d3557] via-[#457b9d] to-[#a8dadc] bg-clip-text text-transparent">
-              Projects
-            </span>
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+        <motion.div className="text-center mb-20" variants={itemVariants}>
+          <motion.h2 
+            className="text-6xl md:text-7xl font-black bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent mb-8"
+            animate={{
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          >
+            Featured Projects
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-medium"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+          >
             A showcase of my recent work, demonstrating expertise across various
             technologies and industries.
-          </p>
+          </motion.p>
         </motion.div>
-        {/* Category Filter */}
+        {/* Modern Category Filter */}
         <motion.div
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-4 mb-16"
           variants={itemVariants}
         >
           {categories.map((category) => (
             <motion.button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+              className={`px-8 py-4 rounded-2xl font-semibold transition-all duration-500 backdrop-blur-xl border ${
                 activeCategory === category
-                  ? "bg-gradient-to-r from-[#1d3557] via-[#457b9d] to-[#a8dadc] text-white shadow-lg"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-[#f1faee] dark:hover:bg-[#1d3557] hover:text-[#1d3557] dark:hover:text-[#a8dadc]"
+                  ? "bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 text-white shadow-2xl shadow-cyan-500/25 border-white/20"
+                  : "bg-white/5 text-slate-300 hover:bg-white/10 border-white/10 hover:shadow-xl"
               }`}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ 
+                scale: 1.05,
+                y: -2,
+                boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.25)"
+              }}
               whileTap={{ scale: 0.95 }}
             >
               {category}
@@ -297,15 +342,21 @@ const Projects = () => {
             {filteredProjects.map((project) => (
               <motion.div
                 key={project.id}
-                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col h-full group"
+                className="group relative bg-white/5 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl hover:shadow-3xl transition-all duration-500 flex flex-col h-full"
                 variants={itemVariants}
                 layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.8, rotateX: -15 }}
+                animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+                exit={{ opacity: 0, scale: 0.8, rotateX: -15 }}
                 whileHover={{
-                  y: -10,
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+                  y: -15,
+                  rotateY: 5,
+                  rotateX: 5,
+                  scale: 1.02,
+                  boxShadow: "0 35px 60px -12px rgba(0, 0, 0, 0.3)",
+                }}
+                style={{
+                  transformStyle: "preserve-3d"
                 }}
               >
                 <div className="relative overflow-hidden">
@@ -328,7 +379,7 @@ const Projects = () => {
                   <div className="md:hidden absolute bottom-4 left-4 right-4">
                     <motion.button
                       onClick={() => setSelectedProject(project)}
-                      className="w-full bg-white/90 text-gray-900 px-4 py-2 rounded-lg text-sm font-medium hover:bg-white transition-colors duration-200 flex items-center justify-center space-x-2"
+                      className="w-full bg-white/10 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors duration-200 flex items-center justify-center space-x-2"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -346,7 +397,7 @@ const Projects = () => {
                     <div className="flex space-x-2 w-full mt-8">
                       <motion.button
                         onClick={() => setSelectedProject(project)}
-                        className="flex-1 bg-white/90 text-gray-900 px-3 py-2 rounded-lg text-sm font-medium hover:bg-white transition-colors duration-200 flex items-center justify-center space-x-1"
+                        className="flex-1 bg-white/10 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors duration-200 flex items-center justify-center space-x-1"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -357,7 +408,7 @@ const Projects = () => {
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 bg-white/90 text-gray-900 rounded-lg hover:bg-white transition-colors duration-200"
+                        className="p-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors duration-200"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
@@ -367,7 +418,7 @@ const Projects = () => {
                         href={project.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 bg-white/90 text-gray-900 rounded-lg hover:bg-white transition-colors duration-200"
+                        className="p-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors duration-200"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
@@ -378,10 +429,10 @@ const Projects = () => {
                 </div>
 
                 <div className="p-6 flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-xl font-bold text-white mb-2">
                     {project.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                  <p className="text-slate-300 mb-4 leading-relaxed">
                     {project.description}
                   </p>
 
@@ -389,14 +440,14 @@ const Projects = () => {
                     {project.technologies.slice(0, 3).map((tech, index) => (
                       <motion.span
                         key={index}
-                        className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded-full"
+                        className="px-3 py-1 bg-white/10 text-slate-300 text-xs rounded-full"
                         whileHover={{ scale: 1.05 }}
                       >
                         {tech}
                       </motion.span>
                     ))}
                     {project.technologies.length > 3 && (
-                      <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded-full">
+                      <span className="px-3 py-1 bg-white/10 text-slate-300 text-xs rounded-full">
                         +{project.technologies.length - 3} more
                       </span>
                     )}
@@ -417,7 +468,7 @@ const Projects = () => {
               onClick={() => setSelectedProject(null)}
             >
               <motion.div
-                className="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[80vh] md:max-h-[90vh] overflow-y-auto"
+                className="bg-slate-900 rounded-2xl max-w-4xl w-full max-h-[80vh] md:max-h-[90vh] overflow-y-auto border border-white/10"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
@@ -431,7 +482,7 @@ const Projects = () => {
                   />
                   <motion.button
                     onClick={() => setSelectedProject(null)}
-                    className="absolute top-4 right-4 p-2 bg-white/90 dark:bg-gray-800/90 rounded-full hover:bg-white dark:hover:bg-gray-800 transition-colors duration-200"
+                    className="absolute top-4 right-4 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors duration-200 text-white"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -441,7 +492,7 @@ const Projects = () => {
                 <div className="p-6 md:p-8">
                   <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4">
                     <div>
-                      <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
                         {selectedProject.title}
                       </h3>
                       <span className="px-3 py-1 bg-gradient-to-r from-[#1d3557] to-[#457b9d] text-white rounded-full text-sm font-medium">
@@ -473,12 +524,12 @@ const Projects = () => {
                       </motion.a>
                     </div>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-base md:text-lg">
+                  <p className="text-slate-300 mb-8 leading-relaxed text-base md:text-lg">
                     {selectedProject.longDescription}
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                      <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                      <h4 className="text-xl font-bold text-white mb-4">
                         Key Features
                       </h4>
                       <ul className="space-y-2">
@@ -491,8 +542,8 @@ const Projects = () => {
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ duration: 0.3, delay: index * 0.1 }}
                             >
-                              <div className="w-1.5 h-1.5 bg-gradient-to-r from-[#1d3557] to-[#457b9d] rounded-full mt-2 flex-shrink-0"></div>
-                              <span className="text-gray-600 dark:text-gray-300">
+                              <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mt-2 flex-shrink-0"></div>
+                              <span className="text-slate-300">
                                 {feature}
                               </span>
                             </motion.li>
@@ -501,7 +552,7 @@ const Projects = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                      <h4 className="text-xl font-bold text-white mb-4">
                         Technologies Used
                       </h4>
                       <div className="flex flex-wrap gap-2">
@@ -509,7 +560,7 @@ const Projects = () => {
                           (tech: string, index: number) => (
                             <motion.span
                               key={index}
-                              className="px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium"
+                              className="px-3 py-2 bg-white/10 text-slate-300 rounded-lg font-medium"
                               initial={{ opacity: 0, scale: 0.8 }}
                               animate={{ opacity: 1, scale: 1 }}
                               transition={{
