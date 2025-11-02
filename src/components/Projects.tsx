@@ -161,9 +161,44 @@ const Projects = () => {
       ],
       gradient: "from-purple-500 to-indigo-700",
     },
+    {
+      id: 5,
+      title: "PixelRNN Image Completion",
+      description: "Deep learning model for image inpainting using RowLSTM architecture",
+      longDescription:
+        "A PixelRNN-based image completion model that reconstructs occluded regions of images using sequential pixel prediction. Unlike convolutional approaches that predict all pixels in parallel, this autoregressive model predicts each pixel conditioned on all previously generated ones. The RowLSTM variant processes images row by row, learning spatial and contextual dependencies. Trained on bedroom images with 64×64 resolution, achieving 26.9 dB PSNR. Features a Streamlit interface for interactive visualization of occluded inputs, reconstructed outputs, and ground-truth comparisons.",
+      image:
+        "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800",
+      technologies: [
+        "Python",
+        "PyTorch",
+        "Streamlit",
+        "NumPy",
+        "PIL",
+        "LSTM",
+        "Computer Vision",
+        "Deep Learning",
+      ],
+      category: "AI/ML",
+      liveUrl: "https://image-completion.streamlit.app/",
+      githubUrl: "https://github.com/MuhammadMaaz7/pixelrnn-image-completion",
+      features: [
+        "RowLSTM architecture for sequential pixel prediction",
+        "Autoregressive image generation with spatial dependencies",
+        "7×7 masked convolution for feature extraction",
+        "Two stacked RowLSTM layers with 128 hidden channels",
+        "Combined MSE and Perceptual loss optimization",
+        "Interactive Streamlit interface for real-time visualization",
+        "Trained on bedroom occluded images dataset",
+        "Achieved 26.9 dB PSNR with 0.0275 validation MSE",
+        "Adam optimizer with gradient clipping",
+        "Batch processing with efficient 64×64 image handling",
+      ],
+      gradient: "from-pink-500 to-rose-600",
+    },
   ];
 
-  const categories = ["All", "Full Stack", "Productivity"];
+  const categories = ["All", "Full Stack", "Productivity", "AI/ML", "Web"];
 
   const filteredProjects =
     activeCategory === "All"

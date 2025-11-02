@@ -11,35 +11,46 @@ const About = () => {
 
   const experiences = [
     {
-      role: 'Frontend Developer',
-      company: 'Techverse',
+      role: 'Frontend Developer (Part Time)',
+      company: 'Freelance',
       period: 'Dec 2024 – Mar 2025',
-      description: 'Migrated Queryverse UI to React.js, integrated backend APIs, and enhanced user experience for natural language database querying.',
+      description: 'Built a responsive React web app integrated with Django APIs, delivering production-ready UI with smooth backend synchronization.',
       achievements: [
-        'Built a responsive and user-friendly UI for real-time query execution',
-        'Optimized performance and ensured seamless API integration'
+        'Developed responsive React application with seamless Django API integration',
+        'Delivered production-ready UI with optimized performance and user experience'
       ],
       color: 'from-[#1d3557] to-[#457b9d]'
     },
     {
-      role: 'ERP Developer Intern',
-      company: 'Osmany & Company (Pvt.) Ltd.',
-      period: 'Jun 2024 – Aug 2024',
-      description: 'Developed a Complaint Management System module within ERPNext to automate and streamline the company\'s complaint handling process.',
+      role: 'Software Development Intern',
+      company: 'OGDCL',
+      period: 'Jun 2025 – Jul 2025',
+      description: 'Built internal automation modules using MERN Stack and integrated APIs to optimize workflows for faster data handling.',
       achievements: [
-        'Designed the ERD and defined Doctypes with appropriate constraints',
-        'Implemented the complete CMS module using the Frappe Framework',
-        'Conducted testing to ensure smooth integration and functionality within ERPNext'
+        'Developed automation modules using MERN Stack for internal processes',
+        'Integrated APIs and optimized workflows for enhanced data handling efficiency'
       ],
       color: 'from-[#457b9d] to-[#a8dadc]'
+    },
+    {
+      role: 'Frappe Developer Intern',
+      company: 'Osmany & Company (Pvt.) Ltd.',
+      period: 'Jun 2024 – Aug 2024',
+      description: 'Developed a Complaint Management System on ERPNext, designed database models and tested modules for reliability.',
+      achievements: [
+        'Designed database models and defined Doctypes with appropriate constraints',
+        'Implemented complete CMS module using Frappe Framework',
+        'Conducted comprehensive testing to ensure module reliability and ERPNext integration'
+      ],
+      color: 'from-[#a8dadc] to-[#e63946]'
     }
   ];
 
   const stats = [
-    { icon: Trophy, label: 'Projects Completed', value: '5+', color: 'text-[#457b9d] dark:text-[#a8dadc]' },
-    { icon: Users, label: 'Happy Clients', value: '3+', color: 'text-[#457b9d] dark:text-[#a8dadc]' },
-    { icon: Zap, label: 'Years Experience', value: '1+', color: 'text-[#457b9d] dark:text-[#a8dadc]' },
-    { icon: Award, label: 'Awards Won', value: '2', color: 'text-[#457b9d] dark:text-[#a8dadc]' },
+    { icon: Trophy, label: 'Projects Completed', value: '8+', color: 'text-[#457b9d] dark:text-[#a8dadc]' },
+    { icon: Users, label: 'Internships', value: '3', color: 'text-[#457b9d] dark:text-[#a8dadc]' },
+    { icon: Zap, label: 'Years Experience', value: '2+', color: 'text-[#457b9d] dark:text-[#a8dadc]' },
+    { icon: Award, label: 'Awards Won', value: '3', color: 'text-[#457b9d] dark:text-[#a8dadc]' },
   ];
 
   const containerVariants = {
@@ -84,7 +95,7 @@ const About = () => {
             About <span className="bg-gradient-to-r from-[#1d3557] via-[#457b9d] to-[#a8dadc] bg-clip-text text-transparent">Me</span>
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            I am a passionate Junior Software Engineer with a strong foundation in programming and a drive to learn new technologies. I enjoy collaborating with others, tackling challenges, and continuously improving my skills to contribute to meaningful projects.
+            Full Stack Developer & DevOps Enthusiast skilled in building scalable web applications using the MERN stack and cloud deployment. Experienced in API integration, CI/CD automation, and applying AI concepts in web solutions. Passionate about building efficient, reliable, and impactful products.
           </p>
         </motion.div>
 
@@ -130,10 +141,10 @@ const About = () => {
               <div className="space-y-4">
                 {[
                   { icon: MapPin, text: 'Islamabad, Pakistan', color: 'text-[#1d3557]' },
-                  { icon: Calendar, text: '1+ Year Experience', color: '[#457b9d]' },
-                  { icon: Award, text: '5+ Projects Completed', color: 'text-[#a8dadc]' },
-                  { icon: Code, text: 'MERN Stack Specialist', color: 'text-[#e63946]' },
-                  { icon: GraduationCap, text: 'BS Software Engineering, FAST NUCES, Islamabad (2022 – 2026)', color: 'text-[#457b9d]' },
+                  { icon: Calendar, text: '2+ Years Experience', color: 'text-[#457b9d]' },
+                  { icon: Award, text: '8+ Projects Completed', color: 'text-[#a8dadc]' },
+                  { icon: Code, text: 'Full Stack Developer & AI Enthusiast', color: 'text-[#e63946]' },
+                  { icon: GraduationCap, text: 'BS Software Engineering, FAST NUCES (2022 – 2026)', color: 'text-[#457b9d]' },
                 ].map((item, index) => (
                   <motion.div
                     key={index}
@@ -155,10 +166,10 @@ const About = () => {
             >
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">What I Do</h3>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                I specialize in building modern web applications using cutting-edge technologies. 
-                My expertise spans from creating responsive frontends with React to developing 
-                robust backend APIs with Node.js. I'm passionate about writing clean, maintainable 
-                code and delivering exceptional user experiences that make a lasting impact.
+                I specialize in building scalable web applications using the MERN stack, with expertise in 
+                DevOps practices and AI integration. My experience includes developing automation modules, 
+                implementing CI/CD pipelines, and creating innovative solutions like PixelRNN for image completion. 
+                I'm passionate about leveraging modern technologies to build efficient, reliable products that solve real-world problems.
               </p>
             </motion.div>
           </motion.div>
