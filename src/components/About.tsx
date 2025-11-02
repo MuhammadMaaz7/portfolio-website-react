@@ -41,7 +41,7 @@ const About = () => {
         'Implemented complete CMS module using Frappe Framework',
         'Conducted comprehensive testing to ensure module reliability and ERPNext integration'
       ],
-      color: 'from-[#a8dadc] to-[#e63946]'
+      color: 'from-emerald-400 to-green-400'
     }
   ];
 
@@ -129,7 +129,7 @@ const About = () => {
       >
         <motion.div className="text-center mb-20" variants={itemVariants}>
           <motion.h2
-            className="text-6xl md:text-7xl font-black bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent mb-8"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent mb-8"
             animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
             }}
@@ -191,7 +191,7 @@ const About = () => {
           ))}
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* Personal Info */}
           <motion.div className="space-y-8" variants={itemVariants}>
             <motion.div
@@ -241,7 +241,7 @@ const About = () => {
             <h3 className="text-2xl font-bold text-white mb-8">Professional Journey</h3>
             <div className="relative">
               {/* Timeline Line */}
-              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-400 via-cyan-400 to-teal-400"></div>
+              <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-400 via-cyan-400 to-emerald-400"></div>
 
               {experiences.map((exp, index) => (
                 <motion.div

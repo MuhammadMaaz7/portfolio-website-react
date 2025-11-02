@@ -53,7 +53,7 @@ const Hero = () => {
       <div ref={bgRef} className="absolute inset-0 -z-10 transition-transform duration-300 will-change-transform">
         <ThreeBackground />
       </div>
-      
+
       {/* Modern Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -83,7 +83,7 @@ const Hero = () => {
             delay: 2
           }}
         />
-        
+
         {/* Floating Particles */}
         {[...Array(30)].map((_, i) => (
           <motion.div
@@ -116,51 +116,55 @@ const Hero = () => {
         animate="visible"
       >
         <div className="flex flex-col items-center justify-center w-full text-center">
-          {/* Modern Profile Section */}
-          <motion.div
-            className="mb-12 relative flex flex-col items-center justify-center"
-            variants={itemVariants}
-          >
-            <motion.div
-              className="w-48 h-48 mx-auto rounded-full bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 p-1 relative shadow-2xl"
-              whileHover={{ 
-                scale: 1.05,
-                rotate: 2,
-                boxShadow: '0 0 60px 20px rgba(59, 130, 246, 0.3)',
-              }}
-              animate={{
-                y: [0, -8, 0],
-                boxShadow: [
-                  '0 0 40px 10px rgba(59, 130, 246, 0.2)',
-                  '0 0 60px 20px rgba(147, 51, 234, 0.3)',
-                  '0 0 40px 10px rgba(59, 130, 246, 0.2)'
-                ],
-              }}
-              transition={{
-                y: {
-                  duration: 4,
+
+
+          {/* Scattered Floating Code Elements */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {[
+              { symbol: '{ }', x: '8%', y: '15%', rotate: '12deg', delay: 0 },
+              { symbol: '< />', x: '92%', y: '25%', rotate: '-18deg', delay: 1.2 },
+              { symbol: '[ ]', x: '3%', y: '65%', rotate: '22deg', delay: 2.5 },
+              { symbol: '( )', x: '88%', y: '78%', rotate: '-8deg', delay: 3.8 },
+              { symbol: '=>', x: '12%', y: '42%', rotate: '28deg', delay: 0.7 },
+              { symbol: '&&', x: '95%', y: '55%', rotate: '-32deg', delay: 4.2 },
+              { symbol: '{ }', x: '18%', y: '88%', rotate: '15deg', delay: 1.8 },
+              { symbol: '< />', x: '78%', y: '12%', rotate: '-25deg', delay: 3.1 },
+              { symbol: '||', x: '6%', y: '35%', rotate: '35deg', delay: 2.2 },
+              { symbol: '++', x: '85%', y: '45%', rotate: '-12deg', delay: 4.5 },
+              { symbol: '!=', x: '25%', y: '8%', rotate: '18deg', delay: 1.5 },
+              { symbol: '===', x: '72%', y: '92%', rotate: '-22deg', delay: 3.7 },
+              { symbol: '?:', x: '2%', y: '78%', rotate: '25deg', delay: 0.3 },
+              { symbol: '//', x: '96%', y: '18%', rotate: '-15deg', delay: 2.8 },
+              { symbol: '**', x: '35%', y: '95%', rotate: '8deg', delay: 4.1 },
+            ].map((item, index) => (
+              <motion.span
+                key={index}
+                className="absolute text-cyan-400/30 font-mono text-base sm:text-lg md:text-xl select-none"
+                style={{
+                  left: item.x,
+                  top: item.y,
+                  transform: `rotate(${item.rotate})`
+                }}
+                animate={{
+                  y: [0, -8, 0],
+                  x: [0, Math.random() * 4 - 2, 0],
+                  opacity: [0.15, 0.4, 0.15],
+                  rotate: [item.rotate, `${parseInt(item.rotate) + 3}deg`, item.rotate]
+                }}
+                transition={{
+                  duration: 5 + Math.random() * 3,
                   repeat: Infinity,
+                  delay: item.delay,
                   ease: "easeInOut"
-                },
-                boxShadow: {
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }
-              }}
-            >
-              <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center relative overflow-hidden">
-                <img
-                  src="/picture.jpg"
-                  alt="Profile"
-                  className="w-full h-full object-cover rounded-full"
-                />
-              </div>
-            </motion.div>
-          </motion.div>
+                }}
+              >
+                {item.symbol}
+              </motion.span>
+            ))}
+          </div>
 
           <motion.h1
-            className="text-5xl sm:text-7xl md:text-8xl font-black text-white mb-8 text-center"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-8 text-center"
             variants={itemVariants}
           >
             <motion.span
@@ -183,7 +187,7 @@ const Hero = () => {
             variants={itemVariants}
           >
             <motion.p
-              className="text-2xl sm:text-3xl md:text-4xl text-slate-300 font-light text-center"
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-slate-300 font-light text-center"
               animate={{
                 y: [0, -3, 0],
               }}
@@ -200,14 +204,14 @@ const Hero = () => {
               className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed text-center"
               variants={itemVariants}
             >
-              Building scalable web applications with modern technologies. Passionate about creating 
+              Building scalable web applications with modern technologies. Passionate about creating
               efficient, reliable solutions that solve real-world problems.
             </motion.p>
           </motion.div>
 
           {/* Modern Social Links */}
           <motion.div
-            className="flex justify-center space-x-8 mb-16"
+            className="flex justify-center space-x-4 sm:space-x-6 md:space-x-8 mb-12 sm:mb-16"
             variants={itemVariants}
           >
             {[
@@ -221,8 +225,8 @@ const Hero = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`p-4 bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 text-slate-300 ${social.color} transition-all duration-300`}
-                whileHover={{ 
-                  scale: 1.1, 
+                whileHover={{
+                  scale: 1.1,
                   y: -5,
                   boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.5)"
                 }}
@@ -246,13 +250,13 @@ const Hero = () => {
 
           {/* Modern CTA Buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row justify-center gap-6 mb-20"
+            className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mb-16 sm:mb-20"
             variants={itemVariants}
           >
             <motion.button
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               className="group px-10 py-5 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-2xl font-semibold text-lg shadow-2xl relative overflow-hidden focus:outline-none"
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
                 boxShadow: "0 0 40px 10px rgba(59, 130, 246, 0.3)"
               }}
@@ -266,11 +270,11 @@ const Hero = () => {
                 transition={{ duration: 0.3 }}
               />
             </motion.button>
-            
+
             <motion.button
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               className="group px-10 py-5 bg-white/5 backdrop-blur-xl text-white rounded-2xl font-semibold text-lg border border-white/20 hover:bg-white/10 relative overflow-hidden focus:outline-none"
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
                 boxShadow: "0 20px 40px -12px rgba(255, 255, 255, 0.1)"
               }}

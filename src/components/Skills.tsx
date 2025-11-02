@@ -132,7 +132,7 @@ const Skills = () => {
       >
         <motion.div className="text-center mb-20" variants={itemVariants}>
           <motion.h2
-            className="text-6xl md:text-7xl font-black bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent mb-6"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent mb-6"
             animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
             }}
@@ -171,7 +171,7 @@ const Skills = () => {
               }}
             >
               {/* Glassmorphism Card */}
-              <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl hover:shadow-3xl transition-all duration-500 text-center overflow-hidden">
+              <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl hover:shadow-3xl transition-all duration-500 text-center overflow-hidden min-h-[320px] flex flex-col justify-center">
 
                 {/* Animated Border Gradient */}
                 <motion.div
@@ -234,7 +234,7 @@ const Skills = () => {
 
                   {/* Description */}
                   <motion.p
-                    className="text-slate-300 leading-relaxed text-sm"
+                    className="text-slate-300 leading-relaxed text-sm mt-4 px-2"
                     initial={{ opacity: 0.8 }}
                     whileHover={{ opacity: 1 }}
                   >
