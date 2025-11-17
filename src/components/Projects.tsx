@@ -183,6 +183,40 @@ const Projects = () => {
       ],
       gradient: "from-purple-500 to-pink-600"
     },
+    {
+      id: 12,
+      title: "RAG FYP Handbook Assistant",
+      description: "A Retrieval-Augmented Generation system that answers student queries using the FAST-NUCES FYP Handbook.",
+      longDescription:
+        "A text-only RAG (Retrieval-Augmented Generation) system designed to help FAST-NUCES students understand Final Year Project policies, formats, and guidelines directly from the official FYP Handbook 2023. The system uses a complete retrieval pipeline including PDF parsing, page-aware chunking, semantic embeddings, FAISS vector search, and a grounded prompt template to generate page-cited responses. Users can interact through a CLI or a lightweight Streamlit interface. All answers are strictly grounded in the handbook, with automatic page citation, threshold-based confidence filtering, and a full prompt logging mechanism for reproducibility.",
+      technologies: [
+        "Python",
+        "FAISS",
+        "Sentence-BERT",
+        "all-MiniLM-L6-v2",
+        "Streamlit",
+        "PyPDF2",
+        "RAG",
+        "NLP",
+        "Vector Databases"
+      ],
+      category: "AI/ML",
+      liveUrl: "https://fyphandbookchatbot.streamlit.app/", // optional placeholder
+      githubUrl: "https://github.com/MuhammadMaaz7/FYP-Handbook-RAG",
+      features: [
+        "PDF parsing with page-preserved text extraction",
+        "Adaptive chunking with 250–400 word windows and 20–40% overlap",
+        "Semantic embeddings using all-MiniLM-L6-v2",
+        "FAISS vector index for efficient similarity search",
+        "Top-k retrieval with lexical boosting and threshold filtering",
+        "Grounded prompt template with automatic page citations",
+        "CLI and Streamlit-based user interfaces",
+        "Debug retrieval view with chunk metadata",
+        "Prompt logging (txt) for all inference calls",
+        "Fully offline, local RAG pipeline"
+      ],
+      gradient: "from-blue-600 to-cyan-500"
+    }
   ];
 
   const categories = ["All", "Full Stack", "AI/ML", "Web"];
