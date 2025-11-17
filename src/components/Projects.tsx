@@ -184,7 +184,7 @@ const Projects = () => {
       gradient: "from-purple-500 to-pink-600"
     },
     {
-      id: 12,
+      id: 6,
       title: "RAG FYP Handbook Assistant",
       description: "A Retrieval-Augmented Generation system that answers student queries using the FAST-NUCES FYP Handbook.",
       longDescription:
@@ -197,8 +197,7 @@ const Projects = () => {
         "Streamlit",
         "PyPDF2",
         "RAG",
-        "NLP",
-        "Vector Databases"
+        "NLP"
       ],
       category: "AI/ML",
       liveUrl: "https://fyphandbookchatbot.streamlit.app/", // optional placeholder
