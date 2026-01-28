@@ -28,6 +28,72 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
+      title: "Point of Sale (POS) System",
+      description: "Modern full-stack POS system with comprehensive business management features",
+      longDescription:
+        "A comprehensive Point of Sale system built with React and Node.js, featuring sales tracking, inventory management, rental services, and employee management. The system implements secure JWT authentication with role-based access control, ensuring different permission levels for managers, cashiers, and administrators. Features real-time inventory updates, sales analytics, customer management, and a modern glassmorphism UI design with smooth animations for enhanced user experience.",
+      technologies: [
+        "React",
+        "Node.js",
+        "Express.js",
+        "MySQL",
+        "JWT",
+        "Tailwind CSS",
+        "Chart.js",
+        "Socket.io",
+      ],
+      category: "Full Stack",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/MuhammadMaaz7/point-of-sale-system",
+      features: [
+        "Real-time sales tracking and comprehensive analytics dashboard",
+        "Advanced inventory management with low-stock alerts",
+        "Equipment rental system with booking and return tracking",
+        "Multi-role employee management with permission controls",
+        "Secure JWT authentication with role-based access",
+        "Customer management with purchase history tracking",
+        "Modern glassmorphism UI with smooth animations",
+        "Responsive design optimized for tablets and desktops",
+        "Sales reporting with exportable charts and data",
+        "Real-time notifications for important business events",
+      ],
+      gradient: "from-emerald-500 to-green-600"
+    },
+    {
+      id: 2,
+      title: "End-to-End Encrypted Chat App",
+      description: "Secure real-time messaging with military-grade encryption and privacy features",
+      longDescription:
+        "A highly secure real-time chat application implementing end-to-end encryption using AES-256-GCM algorithm with ECDH key exchange protocol. The application ensures complete privacy with device-bound private keys, replay attack protection, and MITM prevention mechanisms. Features include secure file sharing, two-factor authentication, real-time messaging via WebSockets, and comprehensive security measures to protect user communications from any form of interception or tampering.",
+      technologies: [
+        "React",
+        "Node.js",
+        "MongoDB",
+        "Socket.io",
+        "AES-256-GCM",
+        "ECDH",
+        "JWT",
+        "2FA",
+      ],
+      category: "Full Stack",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/MuhammadMaaz7/secure-communication-system",
+      features: [
+        "AES-256-GCM client-side encryption for maximum security",
+        "ECDH key exchange protocol for secure key generation",
+        "Device-bound private keys stored locally for enhanced privacy",
+        "Replay attack protection with message sequence validation",
+        "Man-in-the-middle (MITM) attack prevention mechanisms",
+        "Two-factor authentication (2FA) for secure login",
+        "Secure file sharing with encrypted file transfers",
+        "Real-time messaging using WebSocket connections",
+        "Message integrity verification with cryptographic signatures",
+        "Forward secrecy ensuring past messages remain secure",
+      ],
+      gradient: "from-red-500 to-pink-600"
+    },
+    {
+      id: 3,
       title: "Task Management App",
       description: "Full-stack collaborative task management platform with real-time features",
       longDescription:
@@ -60,7 +126,7 @@ const Projects = () => {
       gradient: "from-blue-500 to-cyan-600"
     },
     {
-      id: 2,
+      id: 4,
       title: "Weather Dashboard",
       description: "Real-time weather application with geolocation and AI chatbot integration",
       longDescription:
@@ -86,7 +152,7 @@ const Projects = () => {
       gradient: "from-blue-400 to-indigo-600"
     },
     {
-      id: 3,
+      id: 5,
       title: "GoLocal Guide",
       description: "Comprehensive tourism platform with multi-role booking system",
       longDescription:
@@ -119,7 +185,7 @@ const Projects = () => {
       gradient: "from-green-500 to-emerald-700"
     },
     {
-      id: 4,
+      id: 6,
       title: "Word Ladder Adventure",
       description: "AI-powered word puzzle game with multiple pathfinding algorithms",
       longDescription:
@@ -151,7 +217,7 @@ const Projects = () => {
       gradient: "from-cyan-500 to-teal-600"
     },
     {
-      id: 5,
+      id: 7,
       title: "PixelRNN Image Completion",
       description: "Deep learning model for image inpainting using RowLSTM architecture",
       longDescription:
@@ -184,7 +250,7 @@ const Projects = () => {
       gradient: "from-purple-500 to-pink-600"
     },
     {
-      id: 6,
+      id: 8,
       title: "RAG FYP Handbook Assistant",
       description: "A Retrieval-Augmented Generation system that answers student queries using the FAST-NUCES FYP Handbook.",
       longDescription:

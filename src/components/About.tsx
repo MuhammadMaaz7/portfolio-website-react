@@ -10,6 +10,18 @@ const About = () => {
 
   const experiences = [
     {
+      role: 'AI Platform Developer (Team Project)',
+      company: 'Jadeed',
+      period: 'Dec 2025 – Present',
+      description: 'Migrating large Django frontend to Next.js, integrating LLM-based workflows and improving performance and user experience.',
+      achievements: [
+        'Migrated Django frontend to Next.js, improving routing and structure',
+        'Integrated LLM APIs for dynamic AI-driven user flows',
+        'Collaborated with AI engineers to build scalable, production-ready features'
+      ],
+      color: 'from-purple-500 to-indigo-500'
+    },
+    {
       role: 'Frontend Developer (Part Time)',
       company: 'Freelance',
       period: 'Dec 2024 – Mar 2025',
