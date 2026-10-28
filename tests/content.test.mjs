@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile,access } from 'node:fs/promises';
+const projects=JSON.parse(await readFile('src/projects.json','utf8'));
+test('Every case study has a unique route and substantive content',()=>{assert.equal(new Set(projects.map(p=>p.slug)).size,projects.length);for(const p of projects){for(const field of ['summary','role','problem','contribution','outcome','note'])assert.ok(p[field]?.length>8,`${p.slug}: ${field}`);assert.ok(p.decisions.length>=3);if(p.github)assert.match(p.github,/^https:\/\/github.com\/MuhammadMaaz7\//);}});
+test('Built pages contain their content without JavaScript',async()=>{for(const p of projects){const html=await readFile(`dist/work/${p.slug}/index.html`,'utf8');assert.ok(html.includes(p.subtitle));assert.ok(html.includes('My contribution.'));assert.ok(!html.includes('<!--ssr-->'));}});
+test('Homepage internal page links resolve to generated pages',async()=>{const html=await readFile('dist/index.html','utf8');for(const [,path]of html.matchAll(/href="(\/work\/[^"#]+)"/g))await access(`dist${path}index.html`);assert.ok(html.includes('Incoming Full Stack Software Engineer'));assert.ok(html.includes('COMPLETED ROLE'));});
+test('Homepage has readable fallback content and secondary collection is a disclosure',async()=>{const html=await readFile('dist/index.html','utf8');assert.match(html,/AI systems\./);assert.match(html,/Built end to end/);assert.match(html,/<details class="project-index-section">/);assert.ok(!html.includes('system-map'));assert.ok(!html.includes('jadeed-window'));assert.ok(html.includes('class="motion-control"'));await access('dist/privacy/index.html');});

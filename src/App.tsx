@@ -1,26 +1,12 @@
-import React from 'react';
-import Navigation from './components/Navigation';
-import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
-import ScrollProgress from './components/ScrollProgress';
-
-function App() {
-  return (
-    <div className="min-h-screen bg-black">
-      <ScrollProgress />
-      <Navigation />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Contact />
-      </main>
-    </div>
-  );
+import { Motion } from './Motion';
+import { Home } from './Home';
+import projects from './projects.json';
+export default function App({path='/'}:{path?:string}){
+ const slug=path.replace(/\/+$/,'').split('/')[2];
+ if(path==='/'||path==='/index.html')return <><Motion/><Home/></>;
+ if(path==='/privacy/')return <><Motion/><header className="header wrap"><a href="/">Muhammad Maaz ↗</a></header><main className="wrap case-header"><span className="eyebrow">PRIVACY</span><h1>A small site.<br/>A clear policy.</h1><div className="privacy-copy"><p>This portfolio has no contact form, advertising, or analytics scripts added by me.</p><p>The motion setting is saved in your browser’s local storage. Copy email writes my email address to your clipboard only when you select that button.</p><p>Email and external project links open their respective services, whose privacy policies apply. Fonts are served with the site. The hosting service may process technical request information to deliver and secure the pages.</p><p>Questions: <a href="mailto:maazawan100@gmail.com">maazawan100@gmail.com</a></p><a className="text-link" href="/">Back to portfolio ↗</a></div></main></>;
+ const project=projects.find(p=>p.slug===slug);
+ if(!project)return <><header className="header wrap"><a href="/">Muhammad Maaz ↗</a></header><main className="wrap case-header"><span className="eyebrow">404 / NOT IN THE NOTEBOOK</span><h1>Nothing here.<br/><em>Plenty to explore.</em></h1><a className="text-link" href="/#work">Back to selected work ↗</a></main></>;
+ const next=projects[(projects.indexOf(project)+1)%projects.length];
+ return <><Motion/><a className="skip" href="#main">Skip to content</a><header className="header wrap"><a className="identity" href="/"><span className="monogram">m<span>·</span></span><span>Muhammad Maaz<small>Software & AI engineer</small></span></a><nav aria-label="Main navigation"><a href="/#work">All work</a><a className="nav-contact" href="/#contact">Let’s talk ↗</a></nav></header><main id="main" className="wrap"><div className="case-header"><span className="eyebrow">PROJECT NOTES / {project.name.toUpperCase()}</span><h1>{project.subtitle}</h1><p className="case-lede">{project.summary}</p><div className="case-meta"><div><small>CONTEXT</small>{project.context}</div><div><small>MY ROLE</small>{project.role}</div></div><div className="tags">{project.stack.map(t=><span key={t}>{t}</span>)}</div></div><div className="case-body"><aside><a href="#problem">01 / The problem</a><a href="#contribution">02 / My contribution</a><a href="#decisions">03 / Inside the work</a><a href="#result">04 / Where it landed</a>{project.github&&<a className="text-link" href={project.github}>View source ↗</a>}</aside><article><section id="problem"><h2>The problem.</h2><p>{project.problem}</p></section><section id="contribution"><h2>My contribution.</h2><p>{project.contribution}</p></section><section id="decisions"><h2>Inside the work.</h2><ol>{project.decisions.map(d=><li key={d}>{d}</li>)}</ol></section><section id="result"><h2>Where it landed.</h2><p>{project.outcome}</p></section><p className="case-callout">{project.note}</p></article></div><nav className="case-nav" aria-label="Project navigation"><a href="/#work">← All selected work</a><a href={`/work/${next.slug}/`}>Next: {next.name} ↗</a></nav></main><footer className="wrap"><span>© 2026 Muhammad Maaz</span><a href="mailto:maazawan100@gmail.com">Start a conversation ↗</a></footer></>;
 }
-
-export default App;
