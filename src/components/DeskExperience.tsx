@@ -68,7 +68,11 @@ export function DeskIllustration() {
     </svg>
   );
 }
-export function DeskExperience() {
+export function DeskExperience({
+  onNavigate,
+}: {
+  onNavigate?: (target: DeskTarget) => void;
+}) {
   const [load, setLoad] = useState(false);
   const [ready, setReady] = useState(false);
   const [night, setNight] = useState(false);
@@ -112,6 +116,10 @@ export function DeskExperience() {
         contact: "The best ideas start with a hello.",
       }[target],
     );
+    if (onNavigate) {
+      onNavigate(target);
+      return;
+    }
     document.getElementById(target)?.scrollIntoView({
       behavior: motion ? "smooth" : "auto",
       block: "start",

@@ -42,7 +42,7 @@ export function Motion() {
     );
     document
       .querySelectorAll(
-        ".section-title,.work-card,.role-row,.about-art,.about-copy,.contact-layout,.case-section",
+        ".drawer-heading,.project-folder,.career-book,.profile-slip,.about-copy,.contact-layout,.case-section",
       )
       .forEach((el) => observer.observe(el));
     return () => observer.disconnect();

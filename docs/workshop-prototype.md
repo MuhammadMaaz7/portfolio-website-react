@@ -26,7 +26,7 @@ The desktop scene is an optional navigation layer. A computer opens Work, the no
 
 ## Design decisions
 
-Bricolage Grotesque headings and IBM Plex Sans body text are hosted locally. Clay coral, muted blue, sage, warm paper and dark ink establish a small palette. Physical shading belongs to the 3D scene; content cards use flat borders rather than UI drop shadows. Project illustrations are labelled through descriptive accessible names and are not fabricated product screenshots.
+Bricolage Grotesque headings and Nunito Sans body text are hosted locally. Clay coral, muted blue, sage, warm paper and dark ink establish a small palette. Physical shading belongs to the 3D scene; content cards use flat borders rather than UI drop shadows. The main project drawer uses folders, not decorative illustrations pretending to be product previews. Legacy standalone project routes remain readable fallbacks.
 
 The default collection includes Clarimo, Jarvis, GoLocal and Website Verification. SCAI and Jadeed remain available through filters alongside the other work. Professional roles preserve incoming/current/completed status; unverified end dates are not invented.
 
@@ -45,3 +45,11 @@ Automated checks cover pre-rendered case-study content, internal links, balanced
 - React Bits: https://reactbits.dev/
 
 Spline was evaluated as an authoring option; code-authored geometry gives this prototype an editable, self-contained scene. React Bits was evaluated, but no stock visual effects were needed for this direction.
+
+## Cohesion revision — 28 October 2026
+
+Keep the hero but extend its workshop metaphor into project folders, a career notebook, a personal profile slip and a contact letter. The enhanced interface shows one area at a time. Explicit navigation, a return-to-desk control, URL hashes and browser history keep it understandable. Without JavaScript, sections and project routes remain available. Project notes open in a native dialog with Escape and focus restoration. Body text uses larger Nunito Sans; decorative divider rules and contrasting section bands are removed.
+
+Research: Bruno Simon (https://bruno-simon.com/), Henry Heffernan’s own source (https://github.com/henryjeff/portfolio-website), Robby Leonardi (https://www.rleonardi.com/interactive-resume/) and Josh Comeau (https://www.joshwcomeau.com/). The takeaway is a consistent interaction language, not copying another person's game or computer interface. Vertical scrolling is still appropriate for reading within a view.
+
+Vercel inventory: GoLocal, Word Ladder and Website Verification have production deployments marked READY. Their UI has not yet been visually checked. Clarimo's latest deployment is ERROR: npm cannot find package.json at the repository root; investigate project root settings before claiming a working demo. Do not manufacture screenshots. Product UI screenshots, real workflow diagrams and text-first notes may coexist using consistent framing; not every project requires an image. No changes have been made to these other apps.

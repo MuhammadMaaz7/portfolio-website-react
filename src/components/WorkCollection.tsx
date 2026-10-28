@@ -1,23 +1,23 @@
 import { useState } from "react";
 import projects from "../projects.json";
-import { ProjectArt } from "./ProjectArt";
 const featured = ["clarimo", "jarvis", "golocal", "verification"];
 const summaries: Record<string, string> = {
-  clarimo:
-    "A research platform for turning early startup ideas into informed decisions.",
-  jarvis: "A voice assistant that connects conversation with everyday tools.",
-  golocal: "A tourism platform for discovering places and planning a visit.",
-  verification:
-    "An automation agent for checking websites and brand presence in batches.",
-  scai: "A field-supervision assistant I’m building at Osmani & Company.",
-  jadeed: "A Next.js product frontend I built for an AI-first SaaS platform.",
-  handbook: "A handbook assistant that finds answers in the source material.",
-  "word-ladder":
-    "A playable puzzle built around three different search algorithms.",
-  complaints: "An ERPNext module for internal complaint workflows.",
+  clarimo: "Researching the next good idea.",
+  jarvis: "Useful things, just by asking.",
+  golocal: "A little help exploring Pakistan.",
+  verification: "Taking the repetition out of website checks.",
+  scai: "Making sense of field reports.",
+  jadeed: "Putting an AI product in people’s hands.",
+  handbook: "Finding the answer in the handbook.",
+  "word-ladder": "One letter closer to the solution.",
+  complaints: "A clearer route from issue to resolution.",
 };
 const labels = ["Selected", "AI & automation", "Full-stack", "Everything"];
-export function WorkCollection() {
+export function WorkCollection({
+  onSelect,
+}: {
+  onSelect?: (slug: string) => void;
+}) {
   const [filter, setFilter] = useState("Selected");
   const visible =
     filter === "Selected"
@@ -32,23 +32,21 @@ export function WorkCollection() {
                 )),
         );
   return (
-    <section className="work-section shell" id="work">
-      <div className="section-title">
-        <div>
-          <span className="section-kicker">01 / THE WORK</span>
-          <h2>
-            A few things
-            <br />
-            I’ve built<span className="coral-dot">.</span>
-          </h2>
-        </div>
-        <p>
-          Some independent. Some with teams.
+    <section className="project-drawer" id="work">
+      <div className="drawer-heading">
+        <span className="paper-tab">The project drawer</span>
+        <h2 tabIndex={-1} data-view-title>
+          Made, learned,
           <br />
-          All a chance to figure something out.
+          figured out<span className="coral-dot">.</span>
+        </h2>
+        <p>
+          A few projects from different chapters.
+          <br />
+          Pick a folder. I’ll show you my part.
         </p>
       </div>
-      <div className="work-filters" aria-label="Filter projects">
+      <div className="work-filters drawer-filters" aria-label="Filter projects">
         {labels.map((label) => (
           <button
             key={label}
@@ -56,53 +54,50 @@ export function WorkCollection() {
             onClick={() => setFilter(label)}
           >
             {label}
-            {filter === label && <span aria-hidden="true"> ·</span>}
           </button>
         ))}
       </div>
       <p className="sr-only" role="status">
         Showing {visible.length} projects
       </p>
-      <div className="work-grid" key={filter}>
-        {visible.map((p) => (
+      <div className="folder-board" key={filter}>
+        {visible.map((p, i) => (
           <article
-            className={`work-card art-${p.slug}`}
-            key={p.slug}
+            className={`project-folder folder-tone-${i % 3}`}
             data-project={p.slug}
+            key={p.slug}
           >
             <a
-              className="work-art"
               href={`/work/${p.slug}/`}
-              aria-label={`Explore ${p.name}`}
+              aria-label={`Open ${p.name} project note`}
+              onClick={(event) => {
+                if (onSelect) {
+                  event.preventDefault();
+                  onSelect(p.slug);
+                }
+              }}
             >
-              <ProjectArt kind={p.slug} />
-              <span className="art-corner">View project ↗</span>
+              <span className="folder-tab">{p.category}</span>
+              <div className="folder-paper">
+                <span className="folder-number">
+                  No. {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3>{p.name}</h3>
+                <p>{summaries[p.slug]}</p>
+                <span className="folder-stack">
+                  {p.stack.slice(0, 3).join(" / ")}
+                </span>
+                <span className="folder-open">
+                  Open project note <span aria-hidden="true">↗</span>
+                </span>
+              </div>
             </a>
-            <div className="work-card-info">
-              <div className="work-meta">
-                <span>{p.context}</span>
-                <span>{p.category}</span>
-              </div>
-              <h3>
-                <a href={`/work/${p.slug}/`}>{p.name}</a>
-              </h3>
-              <p>{summaries[p.slug]}</p>
-              <div className="work-card-bottom">
-                <span>{p.stack.slice(0, 3).join(" · ")}</span>
-                <a
-                  href={`/work/${p.slug}/`}
-                  aria-label={`Read about ${p.name}`}
-                >
-                  Explore ↗
-                </a>
-              </div>
-            </div>
           </article>
         ))}
       </div>
-      <a className="github-note" href="https://github.com/MuhammadMaaz7">
-        <span>More experiments, code, and works in progress.</span>
-        <span>Open GitHub ↗</span>
+      <a className="drawer-github" href="https://github.com/MuhammadMaaz7">
+        <span>More code and works in progress live over here.</span>
+        <strong>My GitHub ↗</strong>
       </a>
     </section>
   );

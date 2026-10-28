@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
+import type { Section } from "../navigation";
 export function MaazMark() {
   return (
     <svg viewBox="0 0 48 48" width="43" height="43" aria-hidden="true">
@@ -23,12 +24,32 @@ export function MaazMark() {
     </svg>
   );
 }
-export function Header({ home = false }: { home?: boolean }) {
+export function Header({
+  home = false,
+  current = "home",
+  onNavigate,
+}: {
+  home?: boolean;
+  current?: Section;
+  onNavigate?: (section: Section) => void;
+}) {
   const [open, setOpen] = useState(false);
   const root = home ? "" : "/";
+  function follow(event: MouseEvent<HTMLAnchorElement>, section: Section) {
+    setOpen(false);
+    if (onNavigate) {
+      event.preventDefault();
+      onNavigate(section);
+    }
+  }
   return (
     <header className="site-header shell">
-      <a className="brand" href="/" aria-label="Maaz home">
+      <a
+        className="brand"
+        href="/"
+        aria-label="Maaz home"
+        onClick={(e) => follow(e, "home")}
+      >
         <MaazMark />
         <span>
           maaz<span className="brand-dot">.</span>
@@ -52,14 +73,20 @@ export function Header({ home = false }: { home?: boolean }) {
           ["experience", "Experience"],
           ["about", "About"],
         ].map(([id, label]) => (
-          <a key={id} href={`${root}#${id}`} onClick={() => setOpen(false)}>
+          <a
+            key={id}
+            href={`${root}#${id}`}
+            aria-current={current === id ? "page" : undefined}
+            onClick={(e) => follow(e, id as Section)}
+          >
             {label}
           </a>
         ))}
         <a
           className="nav-hello"
           href={`${root}#contact`}
-          onClick={() => setOpen(false)}
+          onClick={(e) => follow(e, "contact")}
+          aria-current={current === "contact" ? "page" : undefined}
         >
           Say hello <span aria-hidden="true">↗</span>
         </a>

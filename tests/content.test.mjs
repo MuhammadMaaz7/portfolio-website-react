@@ -32,7 +32,7 @@ test("Default portfolio represents Maaz and a balanced mix of four projects", as
   const html = await readFile("dist/index.html", "utf8");
   const hero = html.slice(
     html.indexOf("welcome-section"),
-    html.indexOf("chapter-bar"),
+    html.indexOf('data-view="work"'),
   );
   assert.ok(hero.includes("Hi, I"));
   assert.ok(hero.includes("Maaz"));
@@ -59,8 +59,8 @@ test("All homepage internal routes resolve and career status is explicit", async
   assert.ok(html.includes("Incoming"));
   assert.ok(html.includes("Current"));
   assert.ok(html.includes("Completed"));
-  assert.ok(html.includes("1 November"));
-  assert.ok(html.includes("Earlier chapters"));
+  assert.ok(html.includes("November 2026"));
+  assert.ok(html.includes("In this notebook"));
   await access("dist/privacy/index.html");
   await access("dist/404.html");
 });
@@ -88,4 +88,44 @@ test("3D rendering code is separate from the initial page bundle", async () => {
     !/rel="modulepreload"[^>]*WorkshopScene/.test(html),
     "3D should load on visibility, not be a mandatory initial preload.",
   );
+});
+test("Workshop navigation retains shareable project state and rejects invalid hashes", async () => {
+  const { transform } = await import("esbuild");
+  const source = await readFile("src/navigation.ts", "utf8");
+  const { code } = await transform(source, { loader: "ts", format: "esm" });
+  const { readPortfolioHash, portfolioHash } = await import(
+    `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`
+  );
+  for (const section of ["home", "work", "experience", "about", "contact"])
+    assert.deepEqual(readPortfolioHash(portfolioHash(section)), {
+      section,
+      project: null,
+    });
+  assert.deepEqual(readPortfolioHash(portfolioHash("work", "clarimo")), {
+    section: "work",
+    project: "clarimo",
+  });
+  assert.deepEqual(readPortfolioHash("#unknown/clarimo"), {
+    section: "home",
+    project: null,
+  });
+  assert.equal(readPortfolioHash("#about/clarimo").project, null);
+  assert.equal(readPortfolioHash("#work/<script>").project, null);
+});
+test("Project previews use real content in accessible notes and career has a no-script alternative", async () => {
+  const home = await readFile("dist/index.html", "utf8");
+  assert.ok(home.includes("<dialog"));
+  assert.ok(home.includes('aria-labelledby="project-note-title"'));
+  assert.ok(home.includes("career-print"));
+  for (const employer of [
+    "Vector Inc.",
+    "Osmani",
+    "MazikGlobal",
+    "OGDCL",
+    "Jadeed",
+  ])
+    assert.ok(home.includes(employer));
+  const work = await readFile("src/components/WorkCollection.tsx", "utf8");
+  assert.ok(!work.includes("ProjectArt"));
+  assert.ok(work.includes("preventDefault"));
 });

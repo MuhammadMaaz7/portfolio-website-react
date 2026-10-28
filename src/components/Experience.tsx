@@ -1,103 +1,215 @@
-const roles = [
+import { useState } from "react";
+const chapters = [
   {
-    date: "NOV 2026",
     company: "Vector Inc. / VECTOR AI",
+    short: "Vector",
+    date: "Starting 1 November 2026",
     title: "Full Stack Software Engineer",
-    description: "Joining 1 November. A new chapter in product engineering.",
     status: "Incoming",
+    story:
+      "A new chapter in product engineering. I’m joining the team on 1 November 2026.",
+    focus: ["Full-stack engineering", "New role"],
   },
   {
-    date: "JUN 2026 — NOW",
     company: "Osmani & Company",
+    short: "Osmani",
+    date: "June 2026 — present",
     title: "AI Automation Engineer",
-    description:
-      "Building AI workflows, APIs, data systems, and interfaces. SCAI is one part of that work.",
     status: "Current",
+    story:
+      "Working across AI automation, data, APIs and interfaces. My work includes SCAI, a field-supervision assistant that brings reports, retrieval and conversational workflows together.",
+    focus: [
+      "AI agents & automation",
+      "PostgreSQL & retrieval",
+      "APIs & product UI",
+    ],
   },
   {
-    date: "STARTED NOV 2025",
     company: "Jadeed",
+    short: "Jadeed",
+    date: "Started November 2025 · completed role",
     title: "Full-stack Developer",
-    description:
-      "Owned the Next.js frontend, integrated AI workflows, and connected the product to Django APIs.",
     status: "Completed",
+    story:
+      "Proposed and built a dedicated Next.js frontend. I worked on authentication, project workflows, AI chat, code editing and Django API integrations, and resolved production timeout issues.",
+    focus: [
+      "Next.js frontend ownership",
+      "Django REST integrations",
+      "AI product workflows",
+    ],
+  },
+  {
+    company: "MazikGlobal",
+    short: "MazikGlobal",
+    date: "Joined November 2025",
+    title: "Intern · MBS division",
+    status: "Internship",
+    story:
+      "An internship chapter with the MBS division, joining the team in November 2025.",
+    focus: ["MBS division", "Team experience"],
+  },
+  {
+    company: "OGDCL",
+    short: "OGDCL",
+    date: "June — July 2025",
+    title: "Software Engineering Intern",
+    status: "Internship",
+    story:
+      "Translated business requirements into a PostgreSQL schema, implemented Microsoft Entra ID authentication, and built interfaces and REST APIs for an internal case-management system.",
+    focus: ["PostgreSQL", "Microsoft Entra ID", "Case-management UI & APIs"],
+  },
+  {
+    company: "Freelance",
+    short: "Freelance",
+    date: "December 2024 — March 2025",
+    title: "Part-time Frontend Developer",
+    status: "Completed",
+    story:
+      "Built responsive React interfaces and connected them to Django APIs, working through the details between the frontend and backend.",
+    focus: ["React", "Django APIs", "Frontend delivery"],
+  },
+  {
+    company: "Osmani & Company",
+    short: "Osmani internship",
+    date: "June — August 2024",
+    title: "Software Engineering Intern",
+    status: "Internship",
+    story:
+      "Learned ERPNext and Frappe, then built a complaint-management module with forms, workflows, reports and notifications.",
+    focus: ["ERPNext / Frappe", "Workflow design", "Internal tools"],
   },
 ];
 export function Experience() {
+  const [selected, setSelected] = useState(-1);
+  const chapter = chapters[selected];
   return (
-    <section className="journey-section" id="experience">
-      <div className="shell journey-layout">
-        <div className="journey-heading">
-          <span className="section-kicker">02 / MY JOURNEY</span>
-          <h2>
-            Learning by
-            <br />
-            building.
-          </h2>
-          <p>
-            Different teams, different problems.
-            <br />A little more perspective each time.
-          </p>
-          <div className="journey-stamp" aria-hidden="true">
-            <span>FAST NUCES</span>
-            <strong>SE ’26</strong>
-            <span>ISLAMABAD</span>
-          </div>
-        </div>
-        <div className="journey-list">
-          {roles.map((r, i) => (
-            <article className="role-row" key={r.company}>
-              <div className="role-index">0{i + 1}</div>
-              <div>
-                <div className="role-top">
-                  <span>{r.date}</span>
-                  <span
-                    className={`role-status status-${r.status.toLowerCase()}`}
-                  >
-                    {r.status}
-                  </span>
-                </div>
-                <h3>{r.company}</h3>
-                <h4>{r.title}</h4>
-                <p>{r.description}</p>
-              </div>
+    <section id="experience" className="journey-notebook">
+      <div className="drawer-heading">
+        <span className="paper-tab">The journey notebook</span>
+        <h2 tabIndex={-1} data-view-title>
+          A few chapters
+          <br />
+          along the way<span className="coral-dot">.</span>
+        </h2>
+        <p>
+          Different teams. New questions.
+          <br />
+          Something to take from every chapter.
+        </p>
+      </div>
+      <noscript>
+        <div className="career-print">
+          {chapters.map((c) => (
+            <article key={c.company + c.date}>
+              <h3>{c.company}</h3>
+              <p>
+                {c.title} · {c.status} · {c.date}
+              </p>
+              <p>{c.story}</p>
             </article>
           ))}
-          <details className="early-career">
-            <summary>
-              Earlier chapters <span aria-hidden="true">+</span>
-            </summary>
-            <div className="early-list">
-              <article>
-                <span>NOV 2025</span>
-                <h3>MazikGlobal</h3>
-                <p>Intern, MBS division</p>
-              </article>
-              <article>
-                <span>JUN — JUL 2025</span>
-                <h3>OGDCL</h3>
-                <p>
-                  Software Engineering Intern. PostgreSQL, Microsoft Entra ID,
-                  case-management interfaces and APIs.
-                </p>
-              </article>
-              <article>
-                <span>DEC 2024 — MAR 2025</span>
-                <h3>Freelance</h3>
-                <p>
-                  Part-time frontend development with React and Django APIs.
-                </p>
-              </article>
-              <article>
-                <span>JUN — AUG 2024</span>
-                <h3>Osmani & Company</h3>
-                <p>
-                  Software Engineering Intern. ERPNext and Frappe
-                  complaint-management workflows.
-                </p>
-              </article>
-            </div>
-          </details>
+        </div>
+      </noscript>
+      <div className="career-book">
+        <nav className="career-chapters" aria-label="Career chapters">
+          <span>In this notebook</span>
+          <button
+            aria-pressed={selected === -1}
+            onClick={() => setSelected(-1)}
+          >
+            The story so far <small>Start here</small>
+          </button>
+          {chapters.map((c, i) => (
+            <button
+              key={`${c.short}-${c.date}`}
+              aria-pressed={selected === i}
+              onClick={() => setSelected(i)}
+            >
+              {c.short}
+              <small>{c.status}</small>
+            </button>
+          ))}
+        </nav>
+        <div className="career-page" key={selected}>
+          {chapter ? (
+            <>
+              <div className="career-page-top">
+                <span>Chapter {String(selected + 1).padStart(2, "0")}</span>
+                <span
+                  className={`career-stamp stamp-${chapter.status.toLowerCase()}`}
+                >
+                  {chapter.status}
+                </span>
+              </div>
+              <p className="career-date">{chapter.date}</p>
+              <h3>{chapter.company}</h3>
+              <h4>{chapter.title}</h4>
+              <p className="career-story">{chapter.story}</p>
+              <div className="career-focus">
+                <span>Part of this chapter</span>
+                <ul>
+                  {chapter.focus.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="career-page-top">
+                <span>The story so far</span>
+                <span className="career-stamp">Still learning</span>
+              </div>
+              <h3>
+                Learning by
+                <br />
+                getting involved.
+              </h3>
+              <p className="career-story">
+                I studied software engineering at FAST NUCES in Islamabad.
+                Alongside it, I took on internships, freelance work and team
+                projects.
+              </p>
+              <p className="career-story">
+                That grew into work across full-stack products and AI
+                automation. Each chapter has added another piece to how I think
+                about building software.
+              </p>
+              <div className="career-milestones">
+                <div>
+                  <strong>2024</strong>
+                  <span>First internship</span>
+                </div>
+                <div>
+                  <strong>2026</strong>
+                  <span>BS Software Engineering</span>
+                </div>
+                <div>
+                  <strong>Next</strong>
+                  <span>Vector · November 2026</span>
+                </div>
+              </div>
+            </>
+          )}
+          <div className="career-pagination">
+            <button
+              onClick={() =>
+                setSelected((i) => (i <= -1 ? chapters.length - 1 : i - 1))
+              }
+            >
+              ← Previous chapter
+            </button>
+            <span>
+              {selected + 2} / {chapters.length + 1}
+            </span>
+            <button
+              onClick={() =>
+                setSelected((i) => (i === chapters.length - 1 ? -1 : i + 1))
+              }
+            >
+              Next chapter →
+            </button>
+          </div>
         </div>
       </div>
     </section>
