@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { useTheme } from "../Theme";
 import { WorkshopMark } from "./WorkshopMark";
 import type { DeskTarget } from "./WorkshopScene";
 const WorkshopScene = lazy(() => import("./WorkshopScene"));
@@ -78,7 +79,7 @@ export function DeskExperience({
 }) {
   const [load, setLoad] = useState(false);
   const [ready, setReady] = useState(false);
-  const [night, setNight] = useState(false);
+  const { night, toggle: toggleLighting } = useTheme();
   const [greeting, setGreeting] = useState(0);
   const [activeTarget, setActiveTarget] = useState<DeskTarget | null>(null);
   const [opening, setOpening] = useState<DeskTarget | null>(null);
@@ -221,13 +222,15 @@ export function DeskExperience({
       <div className="desk-topline">
         <span>MY LITTLE WORKSHOP</span>
         <button
-          onClick={() => setNight((n) => !n)}
+          onClick={() => toggleLighting()}
           aria-label={
-            night ? "Turn workshop lights on" : "Turn workshop lights down"
+            night
+              ? "Switch the portfolio to daylight"
+              : "Switch the portfolio to evening"
           }
           aria-pressed={night}
         >
-          {night ? "Morning light" : "Evening mode"}
+          {night ? "Daylight" : "Evening mode"}
           <span aria-hidden="true">{night ? "◐" : "◑"}</span>
         </button>
       </div>
@@ -247,7 +250,7 @@ export function DeskExperience({
                 onSelect={navigate}
                 onHover={setActiveTarget}
                 onGreet={greet}
-                onToggleLight={() => setNight((n) => !n)}
+                onToggleLight={() => toggleLighting()}
                 onReady={onReady}
               />
             </Suspense>

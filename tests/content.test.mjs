@@ -71,7 +71,7 @@ test("Workshop has a static illustration and keyboard-accessible alternatives be
   assert.ok(html.includes("Explore the workshop"));
   for (const name of ["Projects", "My journey", "About me", "Say hello"])
     assert.ok(html.includes(name));
-  assert.ok(html.includes("Turn workshop lights down"));
+  assert.ok(html.includes("Switch the portfolio to evening"));
   assert.ok(html.includes("Say hello to the workshop character"));
   assert.ok(html.includes("motion-control"));
 });

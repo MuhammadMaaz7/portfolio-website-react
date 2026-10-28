@@ -20,10 +20,7 @@ const template = await readFile("dist/index.html", "utf8");
 const escape = (s) =>
   s.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;");
 const origin = (
-  process.env.SITE_URL ||
-  (process.env.VERCEL
-    ? "https://muhammadmaaz7.vercel.app"
-    : "https://maaz-systems-notebook.wellsugar256.chatgpt.site")
+  process.env.SITE_URL || "https://muhammadmaaz7.vercel.app"
 ).replace(/\/+$/, "");
 for (const p of [null, ...projects]) {
   const path = p ? `/work/${p.slug}/` : "/";

@@ -1,9 +1,16 @@
+import { ThemeProvider } from "./Theme";
 import { Motion } from "./Motion";
 import { Home } from "./Home";
 import { Header, Footer } from "./components/SiteChrome";
-import { ProjectArt } from "./components/ProjectArt";
 import projects from "./projects.json";
 export default function App({ path = "/" }: { path?: string }) {
+  return (
+    <ThemeProvider>
+      <Portfolio path={path} />
+    </ThemeProvider>
+  );
+}
+function Portfolio({ path = "/" }: { path?: string }) {
   if (path === "/" || path === "/index.html")
     return (
       <>
@@ -24,10 +31,11 @@ export default function App({ path = "/" }: { path?: string }) {
             scripts added by me.
           </p>
           <p>
-            The motion preference is stored in your browser. Copy email writes
-            my email address to your clipboard only when you choose that button.
-            The workshop uses a locally rendered 3D scene and locally hosted
-            fonts; it does not request your microphone or camera.
+            Your lighting and motion preferences are stored in your browser.
+            Copy email writes my email address to your clipboard only when you
+            choose that button. The workshop uses a locally rendered 3D scene
+            and locally hosted fonts; it does not request your microphone or
+            camera.
           </p>
           <p>
             Email and external project links open other services, whose privacy
@@ -90,9 +98,6 @@ export default function App({ path = "/" }: { path?: string }) {
                   <span key={t}>{t}</span>
                 ))}
               </div>
-            </div>
-            <div className={`case-art art-${project.slug}`}>
-              <ProjectArt kind={project.slug} />
             </div>
           </div>
           <div className="case-meta">

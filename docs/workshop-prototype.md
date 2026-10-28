@@ -8,7 +8,7 @@ The owner requested a personal, playful portfolio with clearer navigation. The p
 
 1. Understand who Maaz is and what he builds.
 2. Explore four varied projects, or filter the wider collection.
-3. Read the current/incoming roles and expand earlier internships.
+3. Browse career chapters, including current work and earlier internships.
 4. Learn about the person and make contact.
 
 The desktop scene is an optional navigation layer. A computer opens Work, the notebook opens Experience, the plant opens About, and the letter opens Contact. Equivalent native buttons remain visible and keyboard accessible. The character greets on first visible arrival when motion is enabled and waves on request; the lamp changes the scene lighting. The illustration is fictional set dressing, not a representation of Maaz's real desk or appearance.
@@ -28,11 +28,11 @@ The desktop scene is an optional navigation layer. A computer opens Work, the no
 
 Bricolage Grotesque headings and Nunito Sans body text are hosted locally. Clay coral, muted blue, sage, warm paper and dark ink establish a small palette. Physical shading belongs to the 3D scene; content cards use flat borders rather than UI drop shadows. The main project drawer uses folders, not decorative illustrations pretending to be product previews. Legacy standalone project routes remain readable fallbacks.
 
-The default collection includes Clarimo, Jarvis, GoLocal and Website Verification. SCAI and Jadeed remain available through filters alongside the other work. Professional roles preserve incoming/current/completed status; unverified end dates are not invented.
+The default collection includes Clarimo, Jarvis, GoLocal and Website Verification. SCAI and Jadeed remain available through filters alongside the other work. Professional roles preserve the owner-confirmed current/completed status; unverified end dates are not invented.
 
 ## Delivery and verification
 
-This is a design-preview branch in the existing GitHub repository and Vercel project. Production remains on the previously verified version while the owner reviews this larger creative change. GitHub Actions and Vercel both build and run content checks.
+This design was developed on a preview branch in the existing GitHub repository and Vercel project. The owner subsequently authorized publishing it to the existing production domain. GitHub Actions and Vercel both build and run content checks.
 
 Automated checks cover pre-rendered case-study content, internal links, balanced default selection, career status, non-WebGL alternatives and lazy-load bundle separation. Browser visual/interaction QA is pending: the browser approval review hit a usage limit. Do not describe the scene as visually verified until it is tested in a real browser, including narrow screens, WebGL failure, light switch, object navigation and reduced motion.
 
@@ -59,3 +59,11 @@ Vercel inventory: GoLocal, Word Ladder and Website Verification have production 
 The owner confirmed their LinkedIn URL as https://www.linkedin.com/in/muhammad-maaz-uddin-2m8h/. The OCLITS Systems LinkedIn company page links to that same profile, and establishes the company spelling. Public LinkedIn extraction does not expose full role details, so do not claim full profile verification. The owner explicitly requested Vector as current and the OCLITS engineering role as completed. Keep the previously supplied start months but do not invent an OCLITS end month. The 2024 Frappe internship uses OCLITS Systems and its actual company name as the chapter label, without repeating “internship” in both title and subtitle. SCAI remains described as a field assistant for Osmani, the project context; employer attribution is OCLITS Systems.
 
 The numbered shortcut rules are replaced by custom illustrated object controls. Hover and keyboard focus lift the corresponding 3D object; selection adds a short camera response before opening a view, with immediate navigation in reduced motion and non-WebGL fallback. A guided tour introduces four objects without forcing navigation. The greeting runs once on visible arrival and does not loop. Navigation timers cancel when leaving the hero or unmounting. Label textures preserve their plane aspect ratio, use higher resolution and shorter/larger text, and the envelope label no longer intersects its tilted backing. The scene remains demand-rendered; camera and object motion stop when settled. Folders expose a second paper layer and truthful scope labels, with matching dialog and drawer motion. Browser interaction and visual QA are still pending the existing usage-limit block.
+
+## Lighting and release review
+
+Evening mode is a site-wide preference: the scene, drawer, notebook, dialogs, contact letter and supporting routes use one setting. A global native select offers Device setting / Daylight / Evening; the lamp switches the resolved theme. Explicit choices persist, default follows prefers-color-scheme, and cross-tab changes synchronize. A small public script applies theme, browser color scheme and reduced motion before paint. Storage failure keeps the site usable. No time-of-day scheduling is used.
+
+Shared reading-surface colors are contrast-tested at 4.5:1 or better for primary and secondary text. This is token-level verification, not a claim of a complete WCAG audit. The mobile menu breakpoint accommodates the lighting control. Motion cannot contradict the device's reduced-motion preference; duplicate generic JavaScript reveal animations were removed. Legacy project pages retain their factual content without unrelated illustrative previews; dead illustration code is removed. Canonical URLs default to the actual portfolio domain.
+
+Release validation includes TypeScript, formatting, production build and 13 automated checks, including first-paint preference behavior with unavailable storage, device/manual theme precedence, reduced-motion precedence, shared-surface contrast and SSR controls on every route. Browser visual/interaction QA remains blocked by the previously reported automatic-review usage limit; the owner authorized deployment with that existing limitation disclosed. The release uses the same repository, existing Vercel project and domain through Git integration.
