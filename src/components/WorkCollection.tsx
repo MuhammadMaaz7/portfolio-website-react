@@ -12,6 +12,17 @@ const summaries: Record<string, string> = {
   "word-ladder": "One letter closer to the solution.",
   complaints: "A clearer route from issue to resolution.",
 };
+const folderLabels: Record<string, string> = {
+  clarimo: "Team project · FYP",
+  jarvis: "Personal automation",
+  golocal: "Team project · Tourist panel",
+  verification: "Hackathon build",
+  scai: "Professional work",
+  jadeed: "Professional work",
+  handbook: "Document retrieval",
+  "word-ladder": "Search algorithms",
+  complaints: "Internship build",
+};
 const labels = ["Selected", "AI & automation", "Full-stack", "Everything"];
 export function WorkCollection({
   onSelect,
@@ -78,17 +89,22 @@ export function WorkCollection({
               }}
             >
               <span className="folder-tab">{p.category}</span>
+              <span className="folder-peek" aria-hidden="true">
+                <span>{p.stack[0]}</span>
+                <span>{p.decisions.length} engineering decisions inside</span>
+              </span>
               <div className="folder-paper">
-                <span className="folder-number">
-                  No. {String(i + 1).padStart(2, "0")}
-                </span>
+                <span className="folder-number">{folderLabels[p.slug]}</span>
                 <h3>{p.name}</h3>
                 <p>{summaries[p.slug]}</p>
                 <span className="folder-stack">
                   {p.stack.slice(0, 3).join(" / ")}
                 </span>
                 <span className="folder-open">
-                  Open project note <span aria-hidden="true">↗</span>
+                  Look inside{" "}
+                  <span className="folder-grip" aria-hidden="true">
+                    ↗
+                  </span>
                 </span>
               </div>
             </a>

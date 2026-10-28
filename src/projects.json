@@ -5,11 +5,11 @@
     "category": "Professional",
     "subtitle": "From field reports to useful answers.",
     "summary": "An AI-powered field supervision assistant for Osmani & Company, connecting incoming reports with searchable operational knowledge.",
-    "context": "Osmani & Company · Ongoing",
+    "context": "OCLITS Systems · Completed role",
     "stack": ["LangGraph", "n8n", "PostgreSQL", "Qdrant", "Vision LLMs"],
     "role": "AI Automation Engineer · End-to-end engineering",
     "problem": "Daily field reports arrive through different channels and formats. Making that information useful means more than extracting text: the system needs to connect reports to the right sites and people, preserve context, and make the information retrievable.",
-    "contribution": "I work across the system: n8n ingestion workflows, AI-assisted document processing, the PostgreSQL and vector data layer, agent orchestration, APIs, and the frontend. The pipeline brings together WhatsApp reports, company email, and scanned letters.",
+    "contribution": "I worked across the system: n8n ingestion workflows, AI-assisted document processing, the PostgreSQL and vector data layer, agent orchestration, APIs, and the frontend. The pipeline brings together WhatsApp reports, company email, and scanned letters.",
     "decisions": [
       "Use vision-LLM document processing to handle scanned material alongside text-based reports.",
       "Combine structured records in PostgreSQL with embeddings and Qdrant retrieval, so agent answers can draw on the relevant report context.",
@@ -17,7 +17,7 @@
       "Treat latency, memory, and reliability as part of the engineering work, alongside the ingestion and user interface."
     ],
     "note": "This is a professional project. This overview describes my responsibilities at a high level; it does not reproduce internal reports, client data, or private source code.",
-    "outcome": "An ongoing field-supervision system connecting report ingestion, retrieval, and management-facing conversations. My work includes production reliability and latency tuning."
+    "outcome": "A field-supervision system connecting report ingestion, retrieval, and management-facing conversations. My contribution included production reliability and latency tuning."
   },
   {
     "slug": "clarimo",
@@ -162,10 +162,10 @@
     "name": "ERPNext Complaint Management",
     "category": "Professional",
     "subtitle": "A clearer path from issue to resolution.",
-    "summary": "An internal complaint-management module built with ERPNext and Frappe during the Osmani internship.",
-    "context": "Osmani & Company · Internship, 2024",
+    "summary": "An internal complaint-management module built with ERPNext and Frappe during the OCLITS Systems internship.",
+    "context": "OCLITS Systems · Internship, 2024",
     "stack": ["ERPNext", "Frappe", "Python"],
-    "role": "Software Engineering Intern",
+    "role": "Frappe Developer Intern",
     "problem": "Internal complaints need a consistent way to enter the system, move through a workflow, and remain visible to the people responsible.",
     "contribution": "I learned ERPNext and Frappe and translated business requirements into a complaint-management module with forms, workflows, reports, and notifications.",
     "decisions": [

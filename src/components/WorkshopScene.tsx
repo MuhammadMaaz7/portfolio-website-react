@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, type ReactNode } from "react";
 import { Canvas, ThreeEvent, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
@@ -8,10 +8,13 @@ type SceneProps = {
   night: boolean;
   motion: boolean;
   greeting: number;
+  activeTarget: DeskTarget | null;
+  opening: DeskTarget | null;
   onSelect: (target: DeskTarget) => void;
   onGreet: () => void;
   onToggleLight: () => void;
   onReady: () => void;
+  onHover: (target: DeskTarget | null) => void;
 };
 function Rounded({
   size,
@@ -108,13 +111,14 @@ function Label({
 }) {
   const texture = useMemo(() => {
     const canvas = document.createElement("canvas");
-    canvas.width = 512;
-    canvas.height = 256;
+    canvas.width = 1024;
+    canvas.height = Math.round((1024 * height) / width);
     const ctx = canvas.getContext("2d")!;
     ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, 512, 256);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = color;
-    ctx.font = `700 ${size}px sans-serif`;
+    const fontSize = size * 2;
+    ctx.font = `700 ${fontSize}px Arial, sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     text
@@ -122,14 +126,14 @@ function Label({
       .forEach((line, i, lines) =>
         ctx.fillText(
           line,
-          256,
-          128 + (i - (lines.length - 1) / 2) * size * 1.3,
+          canvas.width / 2,
+          canvas.height / 2 + (i - (lines.length - 1) / 2) * fontSize * 1.15,
         ),
       );
     const map = new THREE.CanvasTexture(canvas);
     map.colorSpace = THREE.SRGBColorSpace;
     return map;
-  }, [text, bg, color, size]);
+  }, [text, bg, color, size, width, height]);
   useEffect(() => () => texture.dispose(), [texture]);
   return (
     <mesh position={position}>
@@ -138,8 +142,17 @@ function Label({
     </mesh>
   );
 }
-function CameraRig({ onReady }: { onReady: () => void }) {
+function CameraRig({
+  onReady,
+  opening,
+  motion,
+}: {
+  onReady: () => void;
+  opening: DeskTarget | null;
+  motion: boolean;
+}) {
   const { camera, size, invalidate } = useThree();
+  const animation = useRef({ start: 0, from: 75, to: 75 });
   useEffect(() => {
     const c = camera as THREE.OrthographicCamera;
     c.position.set(5.8, 4.7, 7);
@@ -149,7 +162,111 @@ function CameraRig({ onReady }: { onReady: () => void }) {
     invalidate();
     onReady();
   }, [camera, size.width, size.height, invalidate, onReady]);
+  useEffect(() => {
+    const c = camera as THREE.OrthographicCamera;
+    const base = Math.min(size.width / 7.2, size.height / 5.5);
+    const destination = base * (opening && motion ? 1.08 : 1);
+    animation.current = {
+      start:
+        motion && Math.abs(c.zoom - destination) > 0.01 ? performance.now() : 0,
+      from: c.zoom,
+      to: destination,
+    };
+    if (!animation.current.start) {
+      c.zoom = destination;
+      c.updateProjectionMatrix();
+    }
+    invalidate();
+  }, [opening, motion, camera, size.width, size.height, invalidate]);
+  useFrame(() => {
+    const a = animation.current;
+    if (!a.start) return;
+    const t = Math.min(1, (performance.now() - a.start) / 400);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const c = camera as THREE.OrthographicCamera;
+    c.zoom = THREE.MathUtils.lerp(a.from, a.to, eased);
+    c.updateProjectionMatrix();
+    if (t < 1) invalidate();
+    else a.start = 0;
+  });
   return null;
+}
+function DeskObject({
+  target,
+  active,
+  opening,
+  motion,
+  position,
+  rotation = [0, 0, 0],
+  onSelect,
+  onHover,
+  children,
+}: {
+  target: DeskTarget;
+  active: DeskTarget | null;
+  opening: DeskTarget | null;
+  motion: boolean;
+  position: Position;
+  rotation?: Position;
+  onSelect: (target: DeskTarget) => void;
+  onHover?: (target: DeskTarget | null) => void;
+  children: ReactNode;
+}) {
+  const ref = useRef<THREE.Group>(null);
+  const { invalidate } = useThree();
+  const selected = active === target || opening === target;
+  useEffect(() => {
+    invalidate();
+  }, [selected, motion, invalidate]);
+  useFrame((_, delta) => {
+    if (!ref.current) return;
+    const destination = position[1] + (selected ? 0.12 : 0);
+    ref.current.position.y = motion
+      ? THREE.MathUtils.damp(
+          ref.current.position.y,
+          destination,
+          12,
+          Math.min(delta, 0.05),
+        )
+      : destination;
+    const tilt = rotation[2] + (selected ? -0.035 : 0);
+    ref.current.rotation.z = motion
+      ? THREE.MathUtils.damp(
+          ref.current.rotation.z,
+          tilt,
+          12,
+          Math.min(delta, 0.05),
+        )
+      : tilt;
+    if (
+      motion &&
+      (Math.abs(ref.current.position.y - destination) > 0.001 ||
+        Math.abs(ref.current.rotation.z - tilt) > 0.001)
+    )
+      invalidate();
+  });
+  return (
+    <group
+      ref={ref}
+      position={position}
+      rotation={rotation}
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect(target);
+      }}
+      onPointerOver={(e) => {
+        e.stopPropagation();
+        document.body.style.cursor = "pointer";
+        onHover?.(target);
+      }}
+      onPointerOut={() => {
+        document.body.style.cursor = "";
+        onHover?.(null);
+      }}
+    >
+      {children}
+    </group>
+  );
 }
 function Buddy({
   greeting,
@@ -266,7 +383,11 @@ function Scene(props: SceneProps) {
   const { night, onSelect } = props;
   return (
     <>
-      <CameraRig onReady={props.onReady} />
+      <CameraRig
+        onReady={props.onReady}
+        opening={props.opening}
+        motion={props.motion}
+      />
       <ambientLight intensity={night ? 0.7 : 1.2} />
       <hemisphereLight
         args={[night ? "#a7bbf0" : "#fff7e5", "#b6a18e", night ? 0.8 : 1.2]}
@@ -347,7 +468,7 @@ function Scene(props: SceneProps) {
           height={0.68}
           color="#fcf4df"
           bg="#5367ad"
-          size={46}
+          size={66}
         />
         {/* Desk. */}
         <Rounded
@@ -377,18 +498,15 @@ function Scene(props: SceneProps) {
           </group>
         ))}
         {/* Work: an illustrated monitor. */}
-        <group
+        <DeskObject
+          target="work"
           position={[0.02, 2.02, -0.43]}
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelect("work");
-          }}
-          onPointerOver={() => {
-            document.body.style.cursor = "pointer";
-          }}
-          onPointerOut={() => {
-            document.body.style.cursor = "";
-          }}
+          rotation={[0, 0, 0]}
+          active={props.activeTarget}
+          opening={props.opening}
+          motion={props.motion}
+          onSelect={onSelect}
+          onHover={props.onHover}
         >
           <Rounded size={[1.72, 1.16, 0.16]} color="#4d625e" radius={0.08} />
           <Rounded
@@ -398,13 +516,13 @@ function Scene(props: SceneProps) {
             radius={0.035}
           />
           <Label
-            text={"THINGS\nI’VE BUILT"}
+            text={"PROJECTS"}
             position={[-0.1, 0.1, 0.125]}
             width={1.26}
             height={0.67}
             bg="#f7efdb"
             color="#4b625b"
-            size={56}
+            size={80}
           />
           <Rounded
             size={[0.12, 0.32, 0.16]}
@@ -416,7 +534,7 @@ function Scene(props: SceneProps) {
             position={[0, -0.88, 0.04]}
             color="#4d625e"
           />
-        </group>
+        </DeskObject>
         <Rounded
           size={[1.35, 0.08, 0.5]}
           position={[0.07, 1.54, 0.42]}
@@ -441,19 +559,15 @@ function Scene(props: SceneProps) {
           onGreet={props.onGreet}
         />
         {/* Experience: a blue notebook. */}
-        <group
+        <DeskObject
+          target="experience"
           position={[1.25, 1.52, -0.2]}
           rotation={[0, -0.15, -0.09]}
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelect("experience");
-          }}
-          onPointerOver={() => {
-            document.body.style.cursor = "pointer";
-          }}
-          onPointerOut={() => {
-            document.body.style.cursor = "";
-          }}
+          active={props.activeTarget}
+          opening={props.opening}
+          motion={props.motion}
+          onSelect={onSelect}
+          onHover={props.onHover}
         >
           <Rounded
             size={[0.65, 0.88, 0.23]}
@@ -468,22 +582,19 @@ function Scene(props: SceneProps) {
             height={0.61}
             bg="#5c73b4"
             color="#fff2db"
-            size={51}
+            size={70}
           />
-        </group>
+        </DeskObject>
         {/* About: a growing little plant. */}
-        <group
+        <DeskObject
+          target="about"
           position={[-2.04, 1.48, -0.45]}
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelect("about");
-          }}
-          onPointerOver={() => {
-            document.body.style.cursor = "pointer";
-          }}
-          onPointerOut={() => {
-            document.body.style.cursor = "";
-          }}
+          rotation={[0, 0, 0]}
+          active={props.activeTarget}
+          opening={props.opening}
+          motion={props.motion}
+          onSelect={onSelect}
+          onHover={props.onHover}
         >
           <mesh position={[0, 0.16, 0]} castShadow>
             <cylinderGeometry args={[0.24, 0.17, 0.32, 24]} />
@@ -503,7 +614,7 @@ function Scene(props: SceneProps) {
               />
             </group>
           ))}
-        </group>
+        </DeskObject>
         {/* A tactile lamp that changes the room lighting. */}
         <group
           position={[2.03, 1.5, -0.55]}
@@ -537,19 +648,15 @@ function Scene(props: SceneProps) {
           )}
         </group>
         {/* Contact: an envelope sitting on a small stool. */}
-        <group
+        <DeskObject
+          target="contact"
           position={[2.1, 0.4, 1.25]}
           rotation={[0, -0.25, 0]}
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelect("contact");
-          }}
-          onPointerOver={() => {
-            document.body.style.cursor = "pointer";
-          }}
-          onPointerOut={() => {
-            document.body.style.cursor = "";
-          }}
+          active={props.activeTarget}
+          opening={props.opening}
+          motion={props.motion}
+          onSelect={onSelect}
+          onHover={props.onHover}
         >
           <Rounded size={[0.95, 0.13, 0.75]} color="#75958b" />
           <Rounded
@@ -565,7 +672,6 @@ function Scene(props: SceneProps) {
           <Rounded
             size={[0.67, 0.47, 0.05]}
             position={[0, 0.31, 0]}
-            rotation={[-0.2, 0, 0]}
             color="#fff4d8"
             radius={0.015}
           />
@@ -576,9 +682,9 @@ function Scene(props: SceneProps) {
             height={0.33}
             color="#a9624b"
             bg="#fff4d8"
-            size={59}
+            size={90}
           />
-        </group>
+        </DeskObject>
         <Rounded
           size={[1.5, 0.1, 0.48]}
           position={[1.6, 2.87, -1.6]}

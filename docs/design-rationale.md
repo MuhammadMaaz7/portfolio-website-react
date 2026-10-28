@@ -27,4 +27,4 @@ Research informs the decisions, not a guarantee of usability improvement for thi
 
 ## Remaining evidence opportunities
 
-Real redacted screenshots or a recorded, approved product walkthrough would provide stronger evidence than diagrams for the professional projects. Do not fabricate client dashboards, metrics or testimonials. Jadeed and MazikGlobal end months remain unconfirmed and are not invented. Vector's 1 November start remains incoming as of 28 October.
+Real redacted screenshots or a recorded, approved product walkthrough would provide stronger evidence than diagrams for the professional projects. Do not fabricate client dashboards, metrics or testimonials. Jadeed and MazikGlobal end months remain unconfirmed and are not invented. The owner later instructed the portfolio to show Vector as current and OCLITS Systems as a completed role. These explicit status corrections supersede the earlier incoming label; OCLITS' end month remains unspecified.

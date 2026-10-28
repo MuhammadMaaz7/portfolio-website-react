@@ -56,7 +56,8 @@ test("All homepage internal routes resolve and career status is explicit", async
   const html = await readFile("dist/index.html", "utf8");
   for (const [, path] of html.matchAll(/href="(\/work\/[^"#]+)"/g))
     await access(`dist${path}index.html`);
-  assert.ok(html.includes("Incoming"));
+  assert.ok(!html.includes("Incoming"));
+  assert.ok(html.includes("OCLITS Systems"));
   assert.ok(html.includes("Current"));
   assert.ok(html.includes("Completed"));
   assert.ok(html.includes("November 2026"));
@@ -118,8 +119,8 @@ test("Project previews use real content in accessible notes and career has a no-
   assert.ok(home.includes('aria-labelledby="project-note-title"'));
   assert.ok(home.includes("career-print"));
   for (const employer of [
-    "Vector Inc.",
-    "Osmani",
+    "VECTOR Inc.",
+    "OCLITS Systems",
     "MazikGlobal",
     "OGDCL",
     "Jadeed",
@@ -128,4 +129,51 @@ test("Project previews use real content in accessible notes and career has a no-
   const work = await readFile("src/components/WorkCollection.tsx", "utf8");
   assert.ok(!work.includes("ProjectArt"));
   assert.ok(work.includes("preventDefault"));
+});
+test("Career corrections attribute current and completed roles to the right company", async () => {
+  const html = await readFile("dist/index.html", "utf8");
+  const printable = html.match(/<noscript>([\s\S]*?)<\/noscript>/)?.[1];
+  assert.ok(
+    printable,
+    "Career history must also exist without client interaction",
+  );
+  const roles = [...printable.matchAll(/<article>([\s\S]*?)<\/article>/g)].map(
+    (m) => m[1],
+  );
+  assert.equal(roles.filter((role) => role.includes("Current")).length, 1);
+  assert.ok(
+    roles.find((role) => role.includes("VECTOR Inc."))?.includes("Current"),
+  );
+  const oclits = roles.filter((role) => role.includes("OCLITS Systems"));
+  assert.equal(
+    oclits.length,
+    2,
+    "The engineering role and earlier internship are distinct chapters",
+  );
+  assert.ok(
+    oclits.some(
+      (role) =>
+        role.includes("AI Automation Engineer") &&
+        role.includes("Completed") &&
+        !role.includes("present"),
+    ),
+  );
+  assert.ok(
+    oclits.some(
+      (role) =>
+        role.includes("Frappe Developer Intern") && role.includes("2024"),
+    ),
+  );
+  assert.ok(
+    html.includes("https://www.linkedin.com/in/muhammad-maaz-uddin-2m8h/"),
+  );
+  assert.ok(!html.includes("desk-shortcuts"));
+  for (const action of [
+    "Show me around",
+    "Open drawer",
+    "Read notebook",
+    "Meet Maaz",
+    "Write a note",
+  ])
+    assert.ok(html.includes(action));
 });

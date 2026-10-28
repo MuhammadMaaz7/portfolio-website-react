@@ -128,7 +128,10 @@ export function Home() {
                 <span>Curious by default. Engineer by training.</span>
               </div>
             </div>
-            <DeskExperience onNavigate={navigate} />
+            <DeskExperience
+              onNavigate={navigate}
+              visible={location.section === "home"}
+            />
           </section>
         </div>
         <div
@@ -204,7 +207,7 @@ export function Home() {
               </div>
               <a
                 className="plain-link"
-                href="https://linkedin.com/in/muhammad-maaz-uddin-512b4b26b/"
+                href="https://www.linkedin.com/in/muhammad-maaz-uddin-2m8h/"
               >
                 The longer story on LinkedIn ↗
               </a>

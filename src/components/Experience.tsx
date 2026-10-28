@@ -1,23 +1,22 @@
 import { useState } from "react";
 const chapters = [
   {
-    company: "Vector Inc. / VECTOR AI",
-    short: "Vector",
-    date: "Starting 1 November 2026",
+    company: "VECTOR Inc.",
+    short: "VECTOR Inc.",
+    date: "November 2026 — present",
     title: "Full Stack Software Engineer",
-    status: "Incoming",
-    story:
-      "A new chapter in product engineering. I’m joining the team on 1 November 2026.",
+    status: "Current",
+    story: "My current chapter: full-stack software engineering at VECTOR Inc.",
     focus: ["Full-stack engineering", "New role"],
   },
   {
-    company: "Osmani & Company",
-    short: "Osmani",
-    date: "June 2026 — present",
+    company: "OCLITS Systems",
+    short: "OCLITS Systems",
+    date: "Started June 2026 · completed role",
     title: "AI Automation Engineer",
-    status: "Current",
+    status: "Completed",
     story:
-      "Working across AI automation, data, APIs and interfaces. My work includes SCAI, a field-supervision assistant that brings reports, retrieval and conversational workflows together.",
+      "Worked across AI automation, data, APIs and interfaces. My work included SCAI, a field-supervision assistant that brings reports, retrieval and conversational workflows together.",
     focus: [
       "AI agents & automation",
       "PostgreSQL & retrieval",
@@ -49,7 +48,7 @@ const chapters = [
     focus: ["MBS division", "Team experience"],
   },
   {
-    company: "OGDCL",
+    company: "Oil and Gas Development Company Limited",
     short: "OGDCL",
     date: "June — July 2025",
     title: "Software Engineering Intern",
@@ -69,10 +68,10 @@ const chapters = [
     focus: ["React", "Django APIs", "Frontend delivery"],
   },
   {
-    company: "Osmani & Company",
-    short: "Osmani internship",
+    company: "OCLITS Systems",
+    short: "OCLITS Systems",
     date: "June — August 2024",
-    title: "Software Engineering Intern",
+    title: "Frappe Developer Intern",
     status: "Internship",
     story:
       "Learned ERPNext and Frappe, then built a complaint-management module with forms, workflows, reports and notifications.",
@@ -126,7 +125,7 @@ export function Experience() {
               onClick={() => setSelected(i)}
             >
               {c.short}
-              <small>{c.status}</small>
+              <small>{c.status === "Internship" ? c.date : c.status}</small>
             </button>
           ))}
         </nav>
@@ -185,8 +184,8 @@ export function Experience() {
                   <span>BS Software Engineering</span>
                 </div>
                 <div>
-                  <strong>Next</strong>
-                  <span>Vector · November 2026</span>
+                  <strong>Now</strong>
+                  <span>VECTOR Inc. · Full-stack engineering</span>
                 </div>
               </div>
             </>

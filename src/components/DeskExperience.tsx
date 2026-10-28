@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { WorkshopMark } from "./WorkshopMark";
 import type { DeskTarget } from "./WorkshopScene";
 const WorkshopScene = lazy(() => import("./WorkshopScene"));
 class SceneBoundary extends Component<
@@ -70,17 +71,23 @@ export function DeskIllustration() {
 }
 export function DeskExperience({
   onNavigate,
+  visible = true,
 }: {
   onNavigate?: (target: DeskTarget) => void;
+  visible?: boolean;
 }) {
   const [load, setLoad] = useState(false);
   const [ready, setReady] = useState(false);
   const [night, setNight] = useState(false);
   const [greeting, setGreeting] = useState(0);
+  const [activeTarget, setActiveTarget] = useState<DeskTarget | null>(null);
+  const [opening, setOpening] = useState<DeskTarget | null>(null);
+  const [tourStep, setTourStep] = useState(-1);
+  const welcomeShown = useRef(false);
+  const navigationTimer = useRef<ReturnType<typeof setTimeout>>();
+  const greetingCount = useRef(0);
   const [motion, setMotion] = useState(false);
-  const [message, setMessage] = useState(
-    "Click an object, or choose a section below.",
-  );
+  const [message, setMessage] = useState("Welcome in. Make yourself at home.");
   const host = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const update = () =>
@@ -104,9 +111,72 @@ export function DeskExperience({
       observer.disconnect();
       window.removeEventListener("portfolio-motion-change", update);
       document.body.style.cursor = "";
+      clearTimeout(navigationTimer.current);
     };
   }, []);
   const onReady = useCallback(() => setReady(true), []);
+  useEffect(() => {
+    if (
+      !visible ||
+      !ready ||
+      !motion ||
+      welcomeShown.current ||
+      !host.current?.getClientRects().length
+    )
+      return;
+    welcomeShown.current = true;
+    setGreeting((n) => n + 1);
+  }, [ready, motion, visible]);
+  useEffect(() => {
+    if (!visible) {
+      clearTimeout(navigationTimer.current);
+      setOpening(null);
+      setActiveTarget(null);
+    }
+  }, [visible]);
+  const stops: {
+    target: DeskTarget;
+    label: string;
+    action: string;
+    description: string;
+  }[] = [
+    {
+      target: "work",
+      label: "Projects",
+      action: "Open drawer",
+      description:
+        "The computer opens my project drawer. Pick a folder to see what I built.",
+    },
+    {
+      target: "experience",
+      label: "My journey",
+      action: "Read notebook",
+      description:
+        "The blue notebook holds my experience. Each company is a chapter.",
+    },
+    {
+      target: "about",
+      label: "About me",
+      action: "Meet Maaz",
+      description:
+        "The little plant leads to a little about me, my background and my tools.",
+    },
+    {
+      target: "contact",
+      label: "Say hello",
+      action: "Write a note",
+      description:
+        "The envelope takes you to my email. The lamp changes the room’s light.",
+    },
+  ];
+  function tour() {
+    const next = (tourStep + 1) % stops.length;
+    setTourStep(next);
+    setActiveTarget(stops[next].target);
+    setMessage(stops[next].description);
+    setGreeting((n) => n + 1);
+  }
+
   function navigate(target: DeskTarget) {
     setMessage(
       {
@@ -116,22 +186,36 @@ export function DeskExperience({
         contact: "The best ideas start with a hello.",
       }[target],
     );
-    if (onNavigate) {
-      onNavigate(target);
-      return;
-    }
-    document.getElementById(target)?.scrollIntoView({
-      behavior: motion ? "smooth" : "auto",
-      block: "start",
-    });
+    if (opening) return;
+    setActiveTarget(target);
+    setOpening(target);
+    document.body.style.cursor = "";
+    const open = () => {
+      setOpening(null);
+      setActiveTarget(null);
+      if (onNavigate) onNavigate(target);
+      else
+        document.getElementById(target)?.scrollIntoView({
+          behavior: motion ? "smooth" : "auto",
+          block: "start",
+        });
+    };
+    clearTimeout(navigationTimer.current);
+    if (motion && ready) navigationTimer.current = setTimeout(open, 460);
+    else open();
   }
   function greet() {
     setGreeting((n) => n + 1);
-    setMessage("Hey there! Glad you stopped by.");
+    const replies = [
+      "Hey there! Glad you stopped by.",
+      "The computer has my work. The notebook has my story.",
+      "Try the lamp for a little evening light.",
+    ];
+    setMessage(replies[greetingCount.current++ % replies.length]);
   }
   return (
     <div
-      className={`desk-experience ${night ? "desk-night" : ""}`}
+      className={`desk-experience ${night ? "desk-night" : ""} ${opening ? "is-opening" : ""}`}
       data-scene={ready ? "ready" : "illustration"}
     >
       <div className="desk-topline">
@@ -158,7 +242,10 @@ export function DeskExperience({
                 night={night}
                 motion={motion}
                 greeting={greeting}
+                activeTarget={activeTarget}
+                opening={opening}
                 onSelect={navigate}
+                onHover={setActiveTarget}
                 onGreet={greet}
                 onToggleLight={() => setNight((n) => !n)}
                 onReady={onReady}
@@ -174,22 +261,48 @@ export function DeskExperience({
           Say hi <span aria-hidden="true">☺</span>
         </button>
       </div>
+      <div className="workshop-guide">
+        <span>Four little doors into my world.</span>
+        <button onClick={tour}>
+          {tourStep < 0
+            ? "Show me around"
+            : tourStep === 3
+              ? "Tour again"
+              : "Next stop"}
+          {tourStep >= 0 && (
+            <span className="sr-only"> · {tourStep + 1} of 4 shown</span>
+          )}
+        </button>
+      </div>
       <p className="desk-message" aria-live="polite">
         {message}
       </p>
-      <div className="desk-shortcuts" aria-label="Explore the workshop">
-        <button onClick={() => navigate("work")}>
-          <span>01</span>Projects
-        </button>
-        <button onClick={() => navigate("experience")}>
-          <span>02</span>My journey
-        </button>
-        <button onClick={() => navigate("about")}>
-          <span>03</span>About me
-        </button>
-        <button onClick={() => navigate("contact")}>
-          <span>04</span>Say hello
-        </button>
+      <div className="workshop-doors" aria-label="Explore the workshop">
+        {stops.map((stop) => (
+          <button
+            key={stop.target}
+            className={`workshop-door door-${stop.target}`}
+            data-active={activeTarget === stop.target}
+            disabled={!!opening}
+            onMouseEnter={() => setActiveTarget(stop.target)}
+            onMouseLeave={() => {
+              if (tourStep < 0) setActiveTarget(null);
+            }}
+            onFocus={() => setActiveTarget(stop.target)}
+            onBlur={() => {
+              if (tourStep < 0) setActiveTarget(null);
+            }}
+            onClick={() => navigate(stop.target)}
+          >
+            <WorkshopMark kind={stop.target} />
+            <span>
+              <strong>{stop.label}</strong>
+              <small>
+                {opening === stop.target ? "Opening…" : stop.action}
+              </small>
+            </span>
+          </button>
+        ))}
       </div>
     </div>
   );
