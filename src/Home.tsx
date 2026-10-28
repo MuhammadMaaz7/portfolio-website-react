@@ -1,15 +1,265 @@
-import { useState } from 'react';
-import { Workflow } from './Workflow';
-import { ProjectIndex } from './ProjectIndex';
-export function Home(){
-const [copyStatus,setCopyStatus]=useState('');
-async function copyEmail(){try{await navigator.clipboard.writeText('maazawan100@gmail.com');setCopyStatus('Email address copied.');}catch{setCopyStatus('Please select and copy the email address above.');}}
-return (<>
-<a className="skip" href="#main">Skip to content</a>
-<header className="header wrap"><a className="identity" href="/" aria-label="Muhammad Maaz home"><span className="monogram">m<span>·</span></span><span>Muhammad Maaz<small>Software & AI engineer</small></span></a><nav aria-label="Main navigation"><a href="#work">Work <sup>09</sup></a><a href="#about">About</a><a href="#experience" className="experience-nav">Experience</a><a href="#contact" className="nav-contact">Let’s talk <span>↗</span></a></nav></header>
-<main id="main"><section className="hero wrap"><div className="eyebrow"><span className="small-dot"></span> MUHAMMAD MAAZ / SOFTWARE & AI ENGINEER <span className="edition">PORTFOLIO / 2026</span></div><div className="hero-grid"><div><h1>AI systems.<br /><span>Built end to end.</span></h1><p className="intro">I’m Maaz, a software engineer in Islamabad. I build agents, automation, and the products around them.</p><div className="hero-actions"><a className="primary-link" href="#work">View my work</a><a className="quiet-link" href="#contact">Get in touch ↗</a></div><p className="current-work">Currently building SCAI at Osmani & Company.</p></div><Workflow /></div><div className="hero-foot"><span>AI AUTOMATION <i>/</i> FULL-STACK DEVELOPMENT</span><span>Scroll to the good stuff ↓</span></div></section>
-<section className="work wrap" id="work"><div className="section-heading"><div><span className="eyebrow">01 / SELECTED WORK</span><h2>Selected work</h2></div><p>Three projects. My role, the decisions, and the result.</p></div>
-<article className="project featured"><a className="project-visual scai-visual" href="/work/scai/" aria-label="Read SCAI project study"><div className="visual-label mono">SCAI / OSMANI & COMPANY <span>01</span></div><div className="scai-diagram"><div className="scai-source"><span>01 / THE INPUT</span><h3>Stories from<br />the field.</h3><div className="source-tabs"><span>WhatsApp</span><span>Email</span><span>Documents</span></div></div><div className="scai-bridge"><span>↓</span><small>PROCESS · CONNECT · RETRIEVE</small></div><div className="scai-result"><span className="micro">02 / THE CONTEXT</span><strong>A clearer picture.</strong><span>Reports → Knowledge → Answers</span></div></div><span className="visual-note mono">SYSTEM OVERVIEW / ILLUSTRATION</span><span className="round-arrow">↗</span></a><div className="project-copy"><div className="project-index mono">01 <span>PROFESSIONAL / ONGOING</span></div><h3><a href="/work/scai/">From field reports<br />to useful answers.</a></h3><p>Field reports turned into searchable knowledge. I build the ingestion, data layer, agents, and interface.</p><div className="tags"><span>LangGraph</span><span>n8n</span><span>PostgreSQL</span><span>Qdrant</span></div><a className="text-link" href="/work/scai/">Inside SCAI <span>↗</span></a></div></article><div className="project-pair"><article className="project"><a className="project-visual clarimo-visual" href="/work/clarimo/" aria-label="Read Clarimo AI project notes"><div className="visual-label mono">CLARIMO AI <span>PRODUCT STUDY / 02</span></div><div className="research-diagram"><span className="eyebrow">A SEMANTIC RESEARCH PIPELINE</span><div className="research-input">Reddit · Product Hunt<br />GitHub · App marketplaces</div><div className="research-logic"><span>Filter</span><span>Cluster</span><span>Rank</span></div><div className="research-output">Structured<br />startup insights.</div></div><span className="visual-note mono">MY CONTRIBUTION / PIPELINE OVERVIEW</span><span className="round-arrow">↗</span></a><div className="project-copy"><div className="project-index mono">02 <span>AI PRODUCT / TEAM PROJECT</span></div><h3><a href="/work/clarimo/">Clarimo AI</a></h3><p>Startup research and validation. My work spans the product and the semantic research pipeline.</p><div className="tags"><span>React + TypeScript</span><span>FastAPI</span><span>MongoDB</span></div><a className="text-link" href="/work/clarimo/">Inside the project <span>↗</span></a></div></article>
-<article className="project"><a className="project-visual jadeed-visual" href="/work/jadeed/" aria-label="Read Jadeed project study"><div className="visual-label mono">JADEED <span>03</span></div><div className="product-diagram"><div className="product-layer"><span className="eyebrow">THE EXPERIENCE I BUILT</span><strong>Next.js</strong><p>Authentication · Project workflows<br />AI chat · Documents · Code editor</p></div><div className="api-boundary"><span>API INTEGRATION</span><i/></div><div className="service-layer"><strong>Django REST</strong><span>Application services</span></div></div><span className="visual-note mono">MY CONTRIBUTION / INTEGRATION OVERVIEW</span><span className="round-arrow">↗</span></a><div className="project-copy"><div className="project-index mono">03 <span>PROFESSIONAL / COMPLETED ROLE</span></div><h3><a href="/work/jadeed/">Making AI workflows<br />feel like a product.</a></h3><p>A Next.js product frontend I built from scratch, connecting AI workflows with Django APIs.</p><div className="tags"><span>Next.js</span><span>Django REST</span><span>Monaco Editor</span></div><a className="text-link" href="/work/jadeed/">Inside Jadeed <span>↗</span></a></div></article></div><ProjectIndex /><a className="archive-link" href="https://github.com/MuhammadMaaz7">There’s more in the workshop. <span>Explore GitHub ↗</span></a></section>
-<section className="about" id="about"><div className="wrap about-grid"><div><span className="eyebrow">02 / ABOUT</span><h2>I like owning<br />the whole problem.</h2><p className="about-intro">From an incoming report to the answer someone sees, I work across the parts that make a product useful.</p><p>FAST NUCES software engineering graduate. Based in Islamabad. My current focus is AI automation, backend engineering, and system design.</p><a className="text-link" href="https://linkedin.com/in/muhammad-maaz-uddin-512b4b26b/">More on LinkedIn ↗</a></div><aside className="practice-list"><span className="eyebrow">WHAT I WORK WITH</span><div><h3>AI & automation</h3><p>LangGraph · n8n · Retrieval · Voice</p></div><div><h3>Product engineering</h3><p>React · Next.js · Python · Node.js</p></div><div><h3>Data & delivery</h3><p>PostgreSQL · Qdrant · Docker · APIs</p></div></aside></div></section><section className="experience wrap" id="experience"><div className="section-heading"><span className="eyebrow">03 / ALONG THE WAY</span><p>Current work, the next chapter, and where I started.</p></div><div className="experience-row"><span className="mono">STARTING NOV 2026</span><h3>Vector Inc. / VECTOR AI</h3><p>Incoming Full Stack Software Engineer<small>Joining 1 November 2026 · Hybrid</small></p></div><div className="experience-row"><span className="mono">JUN 2026 — PRESENT</span><h3>Osmani & Company</h3><p>AI Automation Engineer<small>SCAI · Ingestion, data, agents, APIs, and frontend</small></p></div><div className="experience-row"><span className="mono">COMPLETED ROLE</span><h3>Jadeed</h3><p>Full-stack Developer<small>Started November 2025 · Next.js product frontend & AI workflows</small></p></div><div className="experience-row"><span className="mono">2025</span><h3>MazikGlobal</h3><p>Intern · MBS Division<small>Joined November 2025</small></p></div><div className="experience-row"><span className="mono">JUN — JUL 2025</span><h3>OGDCL</h3><p>Software Engineering Intern<small>PostgreSQL · Microsoft Entra ID · Case-management UI & APIs</small></p></div><div className="experience-row"><span className="mono">DEC 2024 — MAR 2025</span><h3>Freelance</h3><p>Part-time Frontend Developer<small>React interfaces integrated with Django APIs</small></p></div><div className="experience-row"><span className="mono">JUN — AUG 2024</span><h3>Osmani & Company</h3><p>Software Engineering Intern<small>ERPNext / Frappe · Complaint management</small></p></div></section><section className="contact wrap" id="contact"><div className="eyebrow">04 / NEXT CONVERSATION</div><div className="contact-grid"><h2>Let’s build<br />something useful.</h2><div><p>Have a problem in mind? I’d like to hear it.</p><a className="contact-email" href="mailto:maazawan100@gmail.com">Let’s talk <span>↗</span></a><div className="email-row"><span>maazawan100@gmail.com</span><button id="copy-email" onClick={copyEmail} type="button" aria-label="Copy email address">Copy email</button></div><span id="copy-status" role="status" aria-live="polite">{copyStatus}</span></div></div></section></main>
-<footer className="wrap"><span>© 2026 Muhammad Maaz</span><a href="/privacy/">Privacy</a><a href="#main">Back to top ↑</a></footer></>);}
+import { useEffect, useState } from "react";
+import { Header, Footer } from "./components/SiteChrome";
+import { DeskExperience } from "./components/DeskExperience";
+import { WorkCollection } from "./components/WorkCollection";
+import { Experience } from "./components/Experience";
+import { ProjectNote } from "./components/ProjectNote";
+import {
+  portfolioHash,
+  readPortfolioHash,
+  type PortfolioLocation,
+  type Section,
+} from "./navigation";
+export function Home() {
+  const [location, setLocation] = useState<PortfolioLocation>({
+    section: "home",
+    project: null,
+  });
+  const [enhanced, setEnhanced] = useState(false);
+  useEffect(() => {
+    const sync = () => setLocation(readPortfolioHash(window.location.hash));
+    sync();
+    setEnhanced(true);
+    window.addEventListener("hashchange", sync);
+    window.addEventListener("popstate", sync);
+    return () => {
+      window.removeEventListener("hashchange", sync);
+      window.removeEventListener("popstate", sync);
+    };
+  }, []);
+  function navigate(
+    section: Section,
+    project: string | null = null,
+    replace = false,
+  ) {
+    window.history[replace ? "replaceState" : "pushState"](
+      null,
+      "",
+      portfolioHash(section, project),
+    );
+    setLocation({ section, project });
+    if (!project) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      requestAnimationFrame(() =>
+        document
+          .querySelector<HTMLElement>(
+            `[data-view="${section}"] [data-view-title]`,
+          )
+          ?.focus({ preventScroll: true }),
+      );
+    }
+  }
+  const hidden = (section: Section) => enhanced && location.section !== section;
+  const [copyStatus, setCopyStatus] = useState("");
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText("maazawan100@gmail.com");
+      setCopyStatus("Copied. See you in the inbox!");
+    } catch {
+      setCopyStatus("You can select and copy the address above.");
+    }
+  }
+  return (
+    <>
+      <a className="skip" href="#main">
+        Skip to content
+      </a>
+      <Header home current={location.section} onNavigate={navigate} />
+      <main id="main">
+        {enhanced && location.section !== "home" && (
+          <div className="workspace-bar shell">
+            <button onClick={() => navigate("home")}>← Back to my desk</button>
+            <span>
+              Maaz’s workshop /{" "}
+              {location.section === "experience" ? "Journey" : location.section}
+            </span>
+          </div>
+        )}
+        <div data-view="home" hidden={hidden("home")}>
+          <section className="welcome-section shell">
+            <div className="welcome-copy">
+              <p className="welcome-eyebrow">
+                <span aria-hidden="true" />
+                SOFTWARE ENGINEER · ISLAMABAD, PK
+              </p>
+              <h1 tabIndex={-1} data-view-title>
+                Hi, I’m
+                <br />
+                <span className="name-word">
+                  Maaz<span className="coral-dot">.</span>
+                  <svg viewBox="0 0 260 25" aria-hidden="true">
+                    <path d="M5 13q115-15 245 0M15 21q112-13 222-4" />
+                  </svg>
+                </span>
+              </h1>
+              <p className="welcome-intro">
+                I build full-stack products
+                <br className="desktop-break" /> and AI-powered tools.
+              </p>
+              <p className="welcome-note">
+                Welcome to my little corner of the internet.
+                <br />
+                Have a look around. There’s a bit of me in here.
+              </p>
+              <div className="welcome-actions">
+                <a
+                  className="button button-ink"
+                  href="#work"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate("work");
+                  }}
+                >
+                  Explore my work <span aria-hidden="true">↗</span>
+                </a>
+                <a
+                  className="plain-link"
+                  href="#about"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate("about");
+                  }}
+                >
+                  Meet the human
+                </a>
+              </div>
+              <div className="welcome-caption">
+                <span className="caption-rule" />
+                <span>Curious by default. Engineer by training.</span>
+              </div>
+            </div>
+            <DeskExperience
+              onNavigate={navigate}
+              visible={location.section === "home"}
+            />
+          </section>
+        </div>
+        <div
+          className="workspace-view shell"
+          data-view="work"
+          hidden={hidden("work")}
+        >
+          <WorkCollection onSelect={(slug) => navigate("work", slug)} />
+        </div>
+        <div
+          className="workspace-view shell"
+          data-view="experience"
+          hidden={hidden("experience")}
+        >
+          <Experience />
+        </div>
+        <div
+          className="workspace-view shell"
+          data-view="about"
+          hidden={hidden("about")}
+        >
+          <section className="about-section" id="about">
+            <aside className="profile-slip">
+              <span className="paper-tab">The human</span>
+              <h3>
+                Muhammad
+                <br />
+                Maaz Uddin<span className="coral-dot">.</span>
+              </h3>
+              <dl>
+                <div>
+                  <dt>Based in</dt>
+                  <dd>Islamabad, Pakistan</dd>
+                </div>
+                <div>
+                  <dt>Studied at</dt>
+                  <dd>FAST NUCES · 2022–2026</dd>
+                </div>
+                <div>
+                  <dt>Degree</dt>
+                  <dd>BS Software Engineering</dd>
+                </div>
+              </dl>
+              <span className="profile-signature">Maaz.</span>
+            </aside>
+            <div className="about-copy">
+              <span className="section-kicker">03 / A LITTLE ABOUT ME</span>
+              <h2 tabIndex={-1} data-view-title>
+                A person first.
+                <br />
+                An engineer, too.
+              </h2>
+              <p className="about-lede">
+                I’m Muhammad Maaz Uddin, a software engineering graduate from
+                FAST NUCES.
+              </p>
+              <p>
+                I’ve worked across frontend interfaces, backend services,
+                databases, and AI automation. I like understanding how the
+                pieces fit, then getting them to work together.
+              </p>
+              <p>
+                Right now, I’m growing deeper into AI systems and system design,
+                while keeping an eye on the person who has to use what I build.
+              </p>
+              <div className="about-tools">
+                <span>MY USUAL TOOLS</span>
+                <p>
+                  React / Next.js / Python / Node.js
+                  <br />
+                  PostgreSQL / LangGraph / n8n / Docker
+                </p>
+              </div>
+              <a
+                className="plain-link"
+                href="https://www.linkedin.com/in/muhammad-maaz-uddin-2m8h/"
+              >
+                The longer story on LinkedIn ↗
+              </a>
+            </div>
+          </section>
+        </div>
+        <div
+          className="workspace-view shell"
+          data-view="contact"
+          hidden={hidden("contact")}
+        >
+          <section className="contact-section" id="contact">
+            <div className="contact-layout">
+              <div>
+                <span className="section-kicker">04 / YOUR TURN</span>
+                <h2 tabIndex={-1} data-view-title>
+                  Got something
+                  <br />
+                  in mind<span className="contact-question">?</span>
+                </h2>
+                <p>
+                  A project, a question, or just a hello.
+                  <br />
+                  My inbox is a good place to start.
+                </p>
+              </div>
+              <div className="contact-note">
+                <span className="letter-fold" aria-hidden="true" />
+                <span className="contact-note-top">TO: MAAZ</span>
+                <a
+                  className="contact-address"
+                  href="mailto:maazawan100@gmail.com"
+                >
+                  Let’s talk.<span aria-hidden="true">↗</span>
+                </a>
+                <span className="email-address">maazawan100@gmail.com</span>
+                <button onClick={copyEmail} className="copy-email">
+                  Copy email address
+                </button>
+                <p className="copy-status" aria-live="polite" role="status">
+                  {copyStatus}
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+        <ProjectNote
+          slug={location.project}
+          onClose={() => navigate("work", null, true)}
+        />
+      </main>
+      <Footer />
+    </>
+  );
+}

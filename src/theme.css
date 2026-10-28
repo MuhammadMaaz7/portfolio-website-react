@@ -1,0 +1,279 @@
+:root {
+  color-scheme: light;
+  --muted: #5d645c;
+  --surface: #fffaf0;
+  --surface-soft: #ece9dd;
+  --surface-sage: #e1e5d5;
+  --surface-coral: #e9b19c;
+  --surface-blue: #d5dff0;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #252f38;
+  --ink: #f5eedf;
+  --muted: #c6cdc4;
+  --line: #57616a;
+  --blue: #afc5ff;
+  --coral: #efb49e;
+  --sage: #3d5148;
+  --surface: #313e49;
+  --surface-soft: #394650;
+  --surface-sage: #3d5148;
+  --surface-coral: #6c4c44;
+  --surface-blue: #3c4d6a;
+}
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+.site-header {
+  gap: 22px;
+}
+.theme-control {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  line-height: 1.2;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.theme-control select {
+  font: 600 13px var(--body);
+  color: var(--ink);
+  background: var(--surface-soft);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 8px 24px 8px 9px;
+  max-width: 145px;
+  cursor: pointer;
+}
+.theme-control select:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+.button-ink {
+  color: var(--paper);
+}
+.button-ink:hover {
+  color: var(--paper);
+}
+.skip {
+  color: var(--paper);
+}
+.contact-section {
+  border: 0;
+}
+.contact-note,
+.contact-address,
+.copy-email,
+.case-tags span {
+  border-color: var(--line);
+}
+.letter-fold {
+  background: var(--surface-soft);
+  border-color: var(--line);
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+.about-tools > span,
+.contact-note-top,
+.email-address,
+.copy-email,
+.contact-layout > div > p,
+.welcome-caption,
+.site-footer,
+.motion-control,
+.case-meta > div > span,
+.case-contents > span,
+.case-contents > a,
+.case-section p,
+.case-section li,
+.project-context-note p,
+.case-pagination span {
+  color: var(--muted);
+}
+.about-copy .about-lede {
+  color: var(--ink);
+}
+.about-tools > span {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.copy-email {
+  font-size: 14px;
+}
+.contact-note .copy-status {
+  color: var(--muted);
+  font-size: 13px;
+}
+.project-context-note {
+  background: var(--surface-sage);
+  border-color: var(--line);
+}
+.contact-question {
+  color: var(--blue);
+}
+[data-theme="dark"] .project-folder {
+  --folder: #6a5148;
+}
+[data-theme="dark"] .folder-tone-1 {
+  --folder: #435776;
+}
+[data-theme="dark"] .folder-tone-2 {
+  --folder: #4a6252;
+}
+[data-theme="dark"] .folder-grip {
+  background: var(--surface-soft);
+}
+[data-theme="dark"] .desk-hello {
+  background: var(--surface-soft);
+  color: var(--ink);
+}
+[data-theme="dark"] .brand-dot,
+[data-theme="dark"] .coral-dot {
+  color: var(--coral);
+}
+[data-theme="dark"] .case-art {
+  background: var(--surface-sage);
+  border-color: var(--line);
+}
+[data-theme="dark"] .case-section > .section-kicker {
+  color: var(--coral);
+}
+[data-theme="dark"] ::selection {
+  background: #efb49e;
+  color: #252f38;
+}
+[data-theme="dark"] .plain-link {
+  border-color: var(--muted);
+}
+.motion-control {
+  border-color: var(--line);
+}
+.motion-control:disabled {
+  opacity: 1;
+  cursor: default;
+}
+.desk-night .desk-poster {
+  filter: brightness(0.73) saturate(0.8);
+}
+@media (max-width: 1050px) {
+  .site-header nav {
+    gap: 18px;
+  }
+  .site-header nav a {
+    font-size: 14px;
+  }
+  .site-header {
+    gap: 15px;
+  }
+  .theme-control > span {
+    display: none;
+  }
+  .theme-control select {
+    max-width: 130px;
+  }
+}
+@media (max-width: 800px) {
+  .site-header {
+    position: relative;
+    height: auto;
+    min-height: 95px;
+    gap: 12px;
+  }
+  .brand {
+    margin-right: auto;
+  }
+  .brand > span {
+    font-size: 27px;
+  }
+  .brand svg {
+    width: 36px;
+  }
+  .theme-control {
+    order: 1;
+  }
+  .theme-control select {
+    font-size: 12px;
+    max-width: 125px;
+  }
+  .menu-toggle {
+    display: block;
+    order: 2;
+    border: 1px solid var(--line);
+    background: none;
+    padding: 8px 11px;
+    border-radius: 7px;
+    font-size: 13px;
+  }
+  .site-header nav {
+    display: none;
+    position: absolute;
+    top: 82px;
+    left: 0;
+    right: 0;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    z-index: 30;
+    padding: 18px;
+    gap: 6px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .site-header nav.nav-open {
+    display: flex;
+  }
+  .nav-hello {
+    margin-top: 8px;
+    text-align: center;
+  }
+}
+@media (max-width: 380px) {
+  .theme-control select {
+    max-width: 105px;
+    font-size: 11px;
+    padding-left: 6px;
+  }
+  .site-header {
+    gap: 8px;
+  }
+  .brand {
+    gap: 5px;
+  }
+  .brand > span {
+    font-size: 24px;
+  }
+  .brand svg {
+    width: 32px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
+html[data-motion="off"] {
+  scroll-behavior: auto;
+}
+.case-hero-grid {
+  grid-template-columns: 1fr;
+  max-width: 900px;
+}
+.case-hero-grid > div > p {
+  max-width: 760px;
+}
+.case-tags span {
+  font-size: 13px;
+}
+.case-meta > div > span,
+.case-contents > span {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.case-meta p,
+.case-contents > a {
+  font-size: 16px;
+}
