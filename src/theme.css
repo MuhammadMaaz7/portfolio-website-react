@@ -29,29 +29,6 @@ body {
 .site-header {
   gap: 22px;
 }
-.theme-control {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  font-size: 11px;
-  line-height: 1.2;
-  color: var(--muted);
-  flex-shrink: 0;
-}
-.theme-control select {
-  font: 600 13px var(--body);
-  color: var(--ink);
-  background: var(--surface-soft);
-  border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 8px 24px 8px 9px;
-  max-width: 145px;
-  cursor: pointer;
-}
-.theme-control select:focus-visible {
-  outline: 3px solid var(--blue);
-  outline-offset: 3px;
-}
 .button-ink {
   color: var(--paper);
 }
@@ -167,12 +144,6 @@ body {
   .site-header {
     gap: 15px;
   }
-  .theme-control > span {
-    display: none;
-  }
-  .theme-control select {
-    max-width: 130px;
-  }
 }
 @media (max-width: 800px) {
   .site-header {
@@ -189,13 +160,6 @@ body {
   }
   .brand svg {
     width: 36px;
-  }
-  .theme-control {
-    order: 1;
-  }
-  .theme-control select {
-    font-size: 12px;
-    max-width: 125px;
   }
   .menu-toggle {
     display: block;
@@ -229,11 +193,6 @@ body {
   }
 }
 @media (max-width: 380px) {
-  .theme-control select {
-    max-width: 105px;
-    font-size: 11px;
-    padding-left: 6px;
-  }
   .site-header {
     gap: 8px;
   }

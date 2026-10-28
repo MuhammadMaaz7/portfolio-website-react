@@ -119,6 +119,6 @@ test("All prerendered entry points initialize the same preferences before React"
   ]) {
     const html = await readFile(path, "utf8");
     assert.ok(html.indexOf("/assets/preferences.js") < html.indexOf("<body>"));
-    assert.ok(html.includes('aria-label="Portfolio color theme"'));
+    assert.ok(!html.includes('aria-label="Portfolio color theme"'));
   }
 });

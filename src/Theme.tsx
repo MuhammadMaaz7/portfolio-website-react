@@ -81,20 +81,3 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   );
 }
 export const useTheme = () => useContext(ThemeContext);
-export function ThemeControl() {
-  const { mode, setMode } = useTheme();
-  return (
-    <label className="theme-control">
-      <span>Lighting</span>
-      <select
-        aria-label="Portfolio color theme"
-        value={mode}
-        onChange={(event) => setMode(event.target.value as ThemeMode)}
-      >
-        <option value="system">Device setting</option>
-        <option value="light">Daylight</option>
-        <option value="dark">Evening</option>
-      </select>
-    </label>
-  );
-}

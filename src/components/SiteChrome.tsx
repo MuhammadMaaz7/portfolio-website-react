@@ -1,5 +1,4 @@
 import { useState, type MouseEvent } from "react";
-import { ThemeControl } from "../Theme";
 import type { Section } from "../navigation";
 export function MaazMark() {
   return (
@@ -56,7 +55,6 @@ export function Header({
           maaz<span className="brand-dot">.</span>
         </span>
       </a>
-      <ThemeControl />
       <button
         className="menu-toggle"
         onClick={() => setOpen((v) => !v)}
