@@ -92,3 +92,7 @@ The notebook and envelope now use camera-facing tags at a constant 100×30 CSS-p
 ## Printed-label correction from owner screenshot
 
 The owner rejected the floating tags. They are removed completely, including camera-facing rotation, fixed-pixel scaling and depth overrides. Journey text is printed on the blue notebook cover; Say Hello is printed on the envelope face. Both physical objects turn toward the viewing side and have slightly larger faces. Texture lettering fits the actual face width and height with padding; standard depth testing keeps it attached to the scene. Character routes and movement are unchanged. The supplied screenshot was inspected; the new rendering still awaits browser verification under the existing access limitation.
+
+## Explicit About object
+
+The plant was an unclear About metaphor. It is replaced by a freestanding coral profile frame with ABOUT ME printed on its face and a symbolic portrait below. The tour explanation, native control illustration and no-WebGL poster use the same frame. It occupies the existing About target coordinates, so the character points toward an actual labelled object. The checked character stopping position and all other walking routes remain unchanged.

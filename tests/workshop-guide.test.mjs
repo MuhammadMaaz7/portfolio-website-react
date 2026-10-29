@@ -110,22 +110,22 @@ test("Changing tour stops mid-walk continues from the current position", async (
   );
   assert.deepEqual(redirect.position, first.position);
 });
-test("The About stop has room beside the plant in the camera view", async () => {
+test("The About stop has room beside the profile frame in the camera view", async () => {
   const { deskStops } = await import(
     `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`
   );
   const [x, , z] = deskStops.about;
-  const plant = [-2.04, -0.45];
-  assert.ok(Math.hypot(x - plant[0], z - plant[1]) > 0.8);
+  const frame = [-2.04, -0.45];
+  assert.ok(Math.hypot(x - frame[0], z - frame[1]) > 0.8);
   // Project the separation onto the camera's horizontal right axis, accounting for the room rotation.
   const angle = -0.12;
-  const dx = x - plant[0],
-    dz = z - plant[1];
+  const dx = x - frame[0],
+    dz = z - frame[1];
   const worldX = Math.cos(angle) * dx + Math.sin(angle) * dz;
   const worldZ = -Math.sin(angle) * dx + Math.cos(angle) * dz;
   const separation = (7 * worldX - 5.8 * worldZ) / Math.hypot(7, 5.8);
   assert.ok(
     Math.abs(separation) > 0.75,
-    "Character silhouette should stay beside the plant",
+    "Character silhouette should stay beside the profile frame",
   );
 });

@@ -33,7 +33,7 @@ export function DeskIllustration() {
       viewBox="0 0 640 460"
       className="desk-illustration"
       role="img"
-      aria-label="An illustrated workshop with a friendly character, a computer, a plant and a notebook"
+      aria-label="An illustrated workshop with a friendly character, a computer, a profile frame and a notebook"
     >
       <path d="M84 286 346 365 568 253 302 180Z" fill="#d5c8b4" />
       <path d="m86 110 0 176 260 79V186Z" fill="#efdbca" />
@@ -48,9 +48,31 @@ export function DeskIllustration() {
       <path d="m302 165 81 22v73l-81-23Z" fill="#faf1d9" />
       <path d="m341 266 0 28" stroke="#52685f" strokeWidth="13" />
       <path d="m418 225 38 10v-62l-38-10Z" fill="#6179b5" />
-      <path d="M220 230v-28" stroke="#617d61" strokeWidth="9" />
-      <ellipse cx="220" cy="183" rx="13" ry="28" fill="#93aa7f" />
-      <path d="m203 208 35 12-6 27-23-8Z" fill="#d89173" />
+      <path d="m192 174 39 12v62l-39-12Z" fill="#df9c85" />
+      <path d="m197 181 29 9v48l-29-9Z" fill="#fff3df" />
+      <text
+        x="211"
+        y="201"
+        textAnchor="middle"
+        fontSize="7"
+        fontFamily="Arial"
+        fontWeight="700"
+        fill="#34456e"
+      >
+        ABOUT
+      </text>
+      <text
+        x="211"
+        y="210"
+        textAnchor="middle"
+        fontSize="7"
+        fontFamily="Arial"
+        fontWeight="700"
+        fill="#34456e"
+      >
+        ME
+      </text>
+      <circle cx="211" cy="220" r="4" fill="#6179b5" />
       <rect x="237" y="222" width="44" height="49" rx="14" fill="#efb398" />
       <rect x="228" y="180" width="59" height="51" rx="15" fill="#f2b99e" />
       <circle cx="245" cy="205" r="3" fill="#303a40" />
@@ -164,7 +186,7 @@ export function DeskExperience({
       label: "About me",
       action: "Meet Maaz",
       description:
-        "The little plant leads to a little about me, my background and my tools.",
+        "The About Me frame opens my background, the person behind the work, and my tools.",
     },
     {
       target: "contact",

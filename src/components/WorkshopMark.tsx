@@ -30,23 +30,15 @@ export function WorkshopMark({ kind }: { kind: DeskTarget }) {
         </>
       ) : kind === "about" ? (
         <>
-          <path d="M21 35h25l-4 17H25Z" fill="#d7977d" />
-          <path d="M33 36V16" stroke="#617e62" strokeWidth="4" />
-          <ellipse
-            cx="24"
-            cy="19"
-            rx="7"
-            ry="13"
-            transform="rotate(-37 24 19)"
-            fill="#a7bc8d"
-          />
-          <ellipse
-            cx="40"
-            cy="15"
-            rx="7"
-            ry="13"
-            transform="rotate(34 40 15)"
-            fill="#7d9c73"
+          <rect x="13" y="4" width="38" height="46" rx="5" fill="#df9c85" />
+          <rect x="18" y="9" width="28" height="36" rx="2" fill="#fff3df" />
+          <circle cx="32" cy="21" r="6" fill="#6179b5" />
+          <path d="M22 37c0-10 20-10 20 0" fill="#6179b5" />
+          <path
+            d="M10 51h44"
+            stroke="#b97e65"
+            strokeWidth="4"
+            strokeLinecap="round"
           />
         </>
       ) : (

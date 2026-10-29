@@ -678,32 +678,50 @@ function Scene(props: SceneProps) {
             color="#fff2db"
           />
         </DeskObject>
-        {/* About: a growing little plant. */}
+        {/* About: a labelled profile frame, with a symbolic portrait. */}
         <DeskObject
           target="about"
           position={[-2.04, 1.48, -0.45]}
-          rotation={[0, 0, 0]}
+          rotation={[0, 0.8, 0]}
           onSelect={onSelect}
           onHover={props.onHover}
         >
-          <mesh position={[0, 0.16, 0]} castShadow>
-            <cylinderGeometry args={[0.24, 0.17, 0.32, 24]} />
-            <meshStandardMaterial color="#dd8e6b" roughness={0.8} />
-          </mesh>
-          <Ball
-            position={[0, 0.33, 0]}
-            scale={[0.2, 0.035, 0.2]}
-            color="#796451"
+          <Rounded
+            size={[0.78, 0.08, 0.42]}
+            position={[0, 0.02, 0]}
+            color="#b97e65"
+            radius={0.03}
           />
-          {[-0.7, 0, 0.7].map((a, i) => (
-            <group key={i} rotation={[0, a * 2, a * 0.8]}>
-              <Ball
-                position={[a * 0.15, 0.55, 0]}
-                scale={[0.1, 0.3, 0.08]}
-                color={i === 1 ? "#72906e" : "#91aa7f"}
-              />
-            </group>
-          ))}
+          <Rounded
+            size={[0.72, 1.02, 0.14]}
+            position={[0, 0.53, 0]}
+            color="#df9c85"
+            radius={0.055}
+          />
+          <Rounded
+            size={[0.61, 0.9, 0.025]}
+            position={[0, 0.54, 0.084]}
+            color="#fff3df"
+            radius={0.03}
+          />
+          <Label
+            text={"ABOUT\nME"}
+            position={[0, 0.77, 0.104]}
+            width={0.55}
+            height={0.39}
+            bg="#fff3df"
+            color="#34456e"
+          />
+          <Ball
+            position={[0, 0.39, 0.115]}
+            scale={[0.09, 0.09, 0.025]}
+            color="#6179b5"
+          />
+          <Ball
+            position={[0, 0.21, 0.113]}
+            scale={[0.18, 0.11, 0.024]}
+            color="#6179b5"
+          />
         </DeskObject>
         {/* A tactile lamp that changes the room lighting. */}
         <group
