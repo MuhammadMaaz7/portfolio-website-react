@@ -10,7 +10,7 @@ export const deskHome: DeskPosition = [-1.18, 1.51, 0.24];
 export const deskStops: Record<GuideTarget, DeskPosition> = {
   work: [-1, 1.51, -0.1],
   experience: [1.18, 1.51, 0.52],
-  about: [-1.63, 1.51, 0.23],
+  about: [-1.25, 1.51, -0.8],
   contact: [1.78, 1.51, 0.53],
 };
 export function deskRoute(

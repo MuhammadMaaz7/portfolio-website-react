@@ -110,6 +110,7 @@ function Label({
   bg = "#f6eedc",
   color = "#30383d",
   size = 50,
+  billboard = false,
 }: {
   text: string;
   position: Position;
@@ -118,16 +119,44 @@ function Label({
   bg?: string;
   color?: string;
   size?: number;
+  billboard?: boolean;
 }) {
+  const label = useRef<THREE.Mesh>(null);
+  const { camera } = useThree();
+  const parentRotation = useMemo(() => new THREE.Quaternion(), []);
+  const cameraRotation = useMemo(() => new THREE.Quaternion(), []);
+  useFrame(() => {
+    if (!billboard || !label.current) return;
+    const mesh = label.current;
+    mesh.parent?.getWorldQuaternion(parentRotation);
+    camera.getWorldQuaternion(cameraRotation);
+    mesh.quaternion.copy(parentRotation.invert()).multiply(cameraRotation);
+    const zoom = (camera as THREE.OrthographicCamera).zoom || 1;
+    mesh.scale.set(100 / (width * zoom), 30 / (height * zoom), 1);
+  });
   const texture = useMemo(() => {
     const canvas = document.createElement("canvas");
     canvas.width = 1024;
     canvas.height = Math.round((1024 * height) / width);
     const ctx = canvas.getContext("2d")!;
     ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (billboard) {
+      ctx.beginPath();
+      ctx.roundRect(0, 0, canvas.width, canvas.height, canvas.height * 0.2);
+      ctx.fill();
+    } else ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = color;
-    const fontSize = size * 2;
+    let fontSize = billboard ? Math.round(canvas.height * 0.57) : size * 2;
+    if (billboard) {
+      ctx.font = `700 ${fontSize}px Arial, sans-serif`;
+      const measured = Math.max(
+        ...text.split("\n").map((line) => ctx.measureText(line).width),
+      );
+      fontSize = Math.min(
+        fontSize,
+        (fontSize * (canvas.width * 0.84)) / measured,
+      );
+    }
     ctx.font = `700 ${fontSize}px Arial, sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -143,12 +172,18 @@ function Label({
     const map = new THREE.CanvasTexture(canvas);
     map.colorSpace = THREE.SRGBColorSpace;
     return map;
-  }, [text, bg, color, size, width, height]);
+  }, [text, bg, color, size, width, height, billboard]);
   useEffect(() => () => texture.dispose(), [texture]);
   return (
-    <mesh position={position}>
+    <mesh ref={label} position={position} renderOrder={billboard ? 20 : 0}>
       <planeGeometry args={[width, height]} />
-      <meshBasicMaterial map={texture} toneMapped={false} />
+      <meshBasicMaterial
+        map={texture}
+        toneMapped={false}
+        transparent={billboard}
+        depthTest={!billboard}
+        depthWrite={!billboard}
+      />
     </mesh>
   );
 }
@@ -670,12 +705,13 @@ function Scene(props: SceneProps) {
             radius={0.04}
           />
           <Label
-            text={"MY\nJOURNEY"}
-            position={[0, 0.45, 0.125]}
-            width={0.54}
-            height={0.61}
-            bg="#5c73b4"
-            color="#fff2db"
+            text={"My journey"}
+            billboard
+            position={[0, 1.02, 0.14]}
+            width={1}
+            height={0.3}
+            bg="#f9f1df"
+            color="#34456e"
             size={70}
           />
         </DeskObject>
@@ -764,10 +800,11 @@ function Scene(props: SceneProps) {
             radius={0.015}
           />
           <Label
-            text={"HELLO!"}
-            position={[0, 0.32, 0.035]}
-            width={0.57}
-            height={0.33}
+            text={"Say hello"}
+            billboard
+            position={[0, 0.76, 0.06]}
+            width={1}
+            height={0.3}
             color="#a9624b"
             bg="#fff4d8"
             size={90}
