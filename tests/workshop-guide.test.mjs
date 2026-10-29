@@ -60,3 +60,52 @@ test("Home includes a guided tour and keeps preference controls out of a floatin
   assert.ok(css.includes("100svh"));
   assert.ok(!/overflow:\s*hidden/.test(css));
 });
+test("Every desk route reaches its stop without overshooting and returns home", async () => {
+  const module = await import(
+    `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`
+  );
+  const { deskHome, deskStops, deskRoute, advanceDeskWalk } = module;
+  for (const stop of Object.values(deskStops))
+    for (const [from, to] of [
+      [deskHome, stop],
+      [stop, deskHome],
+    ]) {
+      const path = deskRoute(from, to);
+      let position = [...from],
+        index = 0;
+      for (let frame = 0; frame < 1000 && index < path.length; frame++) {
+        const step = advanceDeskWalk(position, path, index, 0.025);
+        assert.ok(step.travelled <= 0.025 + 1e-10);
+        assert.ok(step.position.every(Number.isFinite));
+        assert.ok(
+          Math.abs(step.position[0]) <= 2.2 &&
+            Math.abs(step.position[2]) <= 0.7,
+        );
+        position = step.position;
+        index = step.index;
+      }
+      assert.equal(index, path.length);
+      position.forEach((value, axis) =>
+        assert.ok(Math.abs(value - to[axis]) < 1e-10),
+      );
+    }
+  assert.deepEqual(deskRoute(deskHome, deskHome), []);
+});
+test("Changing tour stops mid-walk continues from the current position", async () => {
+  const { deskHome, deskStops, deskRoute, advanceDeskWalk } = await import(
+    `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`
+  );
+  const first = advanceDeskWalk(
+    deskHome,
+    deskRoute(deskHome, deskStops.experience),
+    0,
+    0.3,
+  );
+  const redirect = advanceDeskWalk(
+    first.position,
+    deskRoute(first.position, deskStops.about),
+    0,
+    0,
+  );
+  assert.deepEqual(redirect.position, first.position);
+});

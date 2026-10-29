@@ -259,6 +259,8 @@ export function DeskExperience({
                 night={night}
                 motion={motion}
                 greeting={greeting}
+                visit={inspected}
+                visible={visible}
                 activeTarget={inspected || activeTarget}
                 opening={opening}
                 onSelect={inspect}

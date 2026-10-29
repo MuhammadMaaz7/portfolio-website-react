@@ -2,13 +2,22 @@ import { useEffect, useMemo, useRef, type ReactNode } from "react";
 import { Canvas, ThreeEvent, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
-import { guidePose } from "../workshop-guide";
+import {
+  guidePose,
+  deskHome,
+  deskStops,
+  deskRoute,
+  advanceDeskWalk,
+  type DeskPosition,
+} from "../workshop-guide";
 export type DeskTarget = "work" | "experience" | "about" | "contact";
 type Position = [number, number, number];
 type SceneProps = {
   night: boolean;
   motion: boolean;
   greeting: number;
+  visit: DeskTarget | null;
+  visible: boolean;
   activeTarget: DeskTarget | null;
   opening: DeskTarget | null;
   onSelect: (target: DeskTarget) => void;
@@ -233,15 +242,31 @@ function Buddy({
   greeting,
   motion,
   guide,
+  visit,
+  visible,
   onGreet,
 }: {
   greeting: number;
   guide: DeskTarget | null;
+  visit: DeskTarget | null;
+  visible: boolean;
   motion: boolean;
   onGreet: () => void;
 }) {
   const body = useRef<THREE.Group>(null);
-  const pose = useMemo(() => guidePose(guide), [guide]);
+  const destination = motion && visit ? deskStops[visit] : deskHome;
+  const walk = useRef<{
+    position: DeskPosition;
+    path: DeskPosition[];
+    index: number;
+    phase: number;
+  }>({ position: [...deskHome], path: [], index: 0, phase: 0 });
+  const leftFoot = useRef<THREE.Group>(null);
+  const rightFoot = useRef<THREE.Group>(null);
+  const pose = useMemo(
+    () => guidePose(guide, destination),
+    [guide, destination],
+  );
   const aim = useMemo(
     () =>
       guide
@@ -255,6 +280,7 @@ function Buddy({
     [pose, guide],
   );
   const wave = useMemo(() => new THREE.Quaternion(), []);
+  const leftSwing = useMemo(() => new THREE.Quaternion(), []);
   const arm = useRef<THREE.Group>(null);
   const leftArm = useRef<THREE.Group>(null);
   const leftRest = useMemo(
@@ -274,38 +300,88 @@ function Buddy({
     }
   }, [greeting, invalidate]);
   useEffect(() => {
+    const state = walk.current;
+    if (!visible || !motion) {
+      state.position = [...deskHome];
+      state.path = [];
+      state.index = 0;
+      body.current?.position.set(...deskHome);
+    } else {
+      state.path = deskRoute(state.position, destination);
+      state.index = 0;
+    }
+    invalidate();
+  }, [visit, motion, visible, destination, invalidate]);
+  useEffect(() => {
     invalidate();
   }, [guide, motion, invalidate]);
   useFrame((_, delta) => {
     if (!arm.current || !leftArm.current || !head.current || !body.current)
       return;
+    if (!visible) return;
+    const state = walk.current;
+    const step = advanceDeskWalk(
+      state.position,
+      state.path,
+      state.index,
+      motion ? Math.min(delta, 0.05) * 1.65 : 0,
+    );
+    state.position = step.position;
+    state.index = step.index;
+    state.phase += step.travelled * 16;
+    const walking = motion && step.walking;
+    body.current.position.set(...state.position);
+    body.current.position.y += walking
+      ? Math.abs(Math.sin(state.phase)) * 0.025
+      : 0;
+    if (leftFoot.current)
+      leftFoot.current.rotation.x = walking ? Math.sin(state.phase) * 0.3 : 0;
+    if (rightFoot.current)
+      rightFoot.current.rotation.x = walking ? -Math.sin(state.phase) * 0.3 : 0;
     const t = (performance.now() - started.current) / 1000;
-    const waving = !guide && motion && started.current > 0 && t < 1.8;
+    const waving =
+      !walking && !guide && motion && started.current > 0 && t < 1.8;
     wave.setFromEuler(
       new THREE.Euler(
         0,
         0,
-        waving ? -0.55 + Math.sin(t * 13) * 0.36 : Math.PI - 0.15,
+        walking
+          ? Math.PI + Math.sin(state.phase) * 0.3
+          : waving
+            ? -0.55 + Math.sin(t * 13) * 0.36
+            : Math.PI - 0.15,
       ),
     );
-    const desired = guide && !pose.left ? aim : wave;
-    const leftDesired = guide && pose.left ? aim : leftRest;
+    const desired = !walking && guide && !pose.left ? aim : wave;
+    leftSwing.setFromEuler(
+      new THREE.Euler(0, 0, Math.PI - Math.sin(state.phase) * 0.3),
+    );
+    const leftDesired = walking
+      ? leftSwing
+      : guide && pose.left
+        ? aim
+        : leftRest;
     const blend = motion ? 1 - Math.exp(-12 * Math.min(delta, 0.05)) : 1;
     arm.current.quaternion.slerp(desired, blend);
     leftArm.current.quaternion.slerp(leftDesired, blend);
-    body.current.rotation.y = THREE.MathUtils.lerp(
-      body.current.rotation.y,
-      pose.yaw,
-      blend,
+    const facing =
+      walking && Math.hypot(step.direction[0], step.direction[2]) > 0.01
+        ? Math.atan2(step.direction[0], step.direction[2])
+        : pose.yaw;
+    const difference = Math.atan2(
+      Math.sin(facing - body.current.rotation.y),
+      Math.cos(facing - body.current.rotation.y),
     );
+    const turned = body.current.rotation.y + difference * blend;
+    body.current.rotation.y = Math.atan2(Math.sin(turned), Math.cos(turned));
     head.current.rotation.y = THREE.MathUtils.lerp(
       head.current.rotation.y,
-      pose.headYaw,
+      walking ? 0 : pose.headYaw,
       blend,
     );
     head.current.rotation.x = THREE.MathUtils.lerp(
       head.current.rotation.x,
-      pose.headPitch,
+      walking ? 0 : pose.headPitch,
       blend,
     );
     head.current.rotation.z = waving ? Math.sin(t * 5) * 0.04 : 0;
@@ -315,12 +391,12 @@ function Buddy({
       Math.abs(body.current.rotation.y - pose.yaw) > 0.002 ||
       Math.abs(head.current.rotation.y - pose.headYaw) > 0.002 ||
       Math.abs(head.current.rotation.x - pose.headPitch) > 0.002;
-    if (motion && (waving || unsettled)) invalidate();
+    if (motion && (walking || waving || unsettled)) invalidate();
   });
   return (
     <group
       ref={body}
-      position={[-1.18, 1.51, 0.24]}
+      position={deskHome}
       onClick={(e: ThreeEvent<MouseEvent>) => {
         e.stopPropagation();
         onGreet();
@@ -332,16 +408,12 @@ function Buddy({
         document.body.style.cursor = "";
       }}
     >
-      <Ball
-        position={[-0.18, -0.01, 0.12]}
-        scale={[0.16, 0.09, 0.23]}
-        color="#344b8b"
-      />
-      <Ball
-        position={[0.18, -0.01, 0.12]}
-        scale={[0.16, 0.09, 0.23]}
-        color="#344b8b"
-      />
+      <group ref={leftFoot} position={[-0.18, -0.01, 0.12]}>
+        <Ball position={[0, 0, 0]} scale={[0.16, 0.09, 0.23]} color="#344b8b" />
+      </group>
+      <group ref={rightFoot} position={[0.18, -0.01, 0.12]}>
+        <Ball position={[0, 0, 0]} scale={[0.16, 0.09, 0.23]} color="#344b8b" />
+      </group>
       <Rounded
         size={[0.55, 0.55, 0.42]}
         position={[0, 0.27, 0]}
@@ -578,6 +650,8 @@ function Scene(props: SceneProps) {
         <Buddy
           greeting={props.greeting}
           guide={props.opening || props.activeTarget}
+          visit={props.visit}
+          visible={props.visible}
           motion={props.motion}
           onGreet={props.onGreet}
         />
