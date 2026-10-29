@@ -109,8 +109,6 @@ function Label({
   height = 0.5,
   bg = "#f6eedc",
   color = "#30383d",
-  size = 50,
-  billboard = false,
 }: {
   text: string;
   position: Position;
@@ -118,72 +116,41 @@ function Label({
   height?: number;
   bg?: string;
   color?: string;
-  size?: number;
-  billboard?: boolean;
 }) {
-  const label = useRef<THREE.Mesh>(null);
-  const { camera } = useThree();
-  const parentRotation = useMemo(() => new THREE.Quaternion(), []);
-  const cameraRotation = useMemo(() => new THREE.Quaternion(), []);
-  useFrame(() => {
-    if (!billboard || !label.current) return;
-    const mesh = label.current;
-    mesh.parent?.getWorldQuaternion(parentRotation);
-    camera.getWorldQuaternion(cameraRotation);
-    mesh.quaternion.copy(parentRotation.invert()).multiply(cameraRotation);
-    const zoom = (camera as THREE.OrthographicCamera).zoom || 1;
-    mesh.scale.set(100 / (width * zoom), 30 / (height * zoom), 1);
-  });
   const texture = useMemo(() => {
     const canvas = document.createElement("canvas");
     canvas.width = 1024;
     canvas.height = Math.round((1024 * height) / width);
     const ctx = canvas.getContext("2d")!;
     ctx.fillStyle = bg;
-    if (billboard) {
-      ctx.beginPath();
-      ctx.roundRect(0, 0, canvas.width, canvas.height, canvas.height * 0.2);
-      ctx.fill();
-    } else ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = color;
-    let fontSize = billboard ? Math.round(canvas.height * 0.57) : size * 2;
-    if (billboard) {
-      ctx.font = `700 ${fontSize}px Arial, sans-serif`;
-      const measured = Math.max(
-        ...text.split("\n").map((line) => ctx.measureText(line).width),
-      );
-      fontSize = Math.min(
-        fontSize,
-        (fontSize * (canvas.width * 0.84)) / measured,
-      );
-    }
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const lines = text.split("\n");
+    let fontSize = (canvas.height * 0.76) / (lines.length * 1.15);
     ctx.font = `700 ${fontSize}px Arial, sans-serif`;
+    const widest = Math.max(
+      ...lines.map((line) => ctx.measureText(line).width),
+    );
+    fontSize = Math.min(fontSize, (fontSize * canvas.width * 0.88) / widest);
+    ctx.font = `700 ${fontSize}px Arial, sans-serif`;
+    ctx.fillStyle = color;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    text
-      .split("\n")
-      .forEach((line, i, lines) =>
-        ctx.fillText(
-          line,
-          canvas.width / 2,
-          canvas.height / 2 + (i - (lines.length - 1) / 2) * fontSize * 1.15,
-        ),
-      );
+    lines.forEach((line, i) =>
+      ctx.fillText(
+        line,
+        canvas.width / 2,
+        canvas.height / 2 + (i - (lines.length - 1) / 2) * fontSize * 1.15,
+      ),
+    );
     const map = new THREE.CanvasTexture(canvas);
     map.colorSpace = THREE.SRGBColorSpace;
     return map;
-  }, [text, bg, color, size, width, height, billboard]);
+  }, [text, bg, color, width, height]);
   useEffect(() => () => texture.dispose(), [texture]);
   return (
-    <mesh ref={label} position={position} renderOrder={billboard ? 20 : 0}>
+    <mesh position={position}>
       <planeGeometry args={[width, height]} />
-      <meshBasicMaterial
-        map={texture}
-        toneMapped={false}
-        transparent={billboard}
-        depthTest={!billboard}
-        depthWrite={!billboard}
-      />
+      <meshBasicMaterial map={texture} toneMapped={false} />
     </mesh>
   );
 }
@@ -600,7 +567,6 @@ function Scene(props: SceneProps) {
           height={0.68}
           color="#fcf4df"
           bg="#5367ad"
-          size={66}
         />
         {/* Desk. */}
         <Rounded
@@ -651,7 +617,6 @@ function Scene(props: SceneProps) {
             height={0.67}
             bg="#f7efdb"
             color="#4b625b"
-            size={80}
           />
           <Rounded
             size={[0.12, 0.32, 0.16]}
@@ -694,25 +659,23 @@ function Scene(props: SceneProps) {
         <DeskObject
           target="experience"
           position={[1.25, 1.52, -0.2]}
-          rotation={[0, -0.15, -0.09]}
+          rotation={[0, 0.8, -0.05]}
           onSelect={onSelect}
           onHover={props.onHover}
         >
           <Rounded
-            size={[0.65, 0.88, 0.23]}
-            position={[0, 0.42, 0]}
+            size={[0.82, 1.04, 0.23]}
+            position={[0, 0.52, 0]}
             color="#5c73b4"
             radius={0.04}
           />
           <Label
-            text={"My journey"}
-            billboard
-            position={[0, 1.02, 0.14]}
-            width={1}
-            height={0.3}
-            bg="#f9f1df"
-            color="#34456e"
-            size={70}
+            text={"MY\nJOURNEY"}
+            position={[0, 0.54, 0.125]}
+            width={0.72}
+            height={0.82}
+            bg="#5c73b4"
+            color="#fff2db"
           />
         </DeskObject>
         {/* About: a growing little plant. */}
@@ -778,7 +741,7 @@ function Scene(props: SceneProps) {
         <DeskObject
           target="contact"
           position={[2.1, 0.4, 1.25]}
-          rotation={[0, -0.25, 0]}
+          rotation={[0, 0.8, 0]}
           onSelect={onSelect}
           onHover={props.onHover}
         >
@@ -794,20 +757,18 @@ function Scene(props: SceneProps) {
             color="#75958b"
           />
           <Rounded
-            size={[0.67, 0.47, 0.05]}
-            position={[0, 0.31, 0]}
+            size={[0.82, 0.58, 0.05]}
+            position={[0, 0.37, 0]}
             color="#fff4d8"
             radius={0.015}
           />
           <Label
-            text={"Say hello"}
-            billboard
-            position={[0, 0.76, 0.06]}
-            width={1}
-            height={0.3}
+            text={"SAY\nHELLO"}
+            position={[0, 0.38, 0.032]}
+            width={0.72}
+            height={0.48}
             color="#a9624b"
             bg="#fff4d8"
-            size={90}
           />
         </DeskObject>
         <Rounded

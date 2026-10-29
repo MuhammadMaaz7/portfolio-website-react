@@ -88,3 +88,7 @@ Hover alone does not move the character. Reduced-motion mode keeps it at its ori
 ## Label and About-stop correction
 
 The notebook and envelope now use camera-facing tags at a constant 100×30 CSS-pixel size, rather than tiny text on angled surfaces. Their text fits within the texture and is drawn above scene depth so nearby geometry cannot hide it. Native HTML controls remain the accessible alternatives. The About destination moves behind/right of the plant with explicit camera-space silhouette clearance; its route stays on the desk. Regression checks verify both physical distance and horizontal screen-space separation. Visual browser verification remains pending the existing access-limit block.
+
+## Printed-label correction from owner screenshot
+
+The owner rejected the floating tags. They are removed completely, including camera-facing rotation, fixed-pixel scaling and depth overrides. Journey text is printed on the blue notebook cover; Say Hello is printed on the envelope face. Both physical objects turn toward the viewing side and have slightly larger faces. Texture lettering fits the actual face width and height with padding; standard depth testing keeps it attached to the scene. Character routes and movement are unchanged. The supplied screenshot was inspected; the new rendering still awaits browser verification under the existing access limitation.
