@@ -70,3 +70,11 @@ Release validation includes TypeScript, formatting, production build and 13 auto
 
 
 The owner requested removing the duplicate lighting dropdown. The existing lamp remains the single visible lighting switch and controls the whole site. Device preference still supplies the initial mode, and explicit lamp choices persist.
+
+## Mobile-first viewport and character guide — 29 October 2026
+
+The default home composition is now designed for phones: a compact introduction, the workshop as the main visual, touch-sized navigation, a character speech panel and a compact footer. Viewport height uses svh so browser chrome does not cover controls. Larger layouts progressively introduce the roomier two-column introduction. Short, narrow or zoomed displays may scroll rather than losing content; the body is never scroll-locked. Content views retain ordinary reading scroll. Footer motion settings no longer float over touch targets.
+
+Tapping a 3D object introduces it through the character and a clearly labelled open action instead of immediately navigating. The tour is user-paced, with Next / Finish controls. The character turns its body and head and points toward the actual object; it uses the left arm for the plant and the right for the other objects. Scene objects remain stationary. Greeting, pointing and return-to-rest are finite demand-rendered animations. Reduced motion applies poses immediately. The same guidance exists in HTML when WebGL is unavailable, and normal native controls remain available.
+
+Additional automated checks cover guide-direction math, arm selection and neutral restoration. These checks do not establish that phone layouts or gestures have been visually verified: the prior browser access usage-limit restriction remains unresolved. Manual browser/device checks still need to include 320/360/390 px widths, short landscape, browser chrome, text zoom, tapping objects, tour exit, WebGL failure and reduced motion.

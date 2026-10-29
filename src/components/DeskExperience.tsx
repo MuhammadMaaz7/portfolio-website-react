@@ -84,11 +84,14 @@ export function DeskExperience({
   const [activeTarget, setActiveTarget] = useState<DeskTarget | null>(null);
   const [opening, setOpening] = useState<DeskTarget | null>(null);
   const [tourStep, setTourStep] = useState(-1);
+  const [inspected, setInspected] = useState<DeskTarget | null>(null);
   const welcomeShown = useRef(false);
   const navigationTimer = useRef<ReturnType<typeof setTimeout>>();
   const greetingCount = useRef(0);
   const [motion, setMotion] = useState(false);
-  const [message, setMessage] = useState("Welcome in. Make yourself at home.");
+  const [message, setMessage] = useState(
+    "Welcome in! What would you like to explore?",
+  );
   const host = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const update = () =>
@@ -133,6 +136,7 @@ export function DeskExperience({
       clearTimeout(navigationTimer.current);
       setOpening(null);
       setActiveTarget(null);
+      setInspected(null);
     }
   }, [visible]);
   const stops: {
@@ -175,9 +179,16 @@ export function DeskExperience({
     setTourStep(next);
     setActiveTarget(stops[next].target);
     setMessage(stops[next].description);
-    setGreeting((n) => n + 1);
+    setInspected(stops[next].target);
   }
 
+  function inspect(target: DeskTarget) {
+    const stop = stops.find((stop) => stop.target === target)!;
+    setTourStep(-1);
+    setInspected(target);
+    setActiveTarget(target);
+    setMessage(stop.description);
+  }
   function navigate(target: DeskTarget) {
     setMessage(
       {
@@ -206,6 +217,9 @@ export function DeskExperience({
     else open();
   }
   function greet() {
+    setTourStep(-1);
+    setInspected(null);
+    setActiveTarget(null);
     setGreeting((n) => n + 1);
     const replies = [
       "Hey there! Glad you stopped by.",
@@ -216,7 +230,7 @@ export function DeskExperience({
   }
   return (
     <div
-      className={`desk-experience ${night ? "desk-night" : ""} ${opening ? "is-opening" : ""}`}
+      className={`desk-experience ${night ? "desk-night" : ""} ${opening ? "is-opening" : ""} ${inspected ? "has-guide" : ""}`}
       data-scene={ready ? "ready" : "illustration"}
     >
       <div className="desk-topline">
@@ -245,9 +259,9 @@ export function DeskExperience({
                 night={night}
                 motion={motion}
                 greeting={greeting}
-                activeTarget={activeTarget}
+                activeTarget={inspected || activeTarget}
                 opening={opening}
-                onSelect={navigate}
+                onSelect={inspect}
                 onHover={setActiveTarget}
                 onGreet={greet}
                 onToggleLight={() => toggleLighting()}
@@ -258,6 +272,7 @@ export function DeskExperience({
         )}
         <button
           className="desk-hello"
+          disabled={!!opening}
           onClick={greet}
           aria-label="Say hello to the workshop character"
         >
@@ -265,8 +280,26 @@ export function DeskExperience({
         </button>
       </div>
       <div className="workshop-guide">
-        <span>Four little doors into my world.</span>
-        <button onClick={tour}>
+        <span>
+          {tourStep < 0
+            ? "Tap an object. I’ll explain."
+            : `Your tour · ${tourStep + 1} of 4`}
+        </span>
+        {tourStep >= 0 && (
+          <button
+            className="end-tour"
+            disabled={!!opening}
+            onClick={() => {
+              setTourStep(-1);
+              setInspected(null);
+              setActiveTarget(null);
+              setMessage("That’s my little workshop. Where shall we start?");
+            }}
+          >
+            Finish tour
+          </button>
+        )}
+        <button onClick={tour} disabled={!!opening}>
           {tourStep < 0
             ? "Show me around"
             : tourStep === 3
@@ -278,14 +311,29 @@ export function DeskExperience({
         </button>
       </div>
       <p className="desk-message" aria-live="polite">
+        <span className="guide-speaker">Maaz says</span>
         {message}
+        {inspected && (
+          <>
+            <br />
+            <button
+              className="guide-open"
+              disabled={!!opening}
+              onClick={() => navigate(inspected)}
+            >
+              {opening
+                ? "Opening…"
+                : stops.find((stop) => stop.target === inspected)!.action}
+            </button>
+          </>
+        )}
       </p>
       <div className="workshop-doors" aria-label="Explore the workshop">
         {stops.map((stop) => (
           <button
             key={stop.target}
             className={`workshop-door door-${stop.target}`}
-            data-active={activeTarget === stop.target}
+            data-active={(opening || inspected || activeTarget) === stop.target}
             disabled={!!opening}
             onMouseEnter={() => setActiveTarget(stop.target)}
             onMouseLeave={() => {

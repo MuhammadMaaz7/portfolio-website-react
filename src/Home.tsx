@@ -60,7 +60,11 @@ export function Home() {
     }
   }
   return (
-    <>
+    <div
+      className={
+        location.section === "home" ? "portfolio is-home" : "portfolio"
+      }
+    >
       <a className="skip" href="#main">
         Skip to content
       </a>
@@ -93,8 +97,13 @@ export function Home() {
                 </span>
               </h1>
               <p className="welcome-intro">
-                I build full-stack products
-                <br className="desktop-break" /> and AI-powered tools.
+                <span className="compact-intro">
+                  Full-stack products &amp; AI tools.
+                </span>
+                <span className="full-intro">
+                  I build full-stack products
+                  <br className="desktop-break" /> and AI-powered tools.
+                </span>
               </p>
               <p className="welcome-note">
                 Welcome to my little corner of the internet.
@@ -260,6 +269,6 @@ export function Home() {
         />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

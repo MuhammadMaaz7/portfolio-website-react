@@ -1,5 +1,4 @@
 import { ThemeProvider } from "./Theme";
-import { Motion } from "./Motion";
 import { Home } from "./Home";
 import { Header, Footer } from "./components/SiteChrome";
 import projects from "./projects.json";
@@ -11,17 +10,10 @@ export default function App({ path = "/" }: { path?: string }) {
   );
 }
 function Portfolio({ path = "/" }: { path?: string }) {
-  if (path === "/" || path === "/index.html")
-    return (
-      <>
-        <Motion />
-        <Home />
-      </>
-    );
+  if (path === "/" || path === "/index.html") return <Home />;
   if (path === "/privacy/")
     return (
       <>
-        <Motion />
         <Header />
         <main id="main" className="shell prose-page">
           <span className="section-kicker">A LITTLE HOUSEKEEPING</span>
@@ -73,7 +65,6 @@ function Portfolio({ path = "/" }: { path?: string }) {
   const next = projects[(projects.indexOf(project) + 1) % projects.length];
   return (
     <>
-      <Motion />
       <a className="skip" href="#main">
         Skip to content
       </a>

@@ -236,3 +236,519 @@ html[data-motion="off"] {
 .case-contents > a {
   font-size: 16px;
 }
+
+/* Mobile is the default home composition. No body scroll lock: short or zoomed screens can reflow. */
+.guide-speaker {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+.workshop-guide .end-tour {
+  color: var(--muted);
+  font-weight: 400;
+}
+.workshop-door[data-active="true"] .workshop-mark,
+.workshop-door:hover .workshop-mark {
+  transform: none;
+}
+.is-home > .site-header {
+  height: 68px;
+  min-height: 68px;
+}
+.is-home .site-header nav {
+  top: 62px;
+}
+.is-home .welcome-section {
+  height: calc(100svh - 112px);
+  min-height: 528px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  padding: 8px 0;
+}
+.is-home .welcome-copy h1 {
+  font-size: clamp(2.35rem, 8.5vw, 3.4rem);
+  letter-spacing: -2px;
+  line-height: 1.08;
+  margin: 5px 0 10px;
+}
+.is-home .welcome-copy h1 > br {
+  display: none;
+}
+.is-home .name-word {
+  padding: 0;
+  margin-left: 9px;
+}
+.is-home .name-word > svg {
+  height: 9px;
+  bottom: -6px;
+}
+.is-home .welcome-eyebrow {
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+.is-home .welcome-intro {
+  font-size: 17px;
+  line-height: 1.4;
+  margin: 8px 0 0;
+}
+.is-home .desktop-break {
+  display: none;
+}
+.is-home .welcome-note,
+.is-home .welcome-caption,
+.is-home .welcome-actions {
+  display: none;
+}
+.is-home .desk-experience {
+  display: grid;
+  grid-template-rows: auto minmax(165px, 1fr) auto auto auto;
+  min-height: 0;
+  height: 100%;
+  align-self: stretch;
+}
+.is-home .desk-canvas {
+  width: 100%;
+  margin: 0;
+  aspect-ratio: auto;
+  min-height: 0;
+  height: 100%;
+  touch-action: pan-y;
+}
+.is-home .desk-topline {
+  font-size: 11px;
+}
+.is-home .desk-topline > button {
+  min-height: 44px;
+  font-size: 13px;
+}
+.is-home .desk-message {
+  font-size: 14px;
+  padding: 10px 12px;
+  margin: 0 0 6px;
+  min-height: 80px;
+  width: 100%;
+  max-width: none;
+  text-align: left;
+}
+.is-home .workshop-door {
+  min-height: 74px;
+  padding: 5px 2px;
+  gap: 3px;
+}
+.is-home .workshop-mark {
+  height: 31px;
+  width: 39px;
+}
+.is-home .workshop-door strong {
+  font-size: 13px;
+}
+.is-home .workshop-door small {
+  font-size: 11px;
+}
+.is-home .workshop-guide {
+  margin: 0;
+  flex-wrap: nowrap;
+  gap: 8px;
+  font-size: 12px;
+}
+.is-home .workshop-guide > span {
+  font-size: 12px;
+}
+.is-home .workshop-guide button {
+  font-size: 13px;
+  white-space: nowrap;
+  min-height: 44px;
+}
+.is-home .workshop-guide .end-tour {
+  margin-left: auto;
+  margin-right: 0;
+}
+.is-home > .site-footer {
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  justify-content: center;
+}
+.is-home .site-footer > .footer-name,
+.is-home .site-footer > span,
+.is-home .site-footer a[href="#main"] {
+  display: none;
+}
+.is-home .site-footer > div {
+  gap: 20px;
+}
+.is-home .desk-hello {
+  font-size: 13px;
+  min-height: 44px;
+  min-width: 66px;
+  padding: 6px 10px;
+  right: 8px;
+  bottom: 4px;
+}
+.guide-open {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 5px;
+  border: 0;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 8px;
+  padding: 7px 13px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.desk-message:has(.guide-open) {
+  min-height: 124px;
+}
+.site-footer .motion-control {
+  position: static;
+  min-height: 44px;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.site-footer > div {
+  align-items: center;
+}
+.menu-toggle,
+.nav-hello,
+.note-chrome button,
+.career-pagination button,
+.drawer-filters button {
+  min-height: 44px;
+}
+.workspace-bar button {
+  min-height: 44px;
+}
+@media (min-width: 600px) {
+  .is-home .welcome-section {
+    max-width: 760px;
+  }
+  .is-home .welcome-copy {
+    text-align: center;
+  }
+  .is-home .welcome-eyebrow {
+    justify-content: center;
+  }
+  .is-home .desk-experience {
+    width: 100%;
+  }
+  .is-home .desk-message {
+    max-width: 620px;
+    justify-self: center;
+  }
+  .is-home .workshop-guide {
+    font-size: 14px;
+  }
+  .is-home .workshop-guide > span {
+    font-size: 14px;
+  }
+  .is-home .workshop-door strong {
+    font-size: 15px;
+  }
+}
+@media (max-width: 599px) {
+  .shell {
+    width: calc(100% - 32px);
+  }
+  .workspace-view {
+    padding-top: 12px;
+  }
+  .drawer-heading h2 {
+    font-size: 40px;
+  }
+  .drawer-heading p {
+    font-size: 17px;
+  }
+  .folder-board {
+    grid-template-columns: 1fr;
+  }
+  .folder-paper {
+    padding: 24px 22px;
+  }
+  .career-chapters {
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+  }
+  .career-chapters button {
+    min-height: 58px;
+    scroll-snap-align: start;
+  }
+  .career-page {
+    padding: 24px 20px;
+  }
+  .career-page h3 {
+    font-size: 34px;
+  }
+  .career-story {
+    font-size: 17px;
+  }
+  .contact-note {
+    transform: none;
+    width: 100%;
+    padding: 26px 24px 16px;
+  }
+  .contact-layout h2 {
+    font-size: 46px;
+  }
+  .project-note {
+    width: calc(100% - 20px);
+    max-height: calc(100dvh - 20px);
+  }
+  .project-note-paper {
+    padding: 20px;
+  }
+  .note-heading > p {
+    font-size: 18px;
+  }
+  .note-chrome button {
+    min-width: 76px;
+  }
+  .site-footer {
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+  .is-home .site-footer {
+    padding-bottom: 0;
+  }
+  .is-home .workshop-guide > span {
+    max-width: 110px;
+    line-height: 1.35;
+  }
+}
+@media (max-width: 359px), (max-height: 639px) {
+  .is-home .welcome-section {
+    height: auto;
+    min-height: 0;
+    grid-template-rows: auto auto;
+    gap: 14px;
+  }
+  .is-home .desk-experience {
+    height: auto;
+    grid-template-rows: auto 240px auto auto auto;
+  }
+  .is-home > .site-footer {
+    height: auto;
+    min-height: 44px;
+  }
+  .is-home .welcome-copy h1 {
+    font-size: 2.35rem;
+  }
+  .is-home .workshop-doors {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .is-home .workshop-door {
+    flex-direction: row;
+    justify-content: center;
+    min-height: 60px;
+  }
+  .is-home .workshop-door > span {
+    text-align: left;
+  }
+}
+@media (min-width: 900px) and (min-height: 700px) {
+  .is-home {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+  .is-home > .site-header {
+    height: 82px;
+    min-height: 82px;
+  }
+  .is-home > main {
+    flex: 1;
+  }
+  .is-home .welcome-section {
+    height: calc(100svh - 138px);
+    min-height: 550px;
+    padding: 14px 0;
+    gap: 28px;
+  }
+  .is-home > .site-footer {
+    height: 56px;
+    min-height: 56px;
+    padding: 8px 0;
+    gap: 18px;
+  }
+  .is-home .site-footer > span {
+    display: none;
+  }
+  .is-home .desk-experience {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto minmax(180px, 1fr) auto auto auto;
+    align-self: stretch;
+  }
+  .is-home .desk-canvas {
+    aspect-ratio: auto;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+  }
+  .is-home .desk-message {
+    margin: 4px auto 10px;
+    min-height: 70px;
+    max-width: 100%;
+    width: 100%;
+    padding: 9px 15px;
+    font-size: 14px;
+  }
+  .is-home .workshop-door {
+    min-height: 85px;
+    padding: 5px 3px;
+    gap: 3px;
+  }
+  .is-home .workshop-mark {
+    height: 36px;
+    width: 44px;
+  }
+  .is-home .welcome-copy h1 {
+    font-size: clamp(72px, 11svh, 108px);
+    margin-bottom: 23px;
+  }
+  .is-home .welcome-caption {
+    margin-top: 18px;
+  }
+  .is-home .welcome-note {
+    line-height: 1.55;
+  }
+  .is-home .welcome-actions {
+    margin: 22px 0 12px;
+  }
+  .is-home .workshop-guide {
+    margin: 0;
+  }
+  .is-home .welcome-eyebrow {
+    margin-bottom: 17px;
+  }
+}
+@media (min-width: 900px) and (min-height: 700px) and (max-height: 800px) {
+  .is-home .welcome-caption {
+    display: none;
+  }
+  .is-home .welcome-intro {
+    font-size: 21px;
+    margin-bottom: 15px;
+  }
+  .is-home .welcome-note {
+    font-size: 16px;
+  }
+  .is-home .welcome-section {
+    padding: 8px 0;
+  }
+  .is-home .welcome-copy h1 {
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 900px) and (min-height: 700px) {
+  .is-home .welcome-copy {
+    text-align: left;
+  }
+  .is-home .welcome-eyebrow {
+    justify-content: flex-start;
+  }
+  .is-home .welcome-copy h1 > br {
+    display: block;
+  }
+  .is-home .name-word {
+    margin-left: 0;
+    padding-bottom: 10px;
+  }
+  .is-home .name-word > svg {
+    height: 19px;
+  }
+  .is-home .welcome-note,
+  .is-home .welcome-actions {
+    display: block;
+  }
+  .is-home .welcome-actions {
+    display: flex;
+  }
+  .is-home .welcome-section {
+    max-width: none;
+    grid-template-columns: 0.9fr 1.2fr;
+    grid-template-rows: 1fr;
+  }
+  .is-home .welcome-caption {
+    display: flex;
+  }
+  .is-home .desk-experience {
+    width: auto;
+  }
+  .is-home > .site-footer {
+    justify-content: space-between;
+  }
+  .is-home .site-footer > .footer-name {
+    display: flex;
+  }
+  .is-home .workshop-guide > span {
+    max-width: none;
+  }
+}
+@media (max-width: 899px) {
+  .is-home .desk-experience {
+    grid-template-rows: auto minmax(150px, 1fr) auto auto auto;
+  }
+  .is-home .workshop-door {
+    min-height: 60px;
+    padding: 4px 2px;
+  }
+  .is-home .workshop-mark {
+    height: 26px;
+    width: 34px;
+  }
+  .is-home .workshop-door small {
+    display: none;
+  }
+  .is-home .has-guide .workshop-doors {
+    display: none;
+  }
+  .is-home .workshop-guide:has(.end-tour) > span {
+    display: none;
+  }
+  .is-home .workshop-guide .end-tour {
+    margin-left: 0;
+    margin-right: auto;
+  }
+  .site-footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .is-home .desk-message:has(.guide-open) {
+    min-height: 124px;
+  }
+}
+@media (max-height: 639px) {
+  .is-home .desk-experience {
+    grid-template-rows: auto 240px auto auto auto;
+  }
+}
+.compact-intro {
+  display: none;
+}
+.is-home .compact-intro {
+  display: inline;
+}
+.is-home .full-intro {
+  display: none;
+}
+@media (min-width: 900px) and (min-height: 700px) {
+  .is-home .compact-intro {
+    display: none;
+  }
+  .is-home .full-intro {
+    display: inline;
+  }
+}

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, type ReactNode } from "react";
 import { Canvas, ThreeEvent, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
+import { guidePose } from "../workshop-guide";
 export type DeskTarget = "work" | "experience" | "about" | "contact";
 type Position = [number, number, number];
 type SceneProps = {
@@ -193,9 +194,6 @@ function CameraRig({
 }
 function DeskObject({
   target,
-  active,
-  opening,
-  motion,
   position,
   rotation = [0, 0, 0],
   onSelect,
@@ -203,51 +201,14 @@ function DeskObject({
   children,
 }: {
   target: DeskTarget;
-  active: DeskTarget | null;
-  opening: DeskTarget | null;
-  motion: boolean;
   position: Position;
   rotation?: Position;
   onSelect: (target: DeskTarget) => void;
   onHover?: (target: DeskTarget | null) => void;
   children: ReactNode;
 }) {
-  const ref = useRef<THREE.Group>(null);
-  const { invalidate } = useThree();
-  const selected = active === target || opening === target;
-  useEffect(() => {
-    invalidate();
-  }, [selected, motion, invalidate]);
-  useFrame((_, delta) => {
-    if (!ref.current) return;
-    const destination = position[1] + (selected ? 0.12 : 0);
-    ref.current.position.y = motion
-      ? THREE.MathUtils.damp(
-          ref.current.position.y,
-          destination,
-          12,
-          Math.min(delta, 0.05),
-        )
-      : destination;
-    const tilt = rotation[2] + (selected ? -0.035 : 0);
-    ref.current.rotation.z = motion
-      ? THREE.MathUtils.damp(
-          ref.current.rotation.z,
-          tilt,
-          12,
-          Math.min(delta, 0.05),
-        )
-      : tilt;
-    if (
-      motion &&
-      (Math.abs(ref.current.position.y - destination) > 0.001 ||
-        Math.abs(ref.current.rotation.z - tilt) > 0.001)
-    )
-      invalidate();
-  });
   return (
     <group
-      ref={ref}
       position={position}
       rotation={rotation}
       onClick={(e) => {
@@ -271,13 +232,38 @@ function DeskObject({
 function Buddy({
   greeting,
   motion,
+  guide,
   onGreet,
 }: {
   greeting: number;
+  guide: DeskTarget | null;
   motion: boolean;
   onGreet: () => void;
 }) {
+  const body = useRef<THREE.Group>(null);
+  const pose = useMemo(() => guidePose(guide), [guide]);
+  const aim = useMemo(
+    () =>
+      guide
+        ? new THREE.Quaternion().setFromUnitVectors(
+            new THREE.Vector3(0, 1, 0),
+            new THREE.Vector3(...pose.direction),
+          )
+        : new THREE.Quaternion().setFromEuler(
+            new THREE.Euler(0, 0, Math.PI - 0.15),
+          ),
+    [pose, guide],
+  );
+  const wave = useMemo(() => new THREE.Quaternion(), []);
   const arm = useRef<THREE.Group>(null);
+  const leftArm = useRef<THREE.Group>(null);
+  const leftRest = useMemo(
+    () =>
+      new THREE.Quaternion().setFromEuler(
+        new THREE.Euler(0, 0, Math.PI + 0.15),
+      ),
+    [],
+  );
   const head = useRef<THREE.Group>(null);
   const started = useRef(0);
   const { invalidate } = useThree();
@@ -287,16 +273,53 @@ function Buddy({
       invalidate();
     }
   }, [greeting, invalidate]);
-  useFrame(() => {
-    if (!arm.current || !head.current) return;
+  useEffect(() => {
+    invalidate();
+  }, [guide, motion, invalidate]);
+  useFrame((_, delta) => {
+    if (!arm.current || !leftArm.current || !head.current || !body.current)
+      return;
     const t = (performance.now() - started.current) / 1000;
-    const active = motion && started.current > 0 && t < 1.8;
-    arm.current.rotation.z = active ? -0.55 + Math.sin(t * 13) * 0.36 : -0.15;
-    head.current.rotation.z = active ? Math.sin(t * 5) * 0.04 : 0;
-    if (active) invalidate();
+    const waving = !guide && motion && started.current > 0 && t < 1.8;
+    wave.setFromEuler(
+      new THREE.Euler(
+        0,
+        0,
+        waving ? -0.55 + Math.sin(t * 13) * 0.36 : Math.PI - 0.15,
+      ),
+    );
+    const desired = guide && !pose.left ? aim : wave;
+    const leftDesired = guide && pose.left ? aim : leftRest;
+    const blend = motion ? 1 - Math.exp(-12 * Math.min(delta, 0.05)) : 1;
+    arm.current.quaternion.slerp(desired, blend);
+    leftArm.current.quaternion.slerp(leftDesired, blend);
+    body.current.rotation.y = THREE.MathUtils.lerp(
+      body.current.rotation.y,
+      pose.yaw,
+      blend,
+    );
+    head.current.rotation.y = THREE.MathUtils.lerp(
+      head.current.rotation.y,
+      pose.headYaw,
+      blend,
+    );
+    head.current.rotation.x = THREE.MathUtils.lerp(
+      head.current.rotation.x,
+      pose.headPitch,
+      blend,
+    );
+    head.current.rotation.z = waving ? Math.sin(t * 5) * 0.04 : 0;
+    const unsettled =
+      arm.current.quaternion.angleTo(desired) > 0.002 ||
+      leftArm.current.quaternion.angleTo(leftDesired) > 0.002 ||
+      Math.abs(body.current.rotation.y - pose.yaw) > 0.002 ||
+      Math.abs(head.current.rotation.y - pose.headYaw) > 0.002 ||
+      Math.abs(head.current.rotation.x - pose.headPitch) > 0.002;
+    if (motion && (waving || unsettled)) invalidate();
   });
   return (
     <group
+      ref={body}
       position={[-1.18, 1.51, 0.24]}
       onClick={(e: ThreeEvent<MouseEvent>) => {
         e.stopPropagation();
@@ -366,16 +389,18 @@ function Buddy({
       </group>
       <group ref={arm} position={[0.32, 0.42, 0]}>
         <Ball
-          position={[0.09, 0.1, 0]}
+          position={[0, 0.19, 0]}
           scale={[0.1, 0.25, 0.1]}
           color="#edaa8e"
         />
       </group>
-      <Ball
-        position={[-0.32, 0.32, 0.02]}
-        scale={[0.1, 0.23, 0.1]}
-        color="#edaa8e"
-      />
+      <group ref={leftArm} position={[-0.32, 0.42, 0]}>
+        <Ball
+          position={[0, 0.19, 0]}
+          scale={[0.1, 0.25, 0.1]}
+          color="#edaa8e"
+        />
+      </group>
     </group>
   );
 }
@@ -502,9 +527,6 @@ function Scene(props: SceneProps) {
           target="work"
           position={[0.02, 2.02, -0.43]}
           rotation={[0, 0, 0]}
-          active={props.activeTarget}
-          opening={props.opening}
-          motion={props.motion}
           onSelect={onSelect}
           onHover={props.onHover}
         >
@@ -555,6 +577,7 @@ function Scene(props: SceneProps) {
         )}
         <Buddy
           greeting={props.greeting}
+          guide={props.opening || props.activeTarget}
           motion={props.motion}
           onGreet={props.onGreet}
         />
@@ -563,9 +586,6 @@ function Scene(props: SceneProps) {
           target="experience"
           position={[1.25, 1.52, -0.2]}
           rotation={[0, -0.15, -0.09]}
-          active={props.activeTarget}
-          opening={props.opening}
-          motion={props.motion}
           onSelect={onSelect}
           onHover={props.onHover}
         >
@@ -590,9 +610,6 @@ function Scene(props: SceneProps) {
           target="about"
           position={[-2.04, 1.48, -0.45]}
           rotation={[0, 0, 0]}
-          active={props.activeTarget}
-          opening={props.opening}
-          motion={props.motion}
           onSelect={onSelect}
           onHover={props.onHover}
         >
@@ -652,9 +669,6 @@ function Scene(props: SceneProps) {
           target="contact"
           position={[2.1, 0.4, 1.25]}
           rotation={[0, -0.25, 0]}
-          active={props.activeTarget}
-          opening={props.opening}
-          motion={props.motion}
           onSelect={onSelect}
           onHover={props.onHover}
         >

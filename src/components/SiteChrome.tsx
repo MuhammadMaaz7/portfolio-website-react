@@ -1,4 +1,5 @@
 import { useState, type MouseEvent } from "react";
+import { Motion } from "../Motion";
 import type { Section } from "../navigation";
 export function MaazMark() {
   return (
@@ -106,6 +107,7 @@ export function Footer() {
         <a href="https://github.com/MuhammadMaaz7">GitHub ↗</a>
         <a href="/privacy/">Privacy</a>
         <a href="#main">Back to top ↑</a>
+        <Motion />
       </div>
     </footer>
   );
